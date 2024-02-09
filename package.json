@@ -1,0 +1,23 @@
+{
+  "name": "course_rater",
+  "version": "1.0.0",
+  "description": "U of R Class & Professor Rating and Review Application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BlakeColeman/Course_Rater.git"
+  },
+  "author": "Favour, Chris, Hunter, Blake, Onaopemipo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BlakeColeman/Course_Rater/issues"
+  },
+  "homepage": "https://github.com/BlakeColeman/Course_Rater#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "twilio": "^4.21.0"
+  }
+}
