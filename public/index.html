@@ -1,13 +1,60 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Express App</title>
+    <title>Rate My Course</title>
+    <link rel="stylesheet" href="/css/styles.css">
+
 </head>
 <body>
-    <h1>Welcome to My Express App</h1>
-    <p>This is the index page.</p>
+    <header>
+        <h1>Rate My Course</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Search Courses</a></li>
+                <li><a href="#">Rate a Course</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Sign In</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h2>Rate and Review Courses</h2>
+            <p>Find courses and share your experience by rating and reviewing them.</p>
+            <a href="#" class="btn">Get Started</a>
+        </section>
+
+        <section class="search">
+            <div class="search-container">
+                <h2>Search for Courses</h2>
+                <form>
+                    <input type="text" placeholder="Enter course name or code">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+        </section>
+        
+
+        <section class="featured-courses">
+            <h2>Featured Courses</h2>
+            <div class="course-card">
+                <h3>Introduction to Computer Science</h3>
+                <p>Instructor: Dr. John Doe</p>
+                <p>Rating: 4.5/5</p>
+                <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
+            <!-- Add more course cards here -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Rate My Course. All rights reserved.</p>
+    </footer>
+
+    <script src="index.js"></script>
 </body>
 </html>
