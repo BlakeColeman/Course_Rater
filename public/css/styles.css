@@ -1,5 +1,3 @@
-/* styles.css */
-
 /* Reset default browser styles */
 body, h1, h2, h3, p, ul, li {
     margin: 0;
@@ -13,21 +11,14 @@ body {
     background-color: #f8f8f8;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
+/* Header styles */
 header {
     background-color: #333;
     color: #fff;
     padding: 20px 0;
+    text-align: center; /* Align everything to the center */
 }
 
-header h1 {
-    font-size: 2rem;
-}
 
 nav ul {
     list-style: none;
@@ -35,41 +26,26 @@ nav ul {
 
 nav ul li {
     display: inline;
-    margin-right: 20px;
+    margin: 0 20px; /* Adjust spacing between items */
 }
 
 nav ul li a {
     color: #fff;
     text-decoration: none;
+    transition: color 0.3s; /* Add transition effect for smooth color change */
 }
 
+nav ul li a:hover {
+    color: #007bff; /* Change color on hover */
+    text-decoration: underline;
+}
+
+/* Main content styles */
 main {
     padding: 20px 0;
 }
 
-.hero {
-    text-align: center;
-    padding: 50px 0;
-    background-color: #007bff;
-    color: #fff;
-}
-
-.featured-courses {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-
-.course-card {
-    width: 300px;
-    margin-bottom: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: left;
-}
-
+/* Footer styles */
 footer {
     background-color: #333;
     color: #fff;
@@ -80,7 +56,7 @@ footer {
 footer p {
     margin: 0;
 }
-
+/* Search section styles */
 
 .search {
     text-align: center;
@@ -94,4 +70,28 @@ footer p {
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-container input[type="text"],
+.search-container button {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-container input[type="text"] {
+    width: 300px;
+    margin-right: 10px;
+}
+
+.search-container button {
+    background-color: #004f2e;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.search-container button:hover {
+    background-color: #0056b3;
 }
