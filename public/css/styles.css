@@ -109,11 +109,7 @@ button {
     margin: 10px 0px;   
     border: none;   
     cursor: pointer;   
-}   
-
-form {   
-    border: 3px solid #fff;   
-}   
+}     
    
 input[type=text], input[type=password] {   
     width: 100%;   
@@ -128,7 +124,7 @@ button:hover {
     opacity: 0.7;   
 }     
 
-.center{
+.container{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -136,12 +132,29 @@ button:hover {
     max-width: 400px;
     background: white;
     border-radius: 10px;
-    padding: 30px;
+    padding: 15px 30px 20px 30px;
     border-style: solid;  
     border-color: #000000; 
+}
+
+h1 {
+    text-align: center;
 }
 
 h2 {
     text-align: center;
     font-size: 42px;
+    padding: auto;
+}
+h3{
+    text-align: center;
+    font-size: 18px;
+    padding-bottom: 5px;
+    font-weight: 400;
+
+}
+
+hr {
+    margin: 10px 10px;
+    border: 1.3px solid #004f2e;
 }
