@@ -19,6 +19,27 @@ header {
     text-align: center; /* Align everything to the center */
 }
 
+
+nav ul {
+    list-style: none;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 20px; /* Adjust spacing between items */
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s; /* Add transition effect for smooth color change */
+}
+
+nav ul li a:hover {
+    color: #007bff; /* Change color on hover */
+    text-decoration: underline;
+}
+
 /* Main content styles */
 main {
     padding: 20px 0;
@@ -62,6 +83,17 @@ footer p {
 .search-container input[type="text"] {
     width: 300px;
     margin-right: 10px;
+}
+
+.search-container button {
+    background-color: #004f2e;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.search-container button:hover {
+    background-color: #0056b3;
 }
 
 Body {  
