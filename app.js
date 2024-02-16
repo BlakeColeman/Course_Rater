@@ -4,6 +4,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
+const path = require('path');
 
 
 const app = express();
@@ -59,8 +60,13 @@ app.get('/admin', (req, res) => {
 });
 
 app.get('/admin/login', (req, res) => {
-    res.send('Admin Login Page');
+    // res.send('Admin Login Page');
+    // Render admin login HTML file
+        res.sendFile(path.join(__dirname, 'public','html', 'admin', 'login.html'));
+
 });
+
+
 
 app.post('/admin/login', passport.authenticate('admin-local', {
     successRedirect: '/admin',
@@ -71,6 +77,15 @@ app.post('/admin/login', passport.authenticate('admin-local', {
 app.get('/admin/logout', (req, res) => {
     req.logout();
     res.redirect('/admin/login');
+});
+
+
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public','html', 'login.html'));
+});
+
+app.get('/signup', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public','html', 'signup.html'));
 });
 
 // Start server
