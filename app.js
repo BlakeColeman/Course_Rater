@@ -67,7 +67,6 @@ app.get('/admin/login', (req, res) => {
 });
 
 
-
 app.post('/admin/login', passport.authenticate('admin-local', {
     successRedirect: '/admin',
     failureRedirect: '/admin/login',
@@ -86,6 +85,10 @@ app.get('/login', (req, res) => {
 
 app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','html', 'signup.html'));
+});
+
+app.get('/index2', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public','html', 'index2.html'));
 });
 
 // Start server
