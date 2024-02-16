@@ -13,7 +13,7 @@ const port = 3000;
 app.use(express.static('public', { index: 'html/index.html' }));
 
 // Middleware
-app.use(express.static('public'));
+// app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(session({ secret: 'secret', resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
