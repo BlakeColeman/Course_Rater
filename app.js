@@ -79,6 +79,10 @@ app.get('/admin/logout', (req, res) => {
 });
 
 
+app.get('/index', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public','html', 'index.html'));
+});
+
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','html', 'login.html'));
 });
@@ -89,6 +93,14 @@ app.get('/signup', (req, res) => {
 
 app.get('/index2', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','html', 'index2.html'));
+});
+
+app.get('/studentAccount', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public','html', 'studentAccount.html'));
+});
+
+app.get('/adminAccount', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public','html', 'adminAccount.html'));
 });
 
 // Start server

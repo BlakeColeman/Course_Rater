@@ -128,7 +128,6 @@ hr {
     border: 1.3px solid #004f2e;
 }
 
-
 .homeButton {
     background-color: white;
     border-radius: 5px;
@@ -140,5 +139,11 @@ hr {
     display: block;
     margin: 15px 20px 15px 10px;
     float: right;
+}
+
+.subTitle{
+    text-align: left; 
+    font-size: 32px; 
+    padding: 10px 10px 10px 20px;
 }
 
