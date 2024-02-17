@@ -103,6 +103,10 @@ app.get('/adminAccount', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','html', 'adminAccount.html'));
 });
 
+app.get('/createReview', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public','html', 'createReview.html'));
+});
+
 // Start server
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
