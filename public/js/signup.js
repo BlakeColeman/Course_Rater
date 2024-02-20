@@ -4,7 +4,7 @@ function SignupForm(event){
 
 	var emailInput = document.getElementById("email").value;
 	var pswdInput1 = document.getElementById("setpassword").value;
-  var pswdInput2 = document.getElementById("confirmpassword").value;
+	var pswdInput2 = document.getElementById("confirmpassword").value;
 	
 	var emailMsg = document.getElementById("msg_email");
 	var pswdMsg = document.getElementById("msg_p1");
@@ -19,20 +19,27 @@ function SignupForm(event){
 	var checkResult = true;
 	
 	// email
-	if(emailInput == null || emailInput == "")
+	
+	// Check if email address is empty
+	if(emailInput == null || emailInput == "") 
 	{
 		emailMsg.innerHTML = "*Email address empty.";
 		checkResult = false;
 	}
-    else if(!emailCheck.test(emailInput))
-    {
-      emailMsg.innerHTML = "*Email address wrong format. example: username@uregina.ca";
+		
+	// Check if email is correct format
+   	else if(!emailCheck.test(emailInput)) 
+  	{
+   	  	 emailMsg.innerHTML = "*Email address wrong format. example: username@uregina.ca";
+		 checkResult = false;
+  	}
+		
+	//// Check if email is correct size
+  	else if (emailInput.length > 40) 
+	{
+    	  	msg_email.innerHTML = "*Email address too long. Maximum is 60 characters.";
 		checkResult = false;
-    }
-    else if (emailInput.length > 40){
-      msg_email.innerHTML = "*Email address too long. Maximum is 60 characters.";
-		checkResult = false;
-    }
+  	}
 
     
 	// password
