@@ -12,11 +12,14 @@ const port = 3000;
 
 //connecting to the database
 let db = new sqlite3.Database('./public/database/UofRCourseRater.db', (err) => {
-    if (err) {
+    if (err) 
+    {
       console.error(err.message);
     }
-    else{
-    console.log('Connected to the CourseRater database.');}
+    else
+    {
+        console.log('Connected to the CourseRater database.');
+    }
   });
 
 
@@ -40,9 +43,13 @@ const adminUser = {
 
 // Passport Local Strategy for admin authentication
 passport.use('admin-local', new LocalStrategy((username, password, done) => {
-    if (username === adminUser.username && password === adminUser.password) {
+    
+    if (username === adminUser.username && password === adminUser.password) 
+    {
         return done(null, adminUser);
-    } else {
+    } 
+    else 
+    {
         return done(null, false, { message: 'Incorrect username or password' });
     }
 }));
@@ -52,19 +59,26 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-    if (id === adminUser.id) {
+    
+    if (id === adminUser.id) 
+    {
         done(null, adminUser);
-    } else {
+    } 
+    else 
+    {
         done(null, false);
     }
 });
 
 // Admin Routes
 app.get('/admin', (req, res) => {
-    if (req.isAuthenticated()) {
+    if (req.isAuthenticated()) 
+    {
         // Render admin dashboard
         res.send('Admin Dashboard');
-    } else {
+    } 
+    else 
+    {
         res.redirect('/admin/login');
     }
 });
