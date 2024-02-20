@@ -2,7 +2,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const headerContainer = document.getElementById('header-container');
     const xhr = new XMLHttpRequest();
-
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
