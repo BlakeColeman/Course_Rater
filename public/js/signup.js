@@ -1,4 +1,5 @@
-function SignupForm(event){
+function SignupForm(event)
+{
 
   event.preventDefault();
 
@@ -43,22 +44,26 @@ function SignupForm(event){
 
     
 	// password
+
 	if(pswdInput1 == null || pswdInput1 == "")
 	{
 		pswdMsg.innerHTML = "*Password is empty.";
 		checkResult = false;
 	}
-    else if(!pswdCheck.test(pswdInput1)){
-        pswdMsg.innerHTML = "*Password must contain letters and at least one digit."
-        checkResult = false;
-    }
-    else if(pswdInput1.length != 8){
-        pswdMsg.innerHTML = "*Password must be 8 Characters."
-        checkResult = false;
-    }
-    else if(pswdInput1 != pswdInput2){
-        pswdMsg.innerHTML = "*Passwords must match"
-    }
+   	else if(!pswdCheck.test(pswdInput1))
+	{
+        	pswdMsg.innerHTML = "*Password must contain letters and at least one digit."
+        	checkResult = false;
+    	}
+    	else if(pswdInput1.length != 8)
+	{
+        	pswdMsg.innerHTML = "*Password must be 8 Characters."
+        	checkResult = false;
+    	}
+    	else if(pswdInput1 != pswdInput2)
+	{
+        	pswdMsg.innerHTML = "*Passwords must match"
+    	}
 	
 	if(checkResult == false)
 	{
@@ -67,7 +72,8 @@ function SignupForm(event){
 }
 
 
-function SignUpForm(event) {
+function SignUpForm(event) 
+{
 
     event.preventDefault();
   
