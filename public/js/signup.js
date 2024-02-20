@@ -108,27 +108,31 @@ function SignUpForm(event)
   
   
     // if email is left empty or email format is wrong, add an error message to the matching cell.
-    if (email == null || email == "") {
-      textNode = document.createTextNode("Email address empty.");
-      msg_email.appendChild(textNode);
-      valid = false;
+    if (email == null || email == "") 
+    {
+      	textNode = document.createTextNode("Email address empty.");
+     	msg_email.appendChild(textNode);
+     	valid = false;
     } 
-    else if (regex_email.test(email) == false) {
-      textNode = document.createTextNode("Email address wrong format. example: username@somewhere.sth");
-      msg_email.appendChild(textNode);
-      valid = false;
+    else if (regex_email.test(email) == false) 
+    {
+     	textNode = document.createTextNode("Email address wrong format. example: username@somewhere.sth");
+    	msg_email.appendChild(textNode);
+     	valid = false;
     }
-    else if (email.length > 60) {
-      textNode = document.createTextNode("Email address too long. Maximum is 60 characters.");
-      msg_email.appendChild(textNode);
-      valid = false;
+    else if (email.length > 60) 
+    {
+      	textNode = document.createTextNode("Email address too long. Maximum is 60 characters.");
+     	msg_email.appendChild(textNode);
+     	valid = false;
     }
 
     //if username is empty or format is wrong add an error message
-    if (uname == null || uname == "") {
-      textNode = document.createTextNode("Username is empty.");
-      msg_uname.appendChild(textNode);
-      valid = false;
+    if (uname == null || uname == "") 
+    {
+      	textNode = document.createTextNode("Username is empty.");
+      	msg_uname.appendChild(textNode);
+      	valid = false;
     }
     else if (regex_uname.test(uname) == false)
     {
@@ -175,21 +179,22 @@ function SignUpForm(event)
     //if Date of birth is empty or format is wrong add an error message
     if (dob==null||dob=="")
     {
-      textNode = document.createTextNode("Date of Birth is empty.");
-      msg_dob.appendChild(textNode);
-      valid=false;
+      	textNode = document.createTextNode("Date of Birth is empty.");
+      	msg_dob.appendChild(textNode);
+      	valid=false;
     }
     else if (regex_dob.test(dob)==false)
     {
-      textNode = document.createTextNode("Please use YYYY-MM-DD format.");
-      msg_dob.appendChild(textNode);
-      valid=false;
+      	textNode = document.createTextNode("Please use YYYY-MM-DD format.");
+      	msg_dob.appendChild(textNode);
+      	valid=false;
     }
 
 
     var feedback = document.getElementById("feedback");
     feedback.innerHTML = "";
-    if (valid == true) {
+    if (valid == true) 
+    {
       //Set green text color
       feedback.style.color = "green";
 
@@ -201,7 +206,8 @@ function SignUpForm(event)
 
   
     }
-    else {
+    else 
+    {
       event.preventDefault(); // Normally, this is where this command should be
   
       // If the form is not valid, display an "Invalid Data Entered" message and set red text color
