@@ -2,11 +2,11 @@
 body, h1, h2, h3, p, ul, li {
     margin: 0;
     padding: 0;
+
 }
 
 /* Global styles */
 body {
-    font-family: Arial, sans-serif;
     line-height: 1.6;
     background-color: #f8f8f8;
 }
@@ -19,44 +19,23 @@ header {
     text-align: center; /* Align everything to the center */
 }
 
-
-nav ul {
-    list-style: none;
-}
-
-nav ul li {
-    display: inline;
-    margin: 0 20px; /* Adjust spacing between items */
-}
-
-nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    transition: color 0.3s; /* Add transition effect for smooth color change */
-}
-
-nav ul li a:hover {
-    color: #007bff; /* Change color on hover */
-    text-decoration: underline;
-}
-
 /* Main content styles */
 main {
     padding: 20px 0;
 }
 
 /* Footer styles */
-footer {
+
+.footer {
+    left: 0;
+    bottom: 0;
+    width: 100%;
     background-color: #333;
     color: #fff;
     text-align: center;
     padding: 20px 0;
-}
+  }
 
-footer p {
-    margin: 0;
-}
-/* Search section styles */
 
 .search {
     text-align: center;
@@ -64,12 +43,13 @@ footer p {
 }
 
 .search-container {
-    display: inline-block;
+    max-width: 400px;
     text-align: left;
     padding: 20px;
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: auto;
 }
 
 .search-container input[type="text"],
@@ -78,22 +58,6 @@ footer p {
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
-}
-
-.search-container input[type="text"] {
-    width: 300px;
-    margin-right: 10px;
-}
-
-.search-container button {
-    background-color: #004f2e;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-}
-
-.search-container button:hover {
-    background-color: #0056b3;
 }
 
 Body {  
@@ -109,11 +73,7 @@ button {
     margin: 10px 0px;   
     border: none;   
     cursor: pointer;   
-}   
-
-form {   
-    border: 3px solid #fff;   
-}   
+}     
    
 input[type=text], input[type=password] {   
     width: 100%;   
@@ -124,24 +84,90 @@ input[type=text], input[type=password] {
     box-sizing: border-box;   
 }  
    
-button:hover {   
+button:hover, .homeButton:hover, .submitButton:hover{   
     opacity: 0.7;   
 }     
 
-.center{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.container{
     max-width: 400px;
     background: white;
     border-radius: 10px;
-    padding: 30px;
+    padding: 15px 30px 20px 30px;
     border-style: solid;  
     border-color: #000000; 
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
 }
 
 h2 {
     text-align: center;
     font-size: 42px;
+    padding: auto;
+}
+
+h3{
+    text-align: center;
+    font-size: 18px;
+    padding-bottom: 5px;
+    font-weight: 400;
+
+}
+
+h4 {
+    text-align: left;
+    font-size: 42px;
+    margin: auto;
+    padding-left: 20px;
+}
+
+h5{
+    text-align: left;
+    font-size: 22px;
+    margin: auto;
+    font-weight: 500;
+}
+
+hr {
+    margin: 10px 10px;
+    border: 1.3px solid #004f2e;
+}
+
+.homeButton {
+    background-color: white;
+    border-radius: 5px;
+    width: 60px;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    margin: 15px 20px 15px 10px;
+    float: right;
+}
+
+.subTitle{
+    text-align: left; 
+    font-size: 32px; 
+    padding: 10px 10px 10px 0;
+}
+
+
+.over {
+    text-align: left;
+    width: auto;
+    padding: 0 60px;
+    position: relative;
+    min-height: 69.7vh;
+}
+
+textarea {
+    border: lightgray 3px solid;
+    padding: 10px 10px;
+    margin: 10px 0;
+    resize: none;
+    font-size: 18px;
+    width:100%;
 }
