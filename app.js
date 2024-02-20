@@ -5,10 +5,20 @@ const LocalStrategy = require('passport-local').Strategy;
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const path = require('path');
-
+const sqlite3 = require('sqlite3'); 
 
 const app = express();
 const port = 3000;
+
+//connecting to the database
+let db = new sqlite3.Database('./public/database/UofRCourseRater.db', (err) => {
+    if (err) {
+      console.error(err.message);
+    }
+    else{
+    console.log('Connected to the CourseRater database.');}
+  });
+
 
 // Serve static files from the 'public' directory
 app.use(express.static('public', { index: 'html/index.html' }));
