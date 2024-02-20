@@ -1,10 +1,11 @@
-function SignupForm(event){
+function SignupForm(event)
+{
 
   event.preventDefault();
 
 	var emailInput = document.getElementById("email").value;
 	var pswdInput1 = document.getElementById("setpassword").value;
-  var pswdInput2 = document.getElementById("confirmpassword").value;
+	var pswdInput2 = document.getElementById("confirmpassword").value;
 	
 	var emailMsg = document.getElementById("msg_email");
 	var pswdMsg = document.getElementById("msg_p1");
@@ -19,39 +20,50 @@ function SignupForm(event){
 	var checkResult = true;
 	
 	// email
-	if(emailInput == null || emailInput == "")
+	
+	// Check if email address is empty
+	if(emailInput == null || emailInput == "") 
 	{
 		emailMsg.innerHTML = "*Email address empty.";
 		checkResult = false;
 	}
-    else if(!emailCheck.test(emailInput))
-    {
-      emailMsg.innerHTML = "*Email address wrong format. example: username@uregina.ca";
+		
+	// Check if email is correct format
+   	else if(!emailCheck.test(emailInput)) 
+  	{
+   	  	 emailMsg.innerHTML = "*Email address wrong format. example: username@uregina.ca";
+		 checkResult = false;
+  	}
+		
+	//// Check if email is correct size
+  	else if (emailInput.length > 40) 
+	{
+    	  	msg_email.innerHTML = "*Email address too long. Maximum is 60 characters.";
 		checkResult = false;
-    }
-    else if (emailInput.length > 40){
-      msg_email.innerHTML = "*Email address too long. Maximum is 60 characters.";
-		checkResult = false;
-    }
+  	}
 
     
 	// password
+
 	if(pswdInput1 == null || pswdInput1 == "")
 	{
 		pswdMsg.innerHTML = "*Password is empty.";
 		checkResult = false;
 	}
-    else if(!pswdCheck.test(pswdInput1)){
-        pswdMsg.innerHTML = "*Password must contain letters and at least one digit."
-        checkResult = false;
-    }
-    else if(pswdInput1.length != 8){
-        pswdMsg.innerHTML = "*Password must be 8 Characters."
-        checkResult = false;
-    }
-    else if(pswdInput1 != pswdInput2){
-        pswdMsg.innerHTML = "*Passwords must match"
-    }
+   	else if(!pswdCheck.test(pswdInput1))
+	{
+        	pswdMsg.innerHTML = "*Password must contain letters and at least one digit."
+        	checkResult = false;
+    	}
+    	else if(pswdInput1.length != 8)
+	{
+        	pswdMsg.innerHTML = "*Password must be 8 Characters."
+        	checkResult = false;
+    	}
+    	else if(pswdInput1 != pswdInput2)
+	{
+        	pswdMsg.innerHTML = "*Passwords must match"
+    	}
 	
 	if(checkResult == false)
 	{
@@ -60,7 +72,8 @@ function SignupForm(event){
 }
 
 
-function SignUpForm(event) {
+function SignUpForm(event) 
+{
 
     event.preventDefault();
   
@@ -95,27 +108,31 @@ function SignUpForm(event) {
   
   
     // if email is left empty or email format is wrong, add an error message to the matching cell.
-    if (email == null || email == "") {
-      textNode = document.createTextNode("Email address empty.");
-      msg_email.appendChild(textNode);
-      valid = false;
+    if (email == null || email == "") 
+    {
+      	textNode = document.createTextNode("Email address empty.");
+     	msg_email.appendChild(textNode);
+     	valid = false;
     } 
-    else if (regex_email.test(email) == false) {
-      textNode = document.createTextNode("Email address wrong format. example: username@somewhere.sth");
-      msg_email.appendChild(textNode);
-      valid = false;
+    else if (regex_email.test(email) == false) 
+    {
+     	textNode = document.createTextNode("Email address wrong format. example: username@somewhere.sth");
+    	msg_email.appendChild(textNode);
+     	valid = false;
     }
-    else if (email.length > 60) {
-      textNode = document.createTextNode("Email address too long. Maximum is 60 characters.");
-      msg_email.appendChild(textNode);
-      valid = false;
+    else if (email.length > 60) 
+    {
+      	textNode = document.createTextNode("Email address too long. Maximum is 60 characters.");
+     	msg_email.appendChild(textNode);
+     	valid = false;
     }
 
     //if username is empty or format is wrong add an error message
-    if (uname == null || uname == "") {
-      textNode = document.createTextNode("Username is empty.");
-      msg_uname.appendChild(textNode);
-      valid = false;
+    if (uname == null || uname == "") 
+    {
+      	textNode = document.createTextNode("Username is empty.");
+      	msg_uname.appendChild(textNode);
+      	valid = false;
     }
     else if (regex_uname.test(uname) == false)
     {
@@ -162,21 +179,22 @@ function SignUpForm(event) {
     //if Date of birth is empty or format is wrong add an error message
     if (dob==null||dob=="")
     {
-      textNode = document.createTextNode("Date of Birth is empty.");
-      msg_dob.appendChild(textNode);
-      valid=false;
+      	textNode = document.createTextNode("Date of Birth is empty.");
+      	msg_dob.appendChild(textNode);
+      	valid=false;
     }
     else if (regex_dob.test(dob)==false)
     {
-      textNode = document.createTextNode("Please use YYYY-MM-DD format.");
-      msg_dob.appendChild(textNode);
-      valid=false;
+      	textNode = document.createTextNode("Please use YYYY-MM-DD format.");
+      	msg_dob.appendChild(textNode);
+      	valid=false;
     }
 
 
     var feedback = document.getElementById("feedback");
     feedback.innerHTML = "";
-    if (valid == true) {
+    if (valid == true) 
+    {
       //Set green text color
       feedback.style.color = "green";
 
@@ -188,7 +206,8 @@ function SignUpForm(event) {
 
   
     }
-    else {
+    else 
+    {
       event.preventDefault(); // Normally, this is where this command should be
   
       // If the form is not valid, display an "Invalid Data Entered" message and set red text color
