@@ -1,5 +1,5 @@
 //Github demo
-//list of stuff i installed 
+//list of stuff installed 
 // npm install express-session
 // npm install passport
 // npm install passport-local
@@ -7,3 +7,4 @@
 // npm install cookie-parser  
 // npm install connect-flash
 // npm install bcryptjs     
+// npm install sqlite3
