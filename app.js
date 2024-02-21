@@ -4,20 +4,30 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
+const http = require('http');
 const path = require('path');
-const sqlite3 = require('sqlite3'); 
+const sqlite3 = require('sqlite3').verbose(); 
+var helmet = require('helmet');
+
+import { SignupForm} from "./signup.js";
 
 const app = express();
 const port = 3000;
 
 //connecting to the database
-let db = new sqlite3.Database('./public/database/UofRCourseRater.db', (err) => {
-    if (err) {
+let db = new sqlite3.Database('./public/database/UofRCourseRater', (err) => {
+    if (err) 
+    {
       console.error(err.message);
     }
-    else{
-    console.log('Connected to the CourseRater database.');}
+    else
+    {
+        console.log('Connected to the CourseRater database.');
+    }
   });
+
+
+
 
 
 // Serve static files from the 'public' directory
@@ -40,9 +50,13 @@ const adminUser = {
 
 // Passport Local Strategy for admin authentication
 passport.use('admin-local', new LocalStrategy((username, password, done) => {
-    if (username === adminUser.username && password === adminUser.password) {
+    
+    if (username === adminUser.username && password === adminUser.password) 
+    {
         return done(null, adminUser);
-    } else {
+    } 
+    else 
+    {
         return done(null, false, { message: 'Incorrect username or password' });
     }
 }));
@@ -52,19 +66,26 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-    if (id === adminUser.id) {
+    
+    if (id === adminUser.id) 
+    {
         done(null, adminUser);
-    } else {
+    } 
+    else 
+    {
         done(null, false);
     }
 });
 
 // Admin Routes
 app.get('/admin', (req, res) => {
-    if (req.isAuthenticated()) {
+    if (req.isAuthenticated()) 
+    {
         // Render admin dashboard
         res.send('Admin Dashboard');
-    } else {
+    } 
+    else 
+    {
         res.redirect('/admin/login');
     }
 });
@@ -116,6 +137,23 @@ app.get('/adminAccount', (req, res) => {
 app.get('/createReview', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','html', 'createReview.html'));
 });
+
+ // Create new user
+ app.post('/createUser', function(req,res){
+    console.log(req.body)
+    SignupForm(req.body);
+    db.serialize(()=>{
+      db.run('INSERT INTO users(uname,email,pword) VALUES(?,?,?)', [req.body.uname,req.body.email, req.body.pword], function(err) {
+        if (err) {
+          return console.log(err.message);
+        }
+        console.log("New user has been added");
+        res.sendFile(path.join(__dirname, 'public','html', 'login.html'));
+      });
+  });
+  }); 
+
+
 
 // Start server
 app.listen(port, () => {

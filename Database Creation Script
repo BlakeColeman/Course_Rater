@@ -1,5 +1,5 @@
-CREATE TABLE users(lname varchar(255),dname varchar(255),pword varchar(255),role varchar(255),PRIMARY KEY (lname));
+CREATE TABLE users(uname varchar(255),email varchar(255),pword varchar(255),role varchar(255),PRIMARY KEY (uname));
 CREATE TABLE courses(cid int,cname varchar(255),PRIMARY KEY(cid));
-CREATE TABLE teachers(tid int, tname varchar(255),lname varchar(255),PRIMARY KEY(tid),FOREIGN KE Y(lname) REFERENCES users(lname));
-CREATE TABLE teaches(cid int,tid int, tdesc varchar(255),syllabus varchar(255)PRIMARY KEY(cid,tid), FOREIGN KEY(cid) REFERENCES courses(cid),FOREIGN KEY(tid) REFERENCES teachers(tid));
-CREATE TABLE reviews(review_id int,cid int, rdesc varchar(255),crating int, rreview int, flags int,PRIMARY KEY(review_id),FOREIGN KEY(cid) REFERENCES courses(cid));
+CREATE TABLE teachers(tid int, tname varchar(255),email varchar(255),PRIMARY KEY(tid),FOREIGN KEY(email) REFERENCES users(email));
+CREATE TABLE teaches(cid int,tid int, tdesc varchar(255),syllabus varchar(255), PRIMARY KEY(cid,tid), FOREIGN KEY(cid) REFERENCES courses(cid),FOREIGN KEY(tid) REFERENCES teachers(tid));
+CREATE TABLE reviews(review_id int,cid int, rdesc varchar(255),crating int, review int, flags int,PRIMARY KEY(review_id),FOREIGN KEY(cid) REFERENCES courses(cid));
