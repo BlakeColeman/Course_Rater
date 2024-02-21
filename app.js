@@ -40,7 +40,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(session({ secret: 'secret', resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // Dummy admin user (replace with database integration)
 const adminUser = {
@@ -144,7 +145,7 @@ app.get('/createReview', (req, res) => {
     console.log(req.body)
 
     // SignupForm(req.body);
-
+      
 
     db.serialize(()=>{
       db.run('INSERT INTO users(uname,email,pword) VALUES(?,?,?)', [req.body.uname,req.body.email, req.body.pword], function(err) {
@@ -157,6 +158,29 @@ app.get('/createReview', (req, res) => {
   });
   }); 
 
+
+
+  app.post('/checkUsername', (req, res) => {
+    const { uname } = req.body;
+
+    // Check if the username already exists in the database
+    db.get('SELECT * FROM users WHERE uname = ?', [uname], function(err, row) {
+        if (err) {
+            // Handle any errors
+            console.error(err.message);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+
+        if (row) {
+            // Username already exists, send a 400 Bad Request response
+            res.status(400).send('Username already exists');
+        } else {
+            // Username doesn't exist, send a 200 OK response
+            res.status(200).send('Username available');
+        }
+    });
+});
 
 
 // Start server
