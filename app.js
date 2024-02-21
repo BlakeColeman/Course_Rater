@@ -10,6 +10,8 @@ const sqlite3 = require('sqlite3').verbose();
 var helmet = require('helmet');
 
 
+// import { SignupForm} from "./signup.js";
+
 const app = express();
 const port = 3000;
 
@@ -140,6 +142,10 @@ app.get('/createReview', (req, res) => {
  // Create new user
  app.post('/createUser', function(req,res){
     console.log(req.body)
+
+    // SignupForm(req.body);
+
+
     db.serialize(()=>{
       db.run('INSERT INTO users(uname,email,pword) VALUES(?,?,?)', [req.body.uname,req.body.email, req.body.pword], function(err) {
         if (err) {
