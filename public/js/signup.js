@@ -1,6 +1,6 @@
 //body.uname,body.email,body.pword
 
-function SignupForm(body)
+function SignupForm(event)
 {
 
   //console.log(db);
