@@ -1,1 +1,2 @@
-document.getElementById("SignUp").addEventListener("submit", SignupForm);
+//document.getElementById("SignUp").addEventListener("submit", SignupForm);
+

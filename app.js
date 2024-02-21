@@ -4,14 +4,18 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
+const http = require('http');
 const path = require('path');
-const sqlite3 = require('sqlite3'); 
+const sqlite3 = require('sqlite3').verbose(); 
+var helmet = require('helmet');
+
+import { SignupForm} from "./signup.js";
 
 const app = express();
 const port = 3000;
 
 //connecting to the database
-let db = new sqlite3.Database('./public/database/UofRCourseRater.db', (err) => {
+let db = new sqlite3.Database('./public/database/UofRCourseRater', (err) => {
     if (err) 
     {
       console.error(err.message);
@@ -21,6 +25,9 @@ let db = new sqlite3.Database('./public/database/UofRCourseRater.db', (err) => {
         console.log('Connected to the CourseRater database.');
     }
   });
+
+
+
 
 
 // Serve static files from the 'public' directory
@@ -130,6 +137,23 @@ app.get('/adminAccount', (req, res) => {
 app.get('/createReview', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','html', 'createReview.html'));
 });
+
+ // Create new user
+ app.post('/createUser', function(req,res){
+    console.log(req.body)
+    SignupForm(req.body);
+    db.serialize(()=>{
+      db.run('INSERT INTO users(uname,email,pword) VALUES(?,?,?)', [req.body.uname,req.body.email, req.body.pword], function(err) {
+        if (err) {
+          return console.log(err.message);
+        }
+        console.log("New user has been added");
+        res.sendFile(path.join(__dirname, 'public','html', 'login.html'));
+      });
+  });
+  }); 
+
+
 
 // Start server
 app.listen(port, () => {
