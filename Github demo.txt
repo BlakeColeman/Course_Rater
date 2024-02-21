@@ -9,3 +9,4 @@
 // npm install bcryptjs     
 // npm install sqlite3
 //npm install helmet 
+//sqlite> .open ../UofRCourseRater

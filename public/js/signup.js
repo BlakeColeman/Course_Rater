@@ -1,94 +1,99 @@
-//body.uname,body.email,body.pword
-
-function SignupForm(event)
-{
-
-  //console.log(db);
-  
-  event.preventDefault();
-
-	var emailInput = document.getElementById("email").value;
-	var pswdInput1 = document.getElementById("setpassword").value;
-	var pswdInput2 = document.getElementById("confirmpassword").value;
+document.getElementById("SignUp").addEventListener("submit", function(event) {
+	// Prevent the form from submitting by default
+	 
+	 // Get form inputs
+	 var uname = document.getElementById("uname").value;
+	 var email = document.getElementById("email").value;
+	 var pword = document.getElementById("spword").value;
+	 var cpword = document.getElementById("cpword").value;
+	 
+	 //Regex FORM
+	 var RegexEmail = /^[\w]+@uregina.ca$/i;
+	 var RegexPword = /^\W*\w*\W+/;
+ 
+	 // Perform validation
+	 var feedback = document.getElementById("feedback");
+	 feedback.innerText = ""; // Clear previous feedback
+	 feedback.style.color = ""; // Reset color
+	 
 	
-	var emailMsg = document.getElementById("msg_email");
-	var pswdMsg = document.getElementById("msg_p1");
-	//var pswdMsg2 = document.getElementById("pswd_S2");
-	
-	emailMsg.innerHTML = "";
-	pswdMsg.innerHTML = "";
-	
-	var emailCheck = /^[\w]+@uregina.ca$/i;
-	var pswdCheck = /^(\S*)?\d+(\S*)?$/;
-	
-	var checkResult = true;
-	
-	// email
-	
-	// Check if email address is empty
-	if(emailInput == null || emailInput == "") 
-	{
-		emailMsg.innerHTML = "*Email address empty.";
-		checkResult = false;
-	}
-		
-	// Check if email is correct format
-   	else if(!emailCheck.test(emailInput)) 
-  	{
-   	  	 emailMsg.innerHTML = "*Email address wrong format. example: username@uregina.ca";
-		 checkResult = false;
-  	}
-		
-	//// Check if email is correct size
-  	else if (emailInput.length > 40) 
-	{
-    	  	msg_email.innerHTML = "*Email address too long. Maximum is 60 characters.";
-		checkResult = false;
-  	}
-
-    
-	// password
-
-	if(pswdInput1 == null || pswdInput1 == "")
-	{
-		pswdMsg.innerHTML = "*Password is empty.";
-		checkResult = false;
-	}
-   	else if(!pswdCheck.test(pswdInput1))
-	{
-        	pswdMsg.innerHTML = "*Password must contain letters and at least one digit."
-        	checkResult = false;
-    	}
-    	else if(pswdInput1.length != 8)
-	{
-        	pswdMsg.innerHTML = "*Password must be 8 Characters."
-        	checkResult = false;
-    	}
-    	else if(pswdInput1 != pswdInput2)
-	{
-        	pswdMsg.innerHTML = "*Passwords must match"
-    	}
-	
-  var feedback = document.getElementById("feedback");
-  feedback.innerHTML = "";      
-	if(checkResult == false)
-	{
-		event.preventDefault();
-    feedback.setAttribute("style", "color: red"); // Style Method 2: manipulate HTML attribute
-    textNode = document.createTextNode("Invalid Data Entered");
-    feedback.appendChild(textNode);
-	}
-  else 
-  {
-    //Set green text color
-    feedback.style.color = "green";
-
-    textNode = document.createTextNode("Account for " + uname +" has been created");
-    feedback.appendChild(textNode);
+	 if(uname == null || uname == "") {
+		 feedback.innerHTML = "*Username is empty.";
+		 feedback.style.color = "red";
+		 event.preventDefault();
+		 return;
+	 }	else if (email.length > 40) {
+		 feedback.innerHTML = "*Username address too long. Maximum is 40 characters.";
+		 feedback.style.color = "red";
+		 event.preventDefault();
+		 return;
+	   }
+ 
+	 if(email == null || email == "") {
+		 feedback.innerHTML = "*Email address is empty.";
+		 feedback.style.color = "red";
+		 event.preventDefault();
+		 return;
+	 }	else if(!RegexEmail.test(email)) {
+		 feedback.innerHTML = "*Email address wrong format. example: username@uregina.ca";
+		 feedback.style.color = "red";
+		 event.preventDefault();
+		 return;
+	 }	else if (email.length > 40) {
+		 feedback.innerHTML = "*Email address too long. Maximum is 40 characters.";
+		 feedback.style.color = "red";
+		 event.preventDefault();
+		 return;
+	   }
+ 
+	 
+	 if (pword !== cpword) {
+	   feedback.innerText = "Passwords do not match.";
+	   feedback.style.color = "red";
+	   event.preventDefault();
+	   return;
+	 } else if (pword.length != 8){
+		 feedback.innerHTML = "*Password must be 8 Characters.";
+		 feedback.style.color = "red";
+		 event.preventDefault();
+		 return;
+	 }else if (pword == null || pword == ""){
+		 feedback.innerHTML = "*Password is empty.";
+		 feedback.style.color = "red";
+		 event.preventDefault();
+		 return;
+	 }else if(!RegexPword.test(pword)){
+			 feedback.innerHTML = "*Password is invalid. it must contain at least one non-letter character"
+			 feedback.style.color = "red";
+			 event.preventDefault();
+			 return;
+	 }
+	 
+	 
+	 //  // If all validations pass, set feedback to green
+	 //  feedback.innerHTML = "Form submitted successfully.";
+	 //  feedback.style.color = "green"; // Set color to green
+	 
+	 // // If all validations pass, submit the form
+	 // this.submit();
+ 
+	 var xhr = new XMLHttpRequest();
+	 xhr.open("POST", "/checkUsername", true);
+	 xhr.setRequestHeader("Content-Type", "application/json");
+	 xhr.onreadystatechange = function() {
+		 if (xhr.readyState === XMLHttpRequest.DONE) {
+			 if (xhr.status === 200) {
+				 // Username doesn't exist, submit the form
+				 document.getElementById("SignUp").submit();
+			 } else if (xhr.status === 400) {
+				 // Username already exists, display feedback to the user
+				 feedback.innerHTML = "Username already exists.";
+				 feedback.style.color = "red";
+			 }
+		 }
+	 };
+	 xhr.send(JSON.stringify({ uname: uname }));
+ 
+	 
+   });
    
-    //send a form reset event to clear the form
-    //document.getElementById("SignUp").reset();
-
-
-  }
-}
