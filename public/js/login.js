@@ -48,7 +48,6 @@ function ValidLogin(event)
         	checkResult = false;
     	}
 
-	//
 	if(checkResult == false)
 	{
 		event.preventDefault();
