@@ -171,3 +171,16 @@ textarea {
     font-size: 18px;
     width:100%;
 }
+
+#smallButton {
+    padding: 8px 16px; 
+    font-size: 16px; 
+    border: none;
+    background-color: #004f2e; 
+    color: #fff; 
+    border-radius: 5px; 
+    cursor: pointer;
+    width: 150px; 
+}
+
+

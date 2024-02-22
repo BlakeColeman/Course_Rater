@@ -14,7 +14,6 @@
     </header>
         <main>
             <section class="sort">
-                <h2>Sort Reviews</h2>
                 <div class="sort-options">
                     <label for="sortBy">Sort By:</label>
                     <select id="sortBy">
@@ -23,37 +22,37 @@
                         <option value="highest">Highest Rated</option>
                         <option value="lowest">Lowest Rated</option>
                     </select>
-                    <button type="button" id="applySorting">Apply Sorting</button>
+                    <button type="button" id="smallButton">Apply Sorting</button>
                 </div>
             </section>
     
-            <a href="/createReview">Write a Review</a>
+            <a href="/createReview" ><button type="button" id="smallButton">Write a Review</button></a>
 
-            <section class="course-reviews">
-                <h2>Course ABC reviews:</h2>
+            <section>
+                <h2 class="course-reviews">Course ABC reviews:</h2>
                 <div class="review-list">
-                    <article class="review">
-                        <div class="report-btn">
-                            <button class="report-button">Report</button>
-                        </div>
-                        <div class="user-info">
+                    <article>
+                        <div >
                             <img src="user1.jpg" alt="User1">
                             <h3>User1</h3>
                         </div>
-                        <div class="review-content">
+                        <div>
+                            <button type="button" id="smallButton">Report review</button>
+                        </div>
+                        <div>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                             <div class="rating">Rating: 5 stars</div>
                         </div>
                     </article>
-                    <article class="review">
-                        <div class="report-btn">
-                            <button class="report-button">Report</button>
-                        </div>
-                        <div class="user-info">
+                    <article>
+                        <div>
                             <img src="user2.jpg" alt="User2">
                             <h3>User2</h3>
                         </div>
-                        <div class="review-content">
+                        <div>
+                            <button type="button" id="smallButton">Report review</button>
+                        </div>
+                        <div>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                             <div class="rating">Rating: 4 stars</div>
                         </div>
