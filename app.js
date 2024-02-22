@@ -142,19 +142,14 @@ app.get('/createReview', (req, res) => {
 
  // Create new user
  app.post('/createUser', function(req,res){
-     
     console.log(req.body)
-     
     // SignupForm(req.body);
     db.serialize(()=>{
       db.run('INSERT INTO users(uname,email,pword) VALUES(?,?,?)', [req.body.uname,req.body.email, req.body.pword], function(err) {
-        if (err) 
-        {
+        if (err) {
           return console.log(err.message);
         }
-          
         console.log("New user has been added");
-          
         res.sendFile(path.join(__dirname, 'public','html', 'login.html'));
       });
   });
@@ -167,28 +162,45 @@ app.get('/createReview', (req, res) => {
 
     // Check if the username already exists in the database
     db.get('SELECT * FROM users WHERE uname = ?', [uname], function(err, row) {
-        if (err) 
-        {
+        if (err) {
             // Handle any errors
             console.error(err.message);
             res.status(500).send('Internal Server Error');
             return;
         }
 
-        if (row) 
-        {
+        if (row) {
             // Username already exists, send a 400 Bad Request response
             res.status(400).send('Username already exists');
-        } 
-        else 
-        {
+        } else {
             // Username doesn't exist, send a 200 OK response
             res.status(200).send('Username available');
         }
-        
     });
 });
 
+    app.post('/checkEmail',(req,res) => {
+        const { email } = req.body;
+        db.get('SELECT * FROM users WHERE uname = ?',[email], function(err, row){
+        if (err) {
+            // Hanlde any errors
+            console.error(err.message);
+            res.status(500).send('internal Server Error');
+            return;
+        }
+
+        if (row) {
+            //Email already registered, send a 400 Bad Request response
+            res.status(400).send('Email already in use'); 
+        }
+        else
+        {
+            //Email not registered, send a 200 OK response
+            res.status(200).send('Email available');
+        }
+    });
+    
+    });
 
 // Start server
 app.listen(port, () => {

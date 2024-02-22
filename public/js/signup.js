@@ -16,102 +16,161 @@ document.getElementById("SignUp").addEventListener("submit", function(event){
 	 feedback.innerText = ""; // Clear previous feedback
 	 feedback.style.color = ""; // Reset color
 	 
+	 var valid = true;
+
+	 if (validateUsername(uname,feedback) == false)
+	 {
+		valid = false;
+	 }
+	 else if (validateEmail(email,RegexEmail,feedback) == false)
+	 {
+		valid = false;
+	 }
+	 else if (validatePassword(pword,cpword,RegexPword,feedback) == false)
+	 {
+		valid = false;
+	 }
+
+	 if (valid == true)
+	 {
+		//If all validations pass, set feedback to green
+		feedback.innerHTML = "Form submitted successfully.";
+		feedback.style.color = "green";
 	
-	 if(uname == null || uname == "") 
+		// If all validations pass, submit the form
+		document.getElementById("SignUp").submit();
+	 }
+	 else 
 	 {
-		 feedback.innerHTML = "*Username is empty.";
-		 feedback.style.color = "red";
-		 event.preventDefault();
-		 return;
-	 }	
-	 else if (email.length > 40) 
-	 {
-		 feedback.innerHTML = "*Username address too long. Maximum is 40 characters.";
-		 feedback.style.color = "red";
-		 event.preventDefault();
-		 return;
-	   }
- 
-	 if(email == null || email == "") 
-	 {
-		 feedback.innerHTML = "*Email address is empty.";
-		 feedback.style.color = "red";
-		 event.preventDefault();
-		 return;
-	 }	
-	 else if(!RegexEmail.test(email)) 
-	 {
-		 feedback.innerHTML = "*Email address wrong format. example: username@uregina.ca";
-		 feedback.style.color = "red";
-		 event.preventDefault();
-		 return;
-	 }	
-	 else if (email.length > 40) 
-	 {
-		 feedback.innerHTML = "*Email address too long. Maximum is 40 characters.";
-		 feedback.style.color = "red";
-		 event.preventDefault();
-		 return;
-	  }
- 
-	 
-	 if (pword !== cpword) 
-	 {
-	   feedback.innerText = "Passwords do not match.";
-	   feedback.style.color = "red";
-	   event.preventDefault();
-	   return;
+		event.preventDefault();
 	 } 
-	 else if (pword.length != 8)
-	 {
-		 feedback.innerHTML = "*Password must be 8 Characters.";
-		 feedback.style.color = "red";
-		 event.preventDefault();
-		 return;
-	 }else if (pword == null || pword == "")
-	 {
-		 feedback.innerHTML = "*Password is empty.";
-		 feedback.style.color = "red";
-		 event.preventDefault();
-		 return;
-	 }
-	 else if(!RegexPword.test(pword))
-	 {
-			 feedback.innerHTML = "*Password is invalid. it must contain at least one non-letter character"
-			 feedback.style.color = "red";
-			 event.preventDefault();
-			 return;
-	 }
-	 
-	 
-	 //  // If all validations pass, set feedback to green
-	 //  feedback.innerHTML = "Form submitted successfully.";
-	 //  feedback.style.color = "green"; // Set color to green
-	 
-	 // // If all validations pass, submit the form
-	 // this.submit();
- 
-	 var xhr = new XMLHttpRequest();
-	 xhr.open("POST", "/checkUsername", true);
-	 xhr.setRequestHeader("Content-Type", "application/json");
-	 xhr.onreadystatechange = function() {
-		 if (xhr.readyState === XMLHttpRequest.DONE) 
-		 {
-			 if (xhr.status === 200) 
-			 {
-				 // Username doesn't exist, submit the form
-				 document.getElementById("SignUp").submit();
-			 } 
-			 else if (xhr.status === 400) 
-			 {
-				 // Username already exists, display feedback to the user
-				 feedback.innerHTML = "Username already exists.";
-				 feedback.style.color = "red";
-			 }
-		 }
-	 };
-	 xhr.send(JSON.stringify({ uname: uname }));
- 
-	 
-   });
+});
+
    
+function validateUsername(uname,feedback)
+{
+	if(uname == null || uname == "") 
+	{
+		feedback.innerHTML += "\n*Username is empty.";
+		feedback.style.color = "red";
+		return false;
+	}
+	
+	var UniqueUname = checkUsername(uname);
+	
+	if (UniqueUname == false)
+	{
+	   feedback.innerHTML += "\n*Username already in use";
+	   feedback.style.color = "red";
+	   return false;
+	}
+	return true;
+};
+
+function validateEmail(email,RegexEmail,feedback)
+{
+	if(email == null || email == "") 
+	{
+		feedback.innerHTML += "\n*Email address is empty.";
+		feedback.style.color = "red";
+		return false;
+	}	
+	else if(!RegexEmail.test(email)) 
+	{
+		feedback.innerHTML += "\n*Email address wrong format. example: username@uregina.ca";
+		feedback.style.color = "red";
+		return false;
+	}	
+	else if (email.length > 40) 
+	{
+		feedback.innerHTML += "\n*Email address too long. Maximum is 40 characters.";
+		feedback.style.color = "red";
+		return false;
+	}
+
+	var UniqueEmail = checkEmail(email);
+
+	if(UniqueEmail == false)
+	{
+		feedback.innerHTML += "\n*Email address already in use"
+		feddback.style.color = "red";
+		return false;
+	}
+	return true
+};
+
+function validatePassword(pword,cpword,RegexPword,feedback)
+{
+	if (pword == null || pword == "")
+	{
+		feedback.innerHTML += "\n*Password is empty.";
+		feedback.style.color = "red";
+		return false;
+	}
+	else if (pword.length != 8)
+	{
+		feedback.innerHTML += "\n*Password must be 8 Characters.";
+		feedback.style.color = "red";
+		return false;
+	}
+	else if(!RegexPword.test(pword))
+	{
+		feedback.innerHTML += "\n*Password is invalid. it must contain at least one special character"
+		feedback.style.color = "red";
+		return false;
+	}
+	else if (pword !== cpword) 
+	{
+	   feedback.innerText += "\n*Passwords do not match.";
+	   feedback.style.color = "red";
+	   return false;
+	}
+	return true;
+};
+
+function checkUsername(uname)
+{
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "/checkUsername", true);
+	xhr.setRequestHeader("Content-Type", "application/json");
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === XMLHttpRequest.DONE) 
+		{
+			if (xhr.status === 200) 
+			{
+				return true;
+				// Username doesn't exist, submit the form
+				//document.getElementById("SignUp").submit();
+			} 
+			else if (xhr.status === 400) 
+			{
+				return false;
+			}
+		}
+	};
+
+	//xhr.send(JSON.stringify({ uname: uname }));
+};
+
+function checkEmail(email)
+{
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "/checkEmail", true);
+	xhr.setRequestHeader("Content-Type", "application/json");
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === XMLHttpRequest.DONE) 
+		{
+			if (xhr.status === 200) 
+			{
+				return true;
+				// Username doesn't exist, submit the form
+				//document.getElementById("SignUp").submit();
+			} 
+			else if (xhr.status === 400) 
+			{
+				return false;
+			}
+		}
+	};
+	xhr.send(JSON.stringify({ email: email }));
+};
