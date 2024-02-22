@@ -1,31 +1,38 @@
 <!-- reviewpage.html -->
 <!DOCTYPE html>
 <html lang="en">
+    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>U of R Course Rating</title>
     <link rel="stylesheet" href="../css/styles.css">
 </head>
+    
 <body>
     <header>
         <a href="/studentAccount" class="homeButton">Account</a>
         <h4 class="title">Course Reviews</h4>
     </header>
+    
         <main>
             <div class="over">
                 <h2 class="course-reviews">Course ABC reviews:</h2>
                 <a href="/createReview" ><button type="button" id="smallButton">Write a Review</button></a>
+                
                 <section class="sort">
                     <div class="sort-options">
                         <label for="sortBy">Sort By:</label>
+                        
                         <select id="sortBy">
                             <option value="latest">Latest Reviews</option>
                             <option value="oldest">Oldest Reviews</option>
                             <option value="highest">Highest Rated</option>
                             <option value="lowest">Lowest Rated</option>
                         </select>
+        
                         <button type="button" id="smallButton">Apply Sorting</button>
+                        
                     </div>
                 </section>
     
@@ -45,6 +52,7 @@
                                 <div class="rating">Rating: 5 stars</div>
                             </div>
                         </article>
+                        
                         <article>
                             <div>
                                 <img src="user2.jpg" alt="User2">
@@ -58,8 +66,10 @@
                                 <div class="rating">Rating: 4 stars</div>
                             </div>
                         </article>
+                        
                     </div>
                 </section>
+                
             </div>
         </main>
 
