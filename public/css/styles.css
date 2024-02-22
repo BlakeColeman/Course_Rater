@@ -183,4 +183,6 @@ textarea {
     width: 150px; 
 }
 
-
+fieldset{
+    border: 0;
+}
