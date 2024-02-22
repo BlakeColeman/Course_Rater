@@ -1,4 +1,4 @@
-document.getElementById("SignUp").addEventListener("submit", function(event) {
+document.getElementById("SignUp").addEventListener("submit", function(event){
 	// Prevent the form from submitting by default
 	 
 	 // Get form inputs
@@ -17,52 +17,66 @@ document.getElementById("SignUp").addEventListener("submit", function(event) {
 	 feedback.style.color = ""; // Reset color
 	 
 	
-	 if(uname == null || uname == "") {
+	 if(uname == null || uname == "") 
+	 {
 		 feedback.innerHTML = "*Username is empty.";
 		 feedback.style.color = "red";
 		 event.preventDefault();
 		 return;
-	 }	else if (email.length > 40) {
+	 }	
+	 else if (email.length > 40) 
+	 {
 		 feedback.innerHTML = "*Username address too long. Maximum is 40 characters.";
 		 feedback.style.color = "red";
 		 event.preventDefault();
 		 return;
 	   }
  
-	 if(email == null || email == "") {
+	 if(email == null || email == "") 
+	 {
 		 feedback.innerHTML = "*Email address is empty.";
 		 feedback.style.color = "red";
 		 event.preventDefault();
 		 return;
-	 }	else if(!RegexEmail.test(email)) {
+	 }	
+	 else if(!RegexEmail.test(email)) 
+	 {
 		 feedback.innerHTML = "*Email address wrong format. example: username@uregina.ca";
 		 feedback.style.color = "red";
 		 event.preventDefault();
 		 return;
-	 }	else if (email.length > 40) {
+	 }	
+	 else if (email.length > 40) 
+	 {
 		 feedback.innerHTML = "*Email address too long. Maximum is 40 characters.";
 		 feedback.style.color = "red";
 		 event.preventDefault();
 		 return;
-	   }
+	  }
  
 	 
-	 if (pword !== cpword) {
+	 if (pword !== cpword) 
+	 {
 	   feedback.innerText = "Passwords do not match.";
 	   feedback.style.color = "red";
 	   event.preventDefault();
 	   return;
-	 } else if (pword.length != 8){
+	 } 
+	 else if (pword.length != 8)
+	 {
 		 feedback.innerHTML = "*Password must be 8 Characters.";
 		 feedback.style.color = "red";
 		 event.preventDefault();
 		 return;
-	 }else if (pword == null || pword == ""){
+	 }else if (pword == null || pword == "")
+	 {
 		 feedback.innerHTML = "*Password is empty.";
 		 feedback.style.color = "red";
 		 event.preventDefault();
 		 return;
-	 }else if(!RegexPword.test(pword)){
+	 }
+	 else if(!RegexPword.test(pword))
+	 {
 			 feedback.innerHTML = "*Password is invalid. it must contain at least one non-letter character"
 			 feedback.style.color = "red";
 			 event.preventDefault();
@@ -81,11 +95,15 @@ document.getElementById("SignUp").addEventListener("submit", function(event) {
 	 xhr.open("POST", "/checkUsername", true);
 	 xhr.setRequestHeader("Content-Type", "application/json");
 	 xhr.onreadystatechange = function() {
-		 if (xhr.readyState === XMLHttpRequest.DONE) {
-			 if (xhr.status === 200) {
+		 if (xhr.readyState === XMLHttpRequest.DONE) 
+		 {
+			 if (xhr.status === 200) 
+			 {
 				 // Username doesn't exist, submit the form
 				 document.getElementById("SignUp").submit();
-			 } else if (xhr.status === 400) {
+			 } 
+			 else if (xhr.status === 400) 
+			 {
 				 // Username already exists, display feedback to the user
 				 feedback.innerHTML = "Username already exists.";
 				 feedback.style.color = "red";
