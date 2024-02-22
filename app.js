@@ -179,6 +179,28 @@ app.get('/createReview', (req, res) => {
     });
 });
 
+    app.post('/checkEmail',(req,res) => {
+        const { email } = req.body;
+        db.get('SELECT * FROM users WHERE uname = ?',[email], function(err, row){
+        if (err) {
+            // Hanlde any errors
+            console.error(err.message);
+            res.status(500).send('internal Server Error');
+            return;
+        }
+
+        if (row) {
+            //Email already registered, send a 400 Bad Request response
+            res.status(400).send('Email already in use'); 
+        }
+        else
+        {
+            //Email not registered, send a 200 OK response
+            res.status(200).send('Email available');
+        }
+    });
+    
+    });
 
 // Start server
 app.listen(port, () => {

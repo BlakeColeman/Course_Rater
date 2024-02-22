@@ -172,17 +172,37 @@ textarea {
     width:100%;
 }
 
-#smallButton {
-    padding: 8px 16px; 
-    font-size: 16px; 
+#createButton {
+    padding: 10px 15px; 
+    font-size: 18px; 
+    font-weight: 700;
     border: none;
     background-color: #004f2e; 
     color: #fff; 
     border-radius: 5px; 
     cursor: pointer;
+    width: 170px; 
+    float: right;
+}
+
+#reportButton {
+    padding: 8px 16px; 
+    font-size: 14px; 
+    font-weight: 400;
+    border: none;
+    background-color: #dc2a1a; 
+    color: #fff; 
+    border-radius: 5px; 
+    cursor: pointer;
     width: 150px; 
+    float: right;
 }
 
 fieldset{
     border: 0;
+}
+
+article{
+    border: 2px solid black;
+    padding: 15px;
 }
