@@ -148,6 +148,21 @@ hr {
     float: right;
 }
 
+.submitButton{
+    background-color: #004f2e;
+    width: 100%;
+    color: #fff;
+    padding-top: 15px;
+    padding-bottom: 0;
+    margin: 10px 0px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.2;
+    border-radius: 5px;
+}
+
 .subTitle{
     text-align: left; 
     font-size: 32px; 
