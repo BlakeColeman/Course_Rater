@@ -5,7 +5,7 @@ function ValidLogin(event)
 	
 	var emailMsg = document.getElementById("email_S");
 	var pswdMsg = document.getElementById("pswd_S");
-	
+
 	emailMsg.innerHTML = "";
 	pswdMsg.innerHTML = "";
 	
