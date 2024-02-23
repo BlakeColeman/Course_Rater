@@ -1,0 +1,52 @@
+<!-- reviewpage.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>U of R Course Rating</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <header>
+        <a href="/studentAccount" class="homeButton">Account</a>
+        <a href="/index2" class="homeButton">Home</a>
+        <h4 class="title">Course Reviews</h4>
+    </header>
+        <main>
+            <div class="over">
+                <h2 class="course-reviews">Course ABC reviews:</h2>
+                <a href="/createReview" ><button type="button" id="createButton">Write a Review</button></a>
+                <br>
+                <section class="sort">
+                    <div class="sort-options">
+                        <label for="sortBy">Sort By:</label>
+                        <select id="sortBy">
+                            <option value="latest">Latest Reviews</option>
+                            <option value="oldest">Oldest Reviews</option>
+                            <option value="highest">Highest Rated</option>
+                            <option value="lowest">Lowest Rated</option>
+                        </select>
+                    </div>
+                    <br>
+                </section>
+    
+                <section>
+                    <div class="review-list">
+                        <article>
+                          
+                        </article>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <div class="footer">
+            <p>&copy; 2024 U of R Course Rating. All rights reserved.</p>
+        </div>
+
+        <script src="../js/header.js"></script>
+        <script src="../js/index.js"></script>
+</body>
+</html>
+
