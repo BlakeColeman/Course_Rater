@@ -46,7 +46,7 @@ document.getElementById("SignUp").addEventListener("submit", function(event){
 	 } 
 });
 
-   
+
 function validateUsername(uname,feedback)
 {
 	if(uname == null || uname == "") 
@@ -56,14 +56,13 @@ function validateUsername(uname,feedback)
 		return false;
 	}
 	
-	var UniqueUname = checkUsername(uname);
-	
-	if (UniqueUname == false)
-	{
-	   feedback.innerHTML += "\n*Username already in use";
-	   feedback.style.color = "red";
-	   return false;
-	}
+	checkUsername(uname, function (exists) {
+        if (exists) {
+            feedback.innerHTML += "\n*Username already in use";
+            feedback.style.color = "red";
+        }
+    });
+
 	return true;
 };
 
@@ -88,14 +87,13 @@ function validateEmail(email,RegexEmail,feedback)
 		return false;
 	}
 
-	var UniqueEmail = checkEmail(email);
+	checkEmail(email, function (exists) {
+        if (exists) {
+            feedback.innerHTML += "\n*Email address already in use";
+            feedback.style.color = "red";
+        }
+    });
 
-	if(UniqueEmail == false)
-	{
-		feedback.innerHTML += "\n*Email address already in use"
-		feddback.style.color = "red";
-		return false;
-	}
 	return true
 };
 
@@ -128,7 +126,7 @@ function validatePassword(pword,cpword,RegexPword,feedback)
 	return true;
 };
 
-function checkUsername(uname)
+function checkUsername(uname,callback)
 {
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", "/checkUsername", true);
@@ -138,21 +136,21 @@ function checkUsername(uname)
 		{
 			if (xhr.status === 200) 
 			{
-				return true;
+				callback(true);
 				// Username doesn't exist, submit the form
 				//document.getElementById("SignUp").submit();
 			} 
 			else if (xhr.status === 400) 
 			{
-				return false;
+				callback( false);
 			}
 		}
 	};
 
-	//xhr.send(JSON.stringify({ uname: uname }));
+	xhr.send(JSON.stringify({ uname: uname }));
 };
 
-function checkEmail(email)
+function checkEmail(email,callback)
 {
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", "/checkEmail", true);
@@ -162,13 +160,13 @@ function checkEmail(email)
 		{
 			if (xhr.status === 200) 
 			{
-				return true;
+				callback(true);
 				// Username doesn't exist, submit the form
 				//document.getElementById("SignUp").submit();
 			} 
 			else if (xhr.status === 400) 
 			{
-				return false;
+				callback(false);
 			}
 		}
 	};
