@@ -1,7 +1,7 @@
 // Admin Routes
-const express = require('express')
+const express = require('express');
 
-const router = express.Router()
+const router = express.Router();
 
 router.get('/admin', (req, res) => {
     if (req.isAuthenticated()) 
