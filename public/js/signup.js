@@ -77,7 +77,7 @@ function validateEmail(email,RegexEmail,feedback)
 	}	
 	else if(!RegexEmail.test(email)) 
 	{
-		feedback.innerHTML += "\n*Email address wrong format. example: username@uregina.ca";
+		feedback.innerHTML += "\n*Email address is in the wrong format. Example: 'username@uregina.ca'";
 		feedback.style.color = "red";
 		return false;
 	}	

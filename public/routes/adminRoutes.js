@@ -1,6 +1,6 @@
 // Admin Routes
 const express = require('express');
-
+var passport = require('passport');
 const router = express.Router();
 
 router.get('/admin', (req, res) => {

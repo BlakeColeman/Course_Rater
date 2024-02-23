@@ -8,7 +8,7 @@ const http = require('http');
 const path = require('path');
 const sqlite3 = require('sqlite3').verbose(); 
 var helmet = require('helmet');
-const adminRoutes = require('./routes/adminRoutes');
+const adminRoutes = require('./public/routes/adminRoutes');
 
 
 // import { SignupForm} from "./signup.js";
