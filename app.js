@@ -9,7 +9,8 @@ const path = require('path');
 const sqlite3 = require('sqlite3').verbose(); 
 var helmet = require('helmet');
 const adminRoutes = require('./public/routes/adminRoutes');
-
+const LoginRoutes = require('./public/routes/LoginRoutes');
+const SignupRoutes = require('./public/routes/SignUpRoutes');
 
 // import { SignupForm} from "./signup.js";
 
@@ -44,41 +45,6 @@ app.use(passport.session());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Dummy admin user (replace with database integration)
-const adminUser = {
-    id: 1,
-    username: 'admin',
-    password: 'adminpassword'
-};
-
-// Passport Local Strategy for admin authentication
-passport.use('admin-local', new LocalStrategy((username, password, done) => {
-    
-    if (username === adminUser.username && password === adminUser.password) 
-    {
-        return done(null, adminUser);
-    } 
-    else 
-    {
-        return done(null, false, { message: 'Incorrect username or password' });
-    }
-}));
-
-passport.serializeUser((user, done) => {
-    done(null, user.id);
-});
-
-passport.deserializeUser((id, done) => {
-    
-    if (id === adminUser.id) 
-    {
-        done(null, adminUser);
-    } 
-    else 
-    {
-        done(null, false);
-    }
-});
 
 // Admin Routes
 app.use(adminRoutes);
@@ -101,10 +67,6 @@ app.get('/index2', (req, res) => {
 
 app.get('/studentAccount', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','html', 'studentAccount.html'));
-});
-
-app.get('/adminAccount', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public','html', 'adminAccount.html'));
 });
 
 app.get('/createReview', (req, res) => {
