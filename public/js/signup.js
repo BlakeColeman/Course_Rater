@@ -56,10 +56,13 @@ function validateUsername(uname,feedback)
 		return false;
 	}
 	
-	checkUsername(uname, function (exists) {
-        if (exists) {
+	checkUsername(uname, function (exists) 
+	{
+        if (exists) 
+		{
             feedback.innerHTML += "\n*Username already in use";
             feedback.style.color = "red";
+			return false;
         }
     });
 
@@ -87,10 +90,13 @@ function validateEmail(email,RegexEmail,feedback)
 		return false;
 	}
 
-	checkEmail(email, function (exists) {
-        if (exists) {
+	checkEmail(email, function (exists) 
+	{
+        if (exists) 
+		{
             feedback.innerHTML += "\n*Email address already in use";
             feedback.style.color = "red";
+			return false;
         }
     });
 
@@ -137,8 +143,6 @@ function checkUsername(uname,callback)
 			if (xhr.status === 200) 
 			{
 				callback(true);
-				// Username doesn't exist, submit the form
-				//document.getElementById("SignUp").submit();
 			} 
 			else if (xhr.status === 400) 
 			{
@@ -146,7 +150,6 @@ function checkUsername(uname,callback)
 			}
 		}
 	};
-
 	xhr.send(JSON.stringify({ uname: uname }));
 };
 
@@ -161,8 +164,6 @@ function checkEmail(email,callback)
 			if (xhr.status === 200) 
 			{
 				callback(true);
-				// Username doesn't exist, submit the form
-				//document.getElementById("SignUp").submit();
 			} 
 			else if (xhr.status === 400) 
 			{
