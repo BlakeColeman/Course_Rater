@@ -8,6 +8,7 @@ const http = require('http');
 const path = require('path');
 const sqlite3 = require('sqlite3').verbose(); 
 var helmet = require('helmet');
+const adminRoutes = require('./routes/adminRoutes');
 
 
 // import { SignupForm} from "./signup.js";
@@ -80,37 +81,7 @@ passport.deserializeUser((id, done) => {
 });
 
 // Admin Routes
-app.get('/admin', (req, res) => {
-    if (req.isAuthenticated()) 
-    {
-        // Render admin dashboard
-        res.send('Admin Dashboard');
-    } 
-    else 
-    {
-        res.redirect('/admin/login');
-    }
-});
-
-app.get('/admin/login', (req, res) => {
-    // res.send('Admin Login Page');
-    // Render admin login HTML file
-        res.sendFile(path.join(__dirname, 'public','html', 'admin', 'login.html'));
-
-});
-
-
-app.post('/admin/login', passport.authenticate('admin-local', {
-    successRedirect: '/admin',
-    failureRedirect: '/admin/login',
-    failureFlash: true
-}));
-
-app.get('/admin/logout', (req, res) => {
-    req.logout();
-    res.redirect('/admin/login');
-});
-
+app.use(adminRoutes);
 
 app.get('/index', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','html', 'index.html'));
@@ -200,7 +171,7 @@ app.get('/createReview', (req, res) => {
         }
     });
     
-    });
+});
 
 // Start server
 app.listen(port, () => {
