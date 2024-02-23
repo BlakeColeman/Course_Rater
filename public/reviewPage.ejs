@@ -1,5 +1,4 @@
 <!-- reviewpage.ejs -->
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -34,7 +33,17 @@
                 <section>
                     <div class="review-list">
                         <article>
-                          
+                            <% if (reviws.length > 0) { %>
+                                <% reviews.forEach(review => { %>
+                                    <a class="single" href="/reviews/" <%= review._id %>">
+                                        <p class="content"><%= review.content %></p>
+                                        <p class="structure"><%= review.structure %></p>
+                                        <p class="additional"><%= review.additional %></p>
+                                    </a>
+                              <%  }) %>
+                            <% } else { %>
+                                <p> There are no reviews to display...</p>
+                            <% } %>
                         </article>
                     </div>
                 </section>
