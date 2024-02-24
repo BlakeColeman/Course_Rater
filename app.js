@@ -79,7 +79,8 @@ app.get('/createReview', (req, res) => {
     // SignupForm(req.body);
     db.serialize(()=>{
       db.run('INSERT INTO users(uname,email,pword) VALUES(?,?,?)', [req.body.uname,req.body.email, req.body.pword], function(err) {
-        if (err) {
+        if (err) 
+        {
           return console.log(err.message);
         }
         console.log("New user has been added");
@@ -88,7 +89,25 @@ app.get('/createReview', (req, res) => {
   });
   }); 
 
-
+  app.post('/createReviews',(req,res) =>
+  {
+    var {uname} = req.body.uname;
+    var {cname} = req.body.cname;
+    var {cid} = req.body.cid;
+    var {rdesc} = req.body.rdesc;
+    var {crating} = req.body.crating;
+    var {flags} = req.body.flags;
+    var sql = 'INSERT INTO reviews (cname, cid, rdesc, crating, flags,uname) Values(?,?,?,?,?,?)';
+    db.serialize(()=>{
+        db.run(sql,[uname,cname,cid,rdesc,crating,flags], function(err)
+    {
+        if (err) 
+        {
+            return console.log(err.message);
+        }
+        })
+    })
+});
 
   app.post('/checkUsername', (req, res) => 
   {
