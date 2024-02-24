@@ -5,7 +5,7 @@ function ValidLogin(event)
 	
 	var emailMsg = document.getElementById("email_S");
 	var pswdMsg = document.getElementById("pswd_S");
-	
+
 	emailMsg.innerHTML = "";
 	pswdMsg.innerHTML = "";
 	
@@ -22,12 +22,12 @@ function ValidLogin(event)
 	}
     	else if(!emailCheck.test(emailInput))
    	 {
-        	emailMsg.innerHTML = "*Email address wrong format. example: username@uregina.ca";
+        	emailMsg.innerHTML = "*Email address wrong format. Example: username@uregina.ca";
 		checkResult = false;
    	 }
-   	 else if (emailInput.length > 40)
+   	 else if (emailInput.length > 18)
 	 {
-       		emailMsg.innerHTML = "*Email address too long. Maximum is 60 characters.";
+       		emailMsg.innerHTML = "*Email address too long. Maximum is 18 characters.";
 		checkResult = false;
    	 }
     
@@ -48,7 +48,6 @@ function ValidLogin(event)
         	checkResult = false;
     	}
 
-	//
 	if(checkResult == false)
 	{
 		event.preventDefault();

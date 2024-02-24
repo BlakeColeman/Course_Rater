@@ -8,8 +8,11 @@ const http = require('http');
 const path = require('path');
 const sqlite3 = require('sqlite3').verbose(); 
 var helmet = require('helmet');
+const adminRoutes = require('./public/routes/adminRoutes');
+const LoginRoutes = require('./public/routes/LoginRoutes');
+const SignupRoutes = require('./public/routes/SignUpRoutes');
 
-import { SignupForm} from "./signup.js";
+// import { SignupForm} from "./signup.js";
 
 const app = express();
 const port = 3000;
@@ -39,76 +42,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(session({ secret: 'secret', resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-
-// Dummy admin user (replace with database integration)
-const adminUser = {
-    id: 1,
-    username: 'admin',
-    password: 'adminpassword'
-};
-
-// Passport Local Strategy for admin authentication
-passport.use('admin-local', new LocalStrategy((username, password, done) => {
-    
-    if (username === adminUser.username && password === adminUser.password) 
-    {
-        return done(null, adminUser);
-    } 
-    else 
-    {
-        return done(null, false, { message: 'Incorrect username or password' });
-    }
-}));
-
-passport.serializeUser((user, done) => {
-    done(null, user.id);
-});
-
-passport.deserializeUser((id, done) => {
-    
-    if (id === adminUser.id) 
-    {
-        done(null, adminUser);
-    } 
-    else 
-    {
-        done(null, false);
-    }
-});
 
 // Admin Routes
-app.get('/admin', (req, res) => {
-    if (req.isAuthenticated()) 
-    {
-        // Render admin dashboard
-        res.send('Admin Dashboard');
-    } 
-    else 
-    {
-        res.redirect('/admin/login');
-    }
-});
-
-app.get('/admin/login', (req, res) => {
-    // res.send('Admin Login Page');
-    // Render admin login HTML file
-        res.sendFile(path.join(__dirname, 'public','html', 'admin', 'login.html'));
-
-});
-
-
-app.post('/admin/login', passport.authenticate('admin-local', {
-    successRedirect: '/admin',
-    failureRedirect: '/admin/login',
-    failureFlash: true
-}));
-
-app.get('/admin/logout', (req, res) => {
-    req.logout();
-    res.redirect('/admin/login');
-});
-
+app.use(adminRoutes);
 
 app.get('/index', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','html', 'index.html'));
@@ -130,10 +69,6 @@ app.get('/studentAccount', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','html', 'studentAccount.html'));
 });
 
-app.get('/adminAccount', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public','html', 'adminAccount.html'));
-});
-
 app.get('/createReview', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','html', 'createReview.html'));
 });
@@ -141,7 +76,7 @@ app.get('/createReview', (req, res) => {
  // Create new user
  app.post('/createUser', function(req,res){
     console.log(req.body)
-    SignupForm(req.body);
+    // SignupForm(req.body);
     db.serialize(()=>{
       db.run('INSERT INTO users(uname,email,pword) VALUES(?,?,?)', [req.body.uname,req.body.email, req.body.pword], function(err) {
         if (err) {
@@ -154,6 +89,60 @@ app.get('/createReview', (req, res) => {
   }); 
 
 
+
+  app.post('/checkUsername', (req, res) => 
+  {
+    const {uname} = req.body;
+    console.log("Checking uname:",uname,"for availability");
+    var sql = 'SELECT * FROM users WHERE uname = ?';
+    // Check if the username already exists in the database
+    db.all(sql, [uname], (err, rows)=> 
+    {
+        if (err) {
+            // Handle any errors
+            console.error(err.message);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        if (rows.length!=0) {
+            // Username already exists, send a 400 Bad Request response
+            res.status(400).send('Username already exists');
+            return;
+        } else {
+            // Username doesn't exist, send a 200 OK response
+            res.status(200).send('Username available');
+            return;
+        }
+    });
+});
+
+    app.post('/checkEmail',(req,res) => 
+    {
+        const {email} = req.body;
+        console.log("checking Email",email,"for availability");
+        var sql ='SELECT * FROM users WHERE email = ?';
+        db.all(sql,[email],(err, rows) =>
+        {
+            if (err) 
+            {
+                // Handle any errors
+                console.error(err.message);
+                res.status(500).send('internal Server Error');
+                return;
+            }
+            if (rows.length != 0) 
+            {
+                //Email already registered, send a 400 Bad Request response
+                res.status(400).send('Email already in use');
+            }
+            else
+            {
+                //Email not registered, send a 200 OK response
+                res.status(200).send('Email available');
+            }
+        })
+    
+    });
 
 // Start server
 app.listen(port, () => {

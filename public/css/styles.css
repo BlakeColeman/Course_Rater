@@ -148,6 +148,21 @@ hr {
     float: right;
 }
 
+.submitButton{
+    background-color: #004f2e;
+    width: 100%;
+    color: #fff;
+    padding-top: 15px;
+    padding-bottom: 0;
+    margin: 10px 0px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.2;
+    border-radius: 5px;
+}
+
 .subTitle{
     text-align: left; 
     font-size: 32px; 
@@ -170,4 +185,39 @@ textarea {
     resize: none;
     font-size: 18px;
     width:100%;
+}
+
+#createButton {
+    padding: 10px 15px; 
+    font-size: 18px; 
+    font-weight: 700;
+    border: none;
+    background-color: #004f2e; 
+    color: #fff; 
+    border-radius: 5px; 
+    cursor: pointer;
+    width: 170px; 
+    float: right;
+}
+
+#reportButton {
+    padding: 8px 16px; 
+    font-size: 14px; 
+    font-weight: 400;
+    border: none;
+    background-color: #dc2a1a; 
+    color: #fff; 
+    border-radius: 5px; 
+    cursor: pointer;
+    width: 150px; 
+    float: right;
+}
+
+fieldset{
+    border: 0;
+}
+
+article{
+    border: 2px solid black;
+    padding: 15px;
 }

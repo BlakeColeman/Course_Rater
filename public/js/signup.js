@@ -1,94 +1,184 @@
-//body.uname,body.email,body.pword
+document.getElementById("SignUp").addEventListener("submit", function(event){
+	// Prevent the form from submitting by default
+	// testXhr();
+	 // Get form inputs
+	 var uname = document.getElementById("uname").value;
+	 var email = document.getElementById("email").value;
+	 var pword = document.getElementById("spword").value;
+	 var cpword = document.getElementById("cpword").value;
+	 
+	 //Regex FORM
+	 var RegexEmail = /^[\w]+@uregina.ca$/i;
+	 var RegexPword = /^\W*\w*\W+/;
+ 
+	 // Perform validation
+	 var feedback = document.getElementById("feedback");
+	 feedback.innerText = ""; // Clear previous feedback
+	 feedback.style.color = ""; // Reset color
+	 
+	 var valid = true;
 
-function SignupForm(body)
-{
+	 if (validateUsername(uname,feedback) == false)
+	 {
+		valid = false;
+	 }
+	 else if (validateEmail(email,RegexEmail,feedback) == false)
+	 {
+		valid = false;
+	 }
+	 else if (validatePassword(pword,cpword,RegexPword,feedback) == false)
+	 {
+		valid = false;
+	 }
 
-  //console.log(db);
-  
-  event.preventDefault();
-
-	var emailInput = document.getElementById("email").value;
-	var pswdInput1 = document.getElementById("setpassword").value;
-	var pswdInput2 = document.getElementById("confirmpassword").value;
+	 if (valid == true)
+	 {
+		//If all validations pass, set feedback to green
+		feedback.innerHTML = "Form submitted successfully.";
+		feedback.style.color = "green";
 	
-	var emailMsg = document.getElementById("msg_email");
-	var pswdMsg = document.getElementById("msg_p1");
-	//var pswdMsg2 = document.getElementById("pswd_S2");
-	
-	emailMsg.innerHTML = "";
-	pswdMsg.innerHTML = "";
-	
-	var emailCheck = /^[\w]+@uregina.ca$/i;
-	var pswdCheck = /^(\S*)?\d+(\S*)?$/;
-	
-	var checkResult = true;
-	
-	// email
-	
-	// Check if email address is empty
-	if(emailInput == null || emailInput == "") 
-	{
-		emailMsg.innerHTML = "*Email address empty.";
-		checkResult = false;
-	}
-		
-	// Check if email is correct format
-   	else if(!emailCheck.test(emailInput)) 
-  	{
-   	  	 emailMsg.innerHTML = "*Email address wrong format. example: username@uregina.ca";
-		 checkResult = false;
-  	}
-		
-	//// Check if email is correct size
-  	else if (emailInput.length > 40) 
-	{
-    	  	msg_email.innerHTML = "*Email address too long. Maximum is 60 characters.";
-		checkResult = false;
-  	}
-
-    
-	// password
-
-	if(pswdInput1 == null || pswdInput1 == "")
-	{
-		pswdMsg.innerHTML = "*Password is empty.";
-		checkResult = false;
-	}
-   	else if(!pswdCheck.test(pswdInput1))
-	{
-        	pswdMsg.innerHTML = "*Password must contain letters and at least one digit."
-        	checkResult = false;
-    	}
-    	else if(pswdInput1.length != 8)
-	{
-        	pswdMsg.innerHTML = "*Password must be 8 Characters."
-        	checkResult = false;
-    	}
-    	else if(pswdInput1 != pswdInput2)
-	{
-        	pswdMsg.innerHTML = "*Passwords must match"
-    	}
-	
-  var feedback = document.getElementById("feedback");
-  feedback.innerHTML = "";      
-	if(checkResult == false)
-	{
+		// If all validations pass, submit the form
+		document.getElementById("SignUp").submit();
+	 }
+	 else 
+	 {
 		event.preventDefault();
-    feedback.setAttribute("style", "color: red"); // Style Method 2: manipulate HTML attribute
-    textNode = document.createTextNode("Invalid Data Entered");
-    feedback.appendChild(textNode);
+	 } 
+});
+
+
+function validateUsername(uname,feedback)
+{
+	var valid = true;
+	if(uname == null || uname == "") 
+	{
+		feedback.innerHTML += "\n*Username is empty.";
+		feedback.style.color = "red";
+		valid = false;
 	}
-  else 
-  {
-    //Set green text color
-    feedback.style.color = "green";
+	else if(!(checkUsername(uname)))
+	{
+        feedback.innerHTML += "\n*Username already in use";
+       	feedback.style.color = "red";
+		valid = false;
+    }
+	return valid;
+};
 
-    textNode = document.createTextNode("Account for " + uname +" has been created");
-    feedback.appendChild(textNode);
-   
-    //send a form reset event to clear the form
-    //document.getElementById("SignUp").reset();
+function validateEmail(email,RegexEmail,feedback)
+{
+	var valid = true;
+	if(email == null || email == "") 
+	{
+		feedback.innerHTML += "\n*Email address is empty.";
+		feedback.style.color = "red";
+		valid = false;
+	}	
+	else if(!RegexEmail.test(email)) 
+	{
+		feedback.innerHTML += "\n*Email address is in the wrong format. Example: 'username@uregina.ca'";
+		feedback.style.color = "red";
+		valid =  false;
+	}	
+	else if (email.length > 40) 
+	{
+		feedback.innerHTML += "\n*Email address too long. Maximum is 40 characters.";
+		feedback.style.color = "red";
+		valid = false;
+	}
+	else if(!(checkEmail(email)))
+	{
+        feedback.innerHTML += "\n*Email address already in use";
+       	feedback.style.color = "red";
+		valid = false;
+    }
+	return valid;
+};
 
+function validatePassword(pword,cpword,RegexPword,feedback)
+{
+	var valid = true;
+	if (pword == null || pword == "")
+	{
+		feedback.innerHTML += "\n*Password is empty.";
+		feedback.style.color = "red";
+		valid = false;
+	}
+	else if (pword.length != 8)
+	{
+		feedback.innerHTML += "\n*Password must be 8 Characters.";
+		feedback.style.color = "red";
+		valid = false;
+	}
+	else if(!RegexPword.test(pword))
+	{
+		feedback.innerHTML += "\n*Password is invalid. it must contain at least one special character"
+		feedback.style.color = "red";
+		valid = false;
+	}
+	else if (pword !== cpword) 
+	{
+	   feedback.innerText += "\n*Passwords do not match.";
+	   feedback.style.color = "red";
+	   valid = false;
+	}
+	return valid;
+};
 
-  }
-}
+function checkUsername(uname)
+{
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "/checkUsername",false);
+	xhr.setRequestHeader("Content-Type", "application/json");
+
+	var xUname = JSON.stringify({uname});
+	
+	var valid = true;
+	xhr.onload = () =>
+	{
+		if (xhr.readyState == XMLHttpRequest.DONE) 
+		{
+			if (xhr.status == 200) 
+			{
+				valid = true;
+				return true;
+			} 
+			else if (xhr.status == 400) 
+			{
+				valid = false;
+				return false;
+			}
+		}
+	};
+	xhr.send(xUname);
+	
+	//console.log("NEVER",valid);
+	return valid;
+};
+
+function checkEmail(email)
+{
+	const xhr = new XMLHttpRequest();
+	xhr.open("POST", "/checkEmail", false);
+	xhr.setRequestHeader("Content-Type", "application/json");
+
+	var xEmail = JSON.stringify({email});
+	var valid = true;
+
+	xhr.onload = () =>
+	{
+		if (xhr.readyState == XMLHttpRequest.DONE) 
+		{
+			if (xhr.status == 200) 
+			{
+				valid = true;
+			} 
+			else if (xhr.status == 400) 
+			{
+				valid = false;
+			}
+		}
+	};
+	xhr.send(xEmail);
+	return valid;
+};

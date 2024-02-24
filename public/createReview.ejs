@@ -1,4 +1,4 @@
-<!-- createReview.html -->
+<!-- createReview.ejs -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,15 +17,15 @@
     <main>
         <div class="over">
             <div class="subTitle"><b>Create Review: </b></div>
-            <form>
+            <form action="/createReview" method="POST">
                 <h5>Enter the content covered in the course:</h5>
-                <center><textarea rows="8" placeholder="What were the chapters and concepts covered?"></textarea></center>
+                <center><textarea rows="8" id="content" name="content" placeholder="What were the chapters and concepts covered?" required></textarea></center>
                 <br>
                 <h5>Enter the grading and assignment structure of the course:</h5>
-                <center><textarea rows="8" placeholder="The assignments made up 30% of your grade..."></textarea></center>
+                <center><textarea rows="8" id="structure" name="structure" placeholder="The assignments made up 30% of your grade..." required></textarea></center>
                 <br>
                 <h5>Any additional notes:</h5>
-                <center><textarea rows="8" placeholder="Feel free to RESTPECTFULLY talk about the professor or any other related information about the course"></textarea></center>
+                <center><textarea rows="8" id="additional" name="additional" placeholder="Feel free to RESTPECTFULLY talk about the professor or any other related information about the course"></textarea></center>
             
             <h5>Rating:</h5>
             <div class="rate">
