@@ -1,6 +1,6 @@
 document.getElementById("SignUp").addEventListener("submit", function(event){
 	// Prevent the form from submitting by default
-	 
+	// testXhr();
 	 // Get form inputs
 	 var uname = document.getElementById("uname").value;
 	 var email = document.getElementById("email").value;
@@ -49,127 +49,136 @@ document.getElementById("SignUp").addEventListener("submit", function(event){
 
 function validateUsername(uname,feedback)
 {
+	var valid = true;
 	if(uname == null || uname == "") 
 	{
 		feedback.innerHTML += "\n*Username is empty.";
 		feedback.style.color = "red";
-		return false;
+		valid = false;
 	}
-	
-	checkUsername(uname, function (exists) 
+	else if(!(checkUsername(uname)))
 	{
-        if (exists) 
-		{
-            feedback.innerHTML += "\n*Username already in use";
-            feedback.style.color = "red";
-			return false;
-        }
-    });
-
-	return true;
+        feedback.innerHTML += "\n*Username already in use";
+       	feedback.style.color = "red";
+		valid = false;
+    }
+	return valid;
 };
 
 function validateEmail(email,RegexEmail,feedback)
 {
+	var valid = true;
 	if(email == null || email == "") 
 	{
 		feedback.innerHTML += "\n*Email address is empty.";
 		feedback.style.color = "red";
-		return false;
+		valid = false;
 	}	
 	else if(!RegexEmail.test(email)) 
 	{
 		feedback.innerHTML += "\n*Email address is in the wrong format. Example: 'username@uregina.ca'";
 		feedback.style.color = "red";
-		return false;
+		valid =  false;
 	}	
 	else if (email.length > 40) 
 	{
 		feedback.innerHTML += "\n*Email address too long. Maximum is 40 characters.";
 		feedback.style.color = "red";
-		return false;
+		valid = false;
 	}
-
-	checkEmail(email, function (exists) 
+	else if(!(checkEmail(email)))
 	{
-        if (exists) 
-		{
-            feedback.innerHTML += "\n*Email address already in use";
-            feedback.style.color = "red";
-			return false;
-        }
-    });
-
-	return true
+        feedback.innerHTML += "\n*Email address already in use";
+       	feedback.style.color = "red";
+		valid = false;
+    }
+	return valid;
 };
 
 function validatePassword(pword,cpword,RegexPword,feedback)
 {
+	var valid = true;
 	if (pword == null || pword == "")
 	{
 		feedback.innerHTML += "\n*Password is empty.";
 		feedback.style.color = "red";
-		return false;
+		valid = false;
 	}
 	else if (pword.length != 8)
 	{
 		feedback.innerHTML += "\n*Password must be 8 Characters.";
 		feedback.style.color = "red";
-		return false;
+		valid = false;
 	}
 	else if(!RegexPword.test(pword))
 	{
 		feedback.innerHTML += "\n*Password is invalid. it must contain at least one special character"
 		feedback.style.color = "red";
-		return false;
+		valid = false;
 	}
 	else if (pword !== cpword) 
 	{
 	   feedback.innerText += "\n*Passwords do not match.";
 	   feedback.style.color = "red";
-	   return false;
+	   valid = false;
 	}
-	return true;
+	return valid;
 };
 
-function checkUsername(uname,callback)
+function checkUsername(uname)
 {
 	var xhr = new XMLHttpRequest();
-	xhr.open("POST", "/checkUsername", true);
+	xhr.open("POST", "/checkUsername",false);
 	xhr.setRequestHeader("Content-Type", "application/json");
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState === XMLHttpRequest.DONE) 
+
+	var xUname = JSON.stringify({uname});
+	
+	var valid = true;
+	xhr.onload = () =>
+	{
+		if (xhr.readyState == XMLHttpRequest.DONE) 
 		{
-			if (xhr.status === 200) 
+			if (xhr.status == 200) 
 			{
-				callback(true);
+				valid = true;
+				return true;
 			} 
-			else if (xhr.status === 400) 
+			else if (xhr.status == 400) 
 			{
-				callback( false);
+				valid = false;
+				return false;
 			}
 		}
 	};
-	xhr.send(JSON.stringify({ uname: uname }));
+	xhr.send(xUname);
+	
+	//console.log("NEVER",valid);
+	return valid;
 };
 
-function checkEmail(email,callback)
+function checkEmail(email)
 {
-	var xhr = new XMLHttpRequest();
-	xhr.open("POST", "/checkEmail", true);
+	const xhr = new XMLHttpRequest();
+	xhr.open("POST", "/checkEmail", false);
 	xhr.setRequestHeader("Content-Type", "application/json");
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState === XMLHttpRequest.DONE) 
+
+	var xEmail = JSON.stringify({email});
+	var valid = true;
+
+	xhr.onload = () =>
+	{
+		if (xhr.readyState == XMLHttpRequest.DONE) 
 		{
-			if (xhr.status === 200) 
+			if (xhr.status == 200) 
 			{
-				callback(true);
+				valid = true;
 			} 
-			else if (xhr.status === 400) 
+			else if (xhr.status == 400) 
 			{
-				callback(false);
+				valid = false;
 			}
 		}
 	};
-	xhr.send(JSON.stringify({ email: email }));
+	xhr.send(xEmail);
+	return valid;
 };
