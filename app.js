@@ -9,6 +9,7 @@ const path = require('path');
 const sqlite3 = require('sqlite3').verbose(); 
 var helmet = require('helmet');
 const adminRoutes = require('./public/routes/adminRoutes');
+const studentRoutes = require('./public/routes/studentRoutes');
 const LoginRoutes = require('./public/routes/LoginRoutes');
 const SignupRoutes = require('./public/routes/SignUpRoutes');
 
@@ -49,6 +50,9 @@ app.use(bodyParser.json());
 // Admin Routes
 app.use(adminRoutes);
 
+// Student Routes
+app.use(studentRoutes);
+
 app.get('/index', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','html', 'index.html'));
 });
@@ -84,7 +88,7 @@ app.get('/createReview', (req, res) => {
           return console.log(err.message);
         }
         console.log("New user has been added");
-        res.sendFile(path.join(__dirname, 'public','html', 'login.html'));
+        res.sendFile(path.join(__dirname, 'public','html', 'index2.html'));
       });
   });
   }); 
