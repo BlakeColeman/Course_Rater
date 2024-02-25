@@ -191,6 +191,31 @@ app.get('/createReview', (req, res) => {
         });
     });
     
+    // Retrives courses
+    app.get('/getCourse', function(req, res, next) {
+    const { cname } = req.query;
+
+    const sql = 'SELECT * FROM courses WHERE cname LIKE ?';
+    
+    const searchQuery = '%' + cname + '%';
+
+    db.all(sql, [searchQuery], (err, rows) => {
+        if (err) {
+            console.error(err.message);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+
+        if (rows.length === 0) {
+            // Course doesn't exist, send a 404 Not Found response
+            res.status(404).send('Course not found');
+        } else {
+            // Course found, send the list of matching courses
+            res.status(200).json(rows);
+        }
+    });
+});
+
 // Start server
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);

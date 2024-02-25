@@ -16,12 +16,13 @@
     <main>
         <div class="over">
             <section class="search">
-            <h2>Search for Classes</h2>
+                <h2>Search for Classes</h2>
                 <div class="search-container">
-                    <form action="/search" method="get">
-                        <input type="text" name="cname" placeholder="Enter course name">
+                    <form id="search_form" action="/search" method="get">
+                        <input type="text" id="search_input" name="cname" placeholder="Enter course name">
                         <button type="submit">Search</button>
                     </form>
+                    <div id="search_result"></div>
                 </div>
             </section>
         </div>
