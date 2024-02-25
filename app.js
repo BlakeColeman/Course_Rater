@@ -195,7 +195,7 @@ app.get('/createReview', (req, res) => {
     app.get('/getCourse', function(req, res, next) {
     const { cname } = req.query;
 
-    const sql = 'SELECT * FROM courses WHERE cname LIKE ?';
+    const sql = 'SELECT * FROM courses WHERE cname LIKE ? LIMIT 10'; // limit the number of courses shown
     
     const searchQuery = '%' + cname + '%';
 
