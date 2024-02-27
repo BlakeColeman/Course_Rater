@@ -71,15 +71,15 @@ app.get('/createReview', (req, res) => {
 });
 
 
-app.get('/user', (req, res) => {
-    if (req.user) {
-        // User is logged in, send user information
-        res.json({ username: req.user.username, email: req.user.email });
-    } else {
-        // User is not logged in
-        res.status(401).send('Not logged in');
-    }
-});
+// app.get('/user', (req, res) => {
+//     if (req.user) {
+//         // User is logged in, send user information
+//         res.json({ username: req.user.username, email: req.user.email });
+//     } else {
+//         // User is not logged in
+//         res.status(401).send('Not logged in');
+//     }
+// });
 
   app.post('/createReviews',(req,res) =>
   {
