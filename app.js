@@ -152,13 +152,13 @@ app.get('/account', (req, res) => {
 
     // Check the user's role
     if (req.users.role === 'admin') {
-        // Render the admin account page
+        // Direct to the admin account page
         res.sendFile(path.join(__dirname, 'public', 'html', 'adminAccount.html'));
-    } else if (req.users.role === 'student') {
-        // Render the student account page
+    } else if (!req.users.role) {
+        // Direct to the student account page is role is blank
         res.sendFile(path.join(__dirname, 'public', 'html', 'studentAccount.html'));
     } else {
-        res.status(404).send('Error');
+        res.status(404).send('Error handling account');
     }
 });
 
