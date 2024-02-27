@@ -156,6 +156,26 @@ app.get('/getCourse', function(req, res, next) {
     });
 });
 
+// Takes user to appropriate account info
+app.get('/account', (req, res) => {
+    // Check if the user is logged in
+    if (!req.users) {
+        res.redirect('/login');
+        return;
+    }
+
+    // Check the user's role
+    if (req.users.role === 'admin') {
+        // Render the admin account page
+        res.sendFile(path.join(__dirname, 'public', 'html', 'adminAccount.html'));
+    } else if (req.users.role === 'student') {
+        // Render the student account page
+        res.sendFile(path.join(__dirname, 'public', 'html', 'studentAccount.html'));
+    } else {
+        res.status(404).send('Error');
+    }
+});
+
 
 
 app.listen(port, () => {

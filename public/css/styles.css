@@ -146,6 +146,7 @@ hr {
     display: block;
     margin: 15px 20px 15px 10px;
     float: right;
+    cursor: pointer;
 }
 
 .submitButton{
