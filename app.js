@@ -175,10 +175,10 @@ app.get('/account', (req, res) => {
     }
 
     // Check the user's role
-    if (req.users.role === 'admin') {
+    if (req.user.role === 'admin') {
         // Direct to the admin account page
         res.sendFile(path.join(__dirname, 'public', 'html', 'adminAccount.html'));
-    } else if (!req.users.role) {
+    } else if (!req.user.role) {
         // Direct to the student account page is role is blank
         res.sendFile(path.join(__dirname, 'public', 'html', 'studentAccount.html'));
     } else {
