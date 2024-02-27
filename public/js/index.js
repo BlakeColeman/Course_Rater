@@ -22,7 +22,7 @@ function renderLoggedInHeader(uname) {
     const header = document.getElementById('header');
     header.innerHTML = `
         <a href="/logout" class="homeButton">Logout</a>
-        <a href="/account" class="homeButton">Account</a>
+        <a onclick="window.location.href='/account'" class="homeButton">Account</a>
        
         <h4 class="title">U of R Course Rating</h4>
         <span>Welcome, ${uname}</span>
