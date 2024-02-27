@@ -16,6 +16,20 @@ let db = new sqlite3.Database('./public/database/UofRCourseRater', (err) => {
     }
 });
 
+
+
+// Session middleware
+router.use(session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: false
+}));
+
+router.use(flash());
+router.use(passport.initialize());
+router.use(passport.session());
+
+
 // Configure Passport
 passport.use(new LocalStrategy({
     usernameField: 'email',
@@ -51,24 +65,27 @@ passport.deserializeUser((uname, done) => {
   });
 });
 
-// Session middleware
-router.use(session({
-    secret: 'secret',
-    resave: false,
-    saveUninitialized: false
-}));
-
-router.use(flash());
-router.use(passport.initialize());
-router.use(passport.session());
 
 
 // Login route
-router.post('/login', passport.authenticate('local', {
-    successRedirect: '/index2',
-    failureRedirect: '/login',
-    failureFlash: true
-}));
+router.post('/login', (req, res, next) => {
+    passport.authenticate('local', (err, user, info) => {
+        if (err) {
+            return res.status(500).json({ success: false, message: 'An error occurred. Please try again later.' });
+        }
+        if (!user) {
+            return res.status(401).json({ success: false, message: info.message });
+        }
+        req.logIn(user, (err) => {
+            if (err) {
+                return res.status(500).json({ success: false, message: 'An error occurred. Please try again later.' });
+            }
+            // If authentication succeeds, return success and redirect URL
+            return res.status(200).json({ success: true, redirectURL: '/index2' });
+        });
+    })(req, res, next);
+});
+
 
 // Logout route
 router.get('/logout', (req, res) => {
