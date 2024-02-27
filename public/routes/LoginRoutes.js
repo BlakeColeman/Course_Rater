@@ -27,15 +27,19 @@ passport.use(new LocalStrategy({
         console.error(err); // Log the error
         return done(err);
        } 
-        if (!row) return done(null, false, { message: 'Incorrect email.' });
-        if (row.pword !== password) return done(null, false, { message: 'Incorrect password.' });
-        return done(null, row);
+       if (!row) {
+        return done(null, false, { message: 'Incorrect email.' });
+        }
+    if (row.pword !== password) {
+        return done(null, false, { message: 'Incorrect password.' });
+        }
+    return done(null, row);
     });
 }));
 
 // Configure Passport serialization
 passport.serializeUser((user, done) => {
-  // Serialize the username instead of user.id
+  // Serialize the username
   done(null, user.uname); 
 });
 
@@ -55,6 +59,7 @@ router.use(session({
 }));
 
 router.use(flash());
+router.use(session({ secret: 'your-secret-key', resave: true, saveUninitialized: true }));
 router.use(passport.initialize());
 router.use(passport.session());
 

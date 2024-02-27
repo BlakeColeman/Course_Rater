@@ -34,25 +34,17 @@ let db = new sqlite3.Database('./public/database/UofRCourseRater', (err) => {
 
 
 
+// Middleware
 // Serve static files from the 'public' directory
 app.use(express.static('public', { index: 'html/index.html' }));
-
-// Middleware
-// app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 
-//for login
-app.use(session({ secret: 'your-secret-key', resave: true, saveUninitialized: true }));
-app.use(passport.initialize());
-app.use(passport.session());
 
 // Admin Routes
 app.use(adminRoutes);
-
 // Student Routes
 app.use(studentRoutes);
 //signup routes
