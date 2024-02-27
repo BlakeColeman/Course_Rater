@@ -11,7 +11,7 @@ let db = new sqlite3.Database('./public/database/UofRCourseRater', (err) => {
     }
     else
     {
-        console.log('Connected to the CourseRater database.');
+        console.log('SignUp Router is working');
     }
   });
 
