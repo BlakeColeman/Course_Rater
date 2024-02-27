@@ -71,6 +71,16 @@ app.get('/createReview', (req, res) => {
 });
 
 
+app.get('/user', (req, res) => {
+    if (req.user) {
+        // User is logged in, send user information
+        res.json({ username: req.user.username, email: req.user.email });
+    } else {
+        // User is not logged in
+        res.status(401).send('Not logged in');
+    }
+});
+
   app.post('/createReviews',(req,res) =>
   {
     var {uname} = req.body.uname;
@@ -142,10 +152,20 @@ app.get('/getCourse', function(req, res, next) {
     });
 });
 
+
+app.get('/profile', (req, res) => {
+    // If user is authenticated, req.user will contain the user information
+    if (req.user) {
+        res.send('Welcome, ' + req.user.uname);
+    } else {
+        res.redirect('/login'); // Redirect to login page if user is not authenticated
+    }
+});
+
 // Takes user to appropriate account info
 app.get('/account', (req, res) => {
     // Check if the user is logged in
-    if (!req.users) {
+    if (!req.user) {
         res.redirect('/login');
         return;
     }
@@ -161,6 +181,8 @@ app.get('/account', (req, res) => {
         res.status(404).send('Error handling account');
     }
 });
+
+
 
 
 
