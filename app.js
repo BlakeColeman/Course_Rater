@@ -1,17 +1,12 @@
 const express = require('express');
 const session = require('express-session'); 
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
 const bodyParser = require('body-parser');
-const flash = require('connect-flash');
-const http = require('http');
 const path = require('path');
 const sqlite3 = require('sqlite3').verbose(); 
-var helmet = require('helmet');
 const adminRoutes = require('./public/routes/adminRoutes');
 const studentRoutes = require('./public/routes/studentRoutes');
-const LoginRoutes = require('./public/routes/LoginRoutes');
-const SignupRoutes = require('./public/routes/SignUpRoutes');
+const loginRoutes = require('./public/routes/LoginRoutes');
+const signupRoutes = require('./public/routes/SignUpRoutes');
 
 // import { SignupForm} from "./signup.js";
 
@@ -31,34 +26,25 @@ let db = new sqlite3.Database('./public/database/UofRCourseRater', (err) => {
   });
 
 
-
-
-
+// Middleware
 // Serve static files from the 'public' directory
 app.use(express.static('public', { index: 'html/index.html' }));
-
-// Middleware
-// app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(session({
+    secret: 'your-secret-key',
+    resave: true,
+    saveUninitialized: true
+}));
 
 
-//for login
-app.use(session({ secret: 'your-secret-key', resave: true, saveUninitialized: true }));
-app.use(passport.initialize());
-app.use(passport.session());
+// Routes
+app.use(adminRoutes);// Admin Routes
+app.use(studentRoutes); // Student Routes
+app.use(signupRoutes); //signup routes
+app.use(loginRoutes); //login routes
 
-// Admin Routes
-app.use(adminRoutes);
-
-// Student Routes
-app.use(studentRoutes);
-//signup routes
-app.use(SignupRoutes);
-//login routes
-app.use(LoginRoutes);
 
 app.get('/index', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','html', 'index.html'));
