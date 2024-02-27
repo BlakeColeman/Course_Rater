@@ -50,10 +50,8 @@ app.get('/index', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','html', 'index.html'));
 });
 
-app.get('/index2', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public','html', 'index2.html'));
-});
-
+//Deleted index2 route 
+//will delete index2file after a few days
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','html', 'login.html'));
 });
