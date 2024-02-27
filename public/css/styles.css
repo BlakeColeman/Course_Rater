@@ -222,3 +222,15 @@ article{
     border: 2px solid black;
     padding: 15px;
 }
+
+
+#header span {
+    font-size: 24px; 
+    padding: 10px; 
+    display: inline-block; 
+    background-color: #004f2e;
+    color: white; 
+    border-radius: 5px; 
+    margin-right: 10px; 
+}
+

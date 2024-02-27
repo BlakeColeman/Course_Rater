@@ -58,9 +58,6 @@ app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','html', 'signup.html'));
 });
 
-app.get('/index2', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public','html', 'index2.html'));
-});
 
 app.get('/studentAccount', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','html', 'studentAccount.html'));
@@ -153,14 +150,17 @@ app.get('/getCourse', function(req, res, next) {
 });
 
 
-app.get('/profile', (req, res) => {
-    // If user is authenticated, req.user will contain the user information
+
+app.get('/user', (req, res) => {
     if (req.user) {
-        res.send('Welcome, ' + req.user.uname);
+        // User is logged in, send user information
+        res.json({ uname: req.user.uname, email: req.user.email });
     } else {
-        res.redirect('/login'); // Redirect to login page if user is not authenticated
+        // User is not logged in
+        res.status(401).send('Not logged in');
     }
 });
+
 
 // Takes user to appropriate account info
 app.get('/account', (req, res) => {
