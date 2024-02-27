@@ -40,20 +40,25 @@ app.use(express.static('public', { index: 'html/index.html' }));
 // Middleware
 // app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
-app.use(session({ secret: 'secret', resave: true, saveUninitialized: true }));
-app.use(passport.initialize());
-app.use(passport.session());
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+
+//for login
+app.use(session({ secret: 'your-secret-key', resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Admin Routes
 app.use(adminRoutes);
 
 // Student Routes
 app.use(studentRoutes);
-
+//signup routes
 app.use(SignupRoutes);
+//login routes
+app.use(LoginRoutes);
 
 app.get('/index', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','html', 'index.html'));
@@ -103,7 +108,7 @@ app.get('/createReview', (req, res) => {
 
 
     // search for a course
-    app.get('/search', (req, res) => {
+app.get('/search', (req, res) => {
         const { cname } = req.query; // Extracting 'cname' from the query string
         
         const sql = 'SELECT * FROM courses WHERE cname LIKE ?';
@@ -124,10 +129,10 @@ app.get('/createReview', (req, res) => {
 
             }
         });
-    });
+});
     
     // Retrives courses
-    app.get('/getCourse', function(req, res, next) {
+app.get('/getCourse', function(req, res, next) {
     const { cname } = req.query;
 
     const sql = 'SELECT * FROM courses WHERE cname LIKE ? LIMIT 10'; // limit the number of courses shown
@@ -151,7 +156,8 @@ app.get('/createReview', (req, res) => {
     });
 });
 
-// Start server
+
+
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
