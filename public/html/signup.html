@@ -20,24 +20,20 @@
         <h3> Please sign up to create an account </h3>
         
         <!-- <form  method = post id = SignUp onsubmit="return validateForm() " action="./createUser">        -->
-        <form  method = post id = SignUp action="./createUser">
+        <form  method = post id = SignUp action="/createUser">
          
           <fieldset>
             <label>Username (*Other students can see this):</label>
             <input type="text" placeholder="Enter Username" id ="uname" name = "uname" >
-            <label id="msg_uname" class="err_msg"></label><br>
       
             <label>Email address:</label>
             <input type="text" placeholder="Enter uregina email address" id="email" name = "email" > 
-            <label id="msg_email" class="err_msg"></label><br>
-        
+            
             <label>Enter Password : </label>   
             <input type="password" placeholder="Enter Password" id="spword" name = "pword" >
-            <label id="msg_p1" class="err_msg"></label><br>
-        
+           
             <label>Confirm Password : </label>   
             <input  type="password" placeholder="Confirm Password" id="cpword" name ="pword2" >
-            <label id="msg_p2" class="err_msg"></label><br>
           </fieldset>
           
           <h3 id = feedback></h3>
