@@ -81,7 +81,7 @@ router.post('/login', (req, res, next) => {
                 return res.status(500).json({ success: false, message: 'An error occurred. Please try again later.' });
             }
             // If authentication succeeds, return success and redirect URL
-            return res.status(200).json({ success: true, redirectURL: '/index2' });
+            return res.status(200).json({ success: true, redirectURL: '/index' });
         });
     })(req, res, next);
 });
@@ -89,10 +89,10 @@ router.post('/login', (req, res, next) => {
 
 // Logout route
 router.get('/logout', (req, res) => {
-    req.logout();
-    res.redirect('/');
+    req.logout(() => {
+        res.redirect('/index');
+    });
 });
-
 
 // router.post('/checkPassword', (req, res) => {
 //     const { email, pword } = req.body;
