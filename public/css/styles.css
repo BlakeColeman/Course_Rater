@@ -83,7 +83,7 @@ input[type=text], input[type=password] {
     box-sizing: border-box;   
 }  
    
-button:hover, .homeButton:hover, .submitButton:hover{   
+button:hover, .homeButton:hover, .submitButton:hover, .title-link:hover{   
     opacity: 0.7;   
 }     
 
