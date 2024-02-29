@@ -23,8 +23,11 @@ function renderLoggedInHeader(uname) {
     header.innerHTML = `
         <a href="/logout" class="homeButton">Logout</a>
         <a onclick="window.location.href='/account'" class="homeButton">Account</a>
-       
-        <h4 class="title">U of R Course Rating</h4>
+        
+        <a href="/index" class="title-link">
+            <h4 class="title">U of R Course Rating</h4>
+        </a>
+
         <span>Welcome, ${uname}</span>
     `;
 }
@@ -34,7 +37,10 @@ function renderLoggedOutHeader() {
     header.innerHTML = `
         <a href="/login" class="homeButton">Log in</a>
         <a href="/signup" class="homeButton">Sign up</a>
-        <h4 class="title">U of R Course Rating</h4>
+
+        <a href="/index" class="title-link">
+            <h4 class="title">U of R Course Rating</h4>
+        </a>
     `;
 }
 
