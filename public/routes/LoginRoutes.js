@@ -88,11 +88,13 @@ router.post('/login', (req, res, next) => {
 
 
 // Logout route
+/*
 router.get('/logout', (req, res) => {
     req.logout(() => {
         res.redirect('/index');
     });
 });
+*/
 
 // router.post('/checkPassword', (req, res) => {
 //     const { email, pword } = req.body;

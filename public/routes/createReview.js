@@ -7,7 +7,7 @@ router.post('/createReview', (req, res) => {
 
     review.save()
         .then((result) => {
-            res.redirect('/index2');
+            res.redirect('/index');
         })
         .catch((err) => {
             console.log(err);
