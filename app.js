@@ -7,7 +7,7 @@ const adminRoutes = require('./public/routes/adminRoutes');
 const studentRoutes = require('./public/routes/studentRoutes');
 const loginRoutes = require('./public/routes/LoginRoutes');
 const signupRoutes = require('./public/routes/SignUpRoutes');
-const courseDatabase = require('./database/databaseModules')
+//const courseDatabase = require('./database/databaseModules')
 
 // import { SignupForm} from "./signup.js";
 
@@ -15,7 +15,7 @@ const app = express();
 const port = 3000;
 
 //connecting to the database
-let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
+let db = new sqlite3.Database('./public/database/UofRCourseRater', (err) => {
     if (err) 
     {
       console.error(err.message);
