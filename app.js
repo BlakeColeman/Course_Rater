@@ -7,6 +7,7 @@ const adminRoutes = require('./public/routes/adminRoutes');
 const studentRoutes = require('./public/routes/studentRoutes');
 const loginRoutes = require('./public/routes/LoginRoutes');
 const signupRoutes = require('./public/routes/SignUpRoutes');
+const courseDatabase = require('./database/databaseModules')
 
 // import { SignupForm} from "./signup.js";
 
@@ -14,7 +15,7 @@ const app = express();
 const port = 3000;
 
 //connecting to the database
-let db = new sqlite3.Database('./public/database/UofRCourseRater', (err) => {
+let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
     if (err) 
     {
       console.error(err.message);
@@ -184,7 +185,21 @@ app.get('/account', (req, res) => {
     }
 });
 
+app.get('/userReviews',(req,res)=>{
+    const { uname } = req.uname;
 
+    const sql = 'SELECT * FROM reviews WHERE uname LIKE ?'; // limit the number of courses shown
+
+    db.all(sql, uname, (err, rows)=> {
+        if (err) {
+            console.error(err.message);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        else
+    res.send(rows);
+    })
+})
 
 
 
