@@ -14,3 +14,13 @@ fetch('/user')
     .catch(error => {
         createButton.style.display = 'none';
     });
+
+    
+const urlParams = new URLSearchParams(window.location.search);
+const courseName = urlParams.get('cname');
+
+// Display the correct course name on the review page
+const courseNameHeader = document.getElementById('courseNameHeader');
+if (courseName) {
+    courseNameHeader.innerText = `${courseName} reviews:`;
+}
