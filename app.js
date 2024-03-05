@@ -164,7 +164,6 @@ app.get('/user', (req, res) => {
     }
 });
 
-
 // Takes user to appropriate account info
 app.get('/account', (req, res) => {
     // Check if the user is logged in
@@ -177,18 +176,20 @@ app.get('/account', (req, res) => {
     if (req.user.role === 'admin') {
         // Direct to the admin account page
         res.sendFile(path.join(__dirname, 'public', 'html', 'adminAccount.html'));
+        console.log('User accessing account:', req.user.uname); // for testing, can delete later
     } else if (!req.user.role) {
         // Direct to the student account page is role is blank
         res.sendFile(path.join(__dirname, 'public', 'html', 'studentAccount.html'));
+        console.log('User accessing account:', req.user.uname); // for testing, can delete later
     } else {
         res.status(404).send('Error handling account');
     }
 });
 
 app.get('/userReviews',(req,res)=>{
-    const { uname } = req.uname;
+    const { uname } = req.query;
 
-    const sql = 'SELECT * FROM reviews WHERE uname LIKE ?'; // limit the number of courses shown
+    const sql = 'SELECT * FROM reviews WHERE uname LIKE ?';
 
     db.all(sql, uname, (err, rows)=> {
         if (err) {
@@ -200,8 +201,6 @@ app.get('/userReviews',(req,res)=>{
     res.send(rows);
     })
 })
-
-
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
