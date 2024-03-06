@@ -3,7 +3,8 @@
 // Displays the create review button if signed in, otherwise it is not displayed
 fetch('/user')
     .then(response => {
-        if (!response.ok) {
+        if (!response.ok) 
+        {
             throw new Error('Not logged in');
         }
         return response.json();
@@ -21,6 +22,7 @@ const courseName = urlParams.get('cname');
 
 // Display the correct course name on the review page
 const courseNameHeader = document.getElementById('courseNameHeader');
-if (courseName) {
+if (courseName) 
+{
     courseNameHeader.innerText = `${courseName} reviews:`;
 }
