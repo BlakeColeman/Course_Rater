@@ -110,16 +110,20 @@ app.get('/search', (req, res) => {
         const sql = 'SELECT * FROM courses WHERE cname LIKE ?';
         
         db.all(sql, [cname], (err, rows) => {
-            if (err) {
+            if (err) 
+            {
                 console.error(err.message);
                 res.status(500).send('Internal Server Error');
                 return;
             }
             
-            if (rows.length === 0) {
+            if (rows.length === 0) 
+            {
                 // Course doesn't exist, send a 404 Not Found response
                 res.status(404).send('Course not found');
-            } else {
+            } 
+            else 
+            {
                 // Course found, send the list of matching courses
                 res.sendFile(path.join(__dirname, 'public','html', 'reviewpage.html'));
 
@@ -142,10 +146,13 @@ app.get('/getCourse', function(req, res, next) {
             return;
         }
 
-        if (rows.length === 0) {
+        if (rows.length === 0) 
+        {
             // Course doesn't exist, send a 404 Not Found response
             res.status(404).send('Course not found');
-        } else {
+        }
+        else 
+        {
             // Course found, send the list of matching courses
             res.status(200).json(rows);
         }
@@ -155,10 +162,13 @@ app.get('/getCourse', function(req, res, next) {
 
 
 app.get('/user', (req, res) => {
-    if (req.user) {
+    if (req.user) 
+    {
         // User is logged in, send user information
         res.json({ uname: req.user.uname, email: req.user.email });
-    } else {
+    } 
+    else 
+    {
         // User is not logged in
         res.status(401).send('Not logged in');
     }
@@ -167,21 +177,27 @@ app.get('/user', (req, res) => {
 // Takes user to appropriate account info
 app.get('/account', (req, res) => {
     // Check if the user is logged in
-    if (!req.user) {
+    if (!req.user) 
+    {
         res.redirect('/login');
         return;
     }
 
     // Check the user's role
-    if (req.user.role === 'admin') {
+    if (req.user.role === 'admin') 
+    {
         // Direct to the admin account page
         res.sendFile(path.join(__dirname, 'public', 'html', 'adminAccount.html'));
         console.log('User accessing account:', req.user.uname); // for testing, can delete later
-    } else if (!req.user.role) {
+    } 
+    else if (!req.user.role) 
+    {
         // Direct to the student account page is role is blank
         res.sendFile(path.join(__dirname, 'public', 'html', 'studentAccount.html'));
         console.log('User accessing account:', req.user.uname); // for testing, can delete later
-    } else {
+    } 
+    else 
+    {
         res.status(404).send('Error handling account');
     }
 });
@@ -192,7 +208,8 @@ app.get('/userReviews',(req,res)=>{
     const sql = 'SELECT * FROM reviews WHERE uname LIKE ?';
 
     db.all(sql, uname, (err, rows)=> {
-        if (err) {
+        if (err) 
+        {
             console.error(err.message);
             res.status(500).send('Internal Server Error');
             return;
