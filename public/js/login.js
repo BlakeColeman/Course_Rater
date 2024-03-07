@@ -13,13 +13,17 @@ document.getElementById("Login").addEventListener("submit", function(event) {
 
     var valid = true;
 
-    if (validateEmail(email, feedback) === false) {
+    if (validateEmail(email, feedback) === false) 
+    {
         valid = false;
-    } else if (validatePassword(pword, feedback) === false) {
+    } 
+    else if (validatePassword(pword, feedback) === false) 
+    {
         valid = false;
     }
 
-    if (valid) {
+    if (valid) 
+    {
        
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "/login", true);
@@ -27,10 +31,13 @@ document.getElementById("Login").addEventListener("submit", function(event) {
 
         xhr.onload = function() {
             var response = JSON.parse(xhr.responseText);
-            if (xhr.status === 200 && response.success) {
+            if (xhr.status === 200 && response.success) 
+            {
                 // If login successful, redirect
                 window.location.href = response.redirectURL;
-            } else {
+            } 
+            else 
+            {
                 // If login failed, display error message
                 feedback.innerHTML = response.message;
                 feedback.style.color = "red";
@@ -50,7 +57,8 @@ document.getElementById("Login").addEventListener("submit", function(event) {
 
 function validateEmail(email, feedback) {
     var valid = true;
-    if (email == null || email === "") {
+    if (email == null || email === "") 
+    {
         feedback.innerHTML += "\n*Email address is empty.";
         feedback.style.color = "red";
         valid = false;
@@ -60,7 +68,8 @@ function validateEmail(email, feedback) {
 
 function validatePassword(pword, feedback) {
     var valid = true;
-    if (pword == null || pword === "") {
+    if (pword == null || pword === "") 
+    {
         feedback.innerHTML += "\n*Password is empty.";
         feedback.style.color = "red";
         valid = false;
