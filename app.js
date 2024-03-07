@@ -44,7 +44,7 @@ app.use(session({
 app.use(adminRoutes);// Admin Routes
 app.use(studentRoutes); // Student Routes
 app.use(signupRoutes); //signup routes
-app.use(loginRoutes); //login routes
+app.use(loginRoutes); // login routes
 
 
 app.get('/index', (req, res) => {
@@ -66,9 +66,6 @@ app.get('/studentAccount', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','html', 'studentAccount.html'));
 });
 
-app.get('/createReview', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public','html', 'createReview.html'));
-});
 
 
 // app.get('/user', (req, res) => {
@@ -81,31 +78,9 @@ app.get('/createReview', (req, res) => {
 //     }
 // });
 
-  app.post('/createReviews',(req,res) =>
-  {
-    var {uname} = req.body.uname;
-    var {cname} = req.body.cname;
-    var {cid} = req.body.cid;
-    var {rdesc} = req.body.rdesc;
-    var {crating} = req.body.crating;
-    var {flags} = req.body.flags;
-    var sql = 'INSERT INTO reviews (cname, cid, rdesc, crating, flags,uname) Values(?,?,?,?,?,?)';
-    db.serialize(()=>{
-        db.run(sql,[uname,cname,cid,rdesc,crating,flags], function(err)
-    {
-        if (err) 
-        {
-            return console.log(err.message);
-        }
-        })
-    })
-});
-
-
-
     // search for a course
 app.get('/search', (req, res) => {
-        const { cname } = req.query; // Extracting 'cname' from the query string
+        const { cname } = req.query; 
         
         const sql = 'SELECT * FROM courses WHERE cname LIKE ?';
         
@@ -154,12 +129,39 @@ app.get('/getCourse', function(req, res, next) {
         else 
         {
             // Course found, send the list of matching courses
-            res.status(200).json(rows);
+            res.json(rows);
         }
     });
 });
 
+app.get('/createReview', (req, res) => {
+    const { cname } = req.query;
+    
+    res.redirect(`/createReview?cname=${cname}`);
 
+});
+
+app.post('/createReview', (req, res) => {
+
+    const uname = req.user.uname;  
+    console.log(uname);
+
+    const cid = req.query.cid; 
+    console.log(cid);
+    const { rdesc } = req.body;
+
+    const sql = 'INSERT INTO reviews (cid, rdesc, uname) VALUES (?, ?, ?)';
+    db.serialize(() => {
+        db.run(sql, [cid, rdesc, uname], function(err) {
+            if (err) {
+                console.log(err.message);
+                res.status(500).send('Internal Server Error');
+                return;
+            }
+            res.redirect('/index'); 
+        });
+    });
+});
 
 app.get('/user', (req, res) => {
     if (req.user) 
@@ -207,7 +209,7 @@ app.get('/userReviews',(req,res)=>{
 
     const sql = 'SELECT * FROM reviews WHERE uname LIKE ?';
 
-    db.all(sql, uname, (err, rows)=> {
+    db.all(sql, [uname], (err, rows)=> {
         if (err) 
         {
             console.error(err.message);
@@ -215,7 +217,7 @@ app.get('/userReviews',(req,res)=>{
             return;
         }
         else
-    res.send(rows);
+            res.json(rows);
     })
 })
 
