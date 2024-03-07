@@ -2,4 +2,4 @@ CREATE TABLE users(uname varchar(255),email varchar(255) UNIQUE,pword varchar(25
 CREATE TABLE courses(cid int,cname varchar(255),PRIMARY KEY(cid));
 CREATE TABLE teachers(tid int, tname varchar(255),email varchar(255),PRIMARY KEY(tid),FOREIGN KEY(email) REFERENCES users(email));
 CREATE TABLE teaches(cid int,tid int, tdesc varchar(255),syllabus varchar(255), PRIMARY KEY(cid,tid), FOREIGN KEY(cid) REFERENCES courses(cid),FOREIGN KEY(tid) REFERENCES teachers(tid));
-CREATE TABLE reviews(review_id int NOT NULL,cid int, uname varchar(255), rdesc varchar(255),crating int, review int, flags int,PRIMARY KEY(review_id),FOREIGN KEY(cid) REFERENCES courses(cid),FOREIGN KEY(uname) REFERENCES users(uname));
+CREATE TABLE reviews(review_id int NOT NULL,cid int, uname varchar(255), rdesc varchar(255),crating int, flags int,PRIMARY KEY(review_id),FOREIGN KEY(cid) REFERENCES courses(cid),FOREIGN KEY(uname) REFERENCES users(uname));
