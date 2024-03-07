@@ -67,6 +67,13 @@ app.get('/studentAccount', (req, res) => {
 });
 
 
+app.get('/createReview', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public','html', 'createReview.html'));
+});
+
+
+
+
 
 // app.get('/user', (req, res) => {
 //     if (req.user) {
@@ -134,12 +141,14 @@ app.get('/getCourse', function(req, res, next) {
     });
 });
 
+/*
 app.get('/createReview', (req, res) => {
     const { cname } = req.query;
     
     res.redirect(`/createReview?cname=${cname}`);
 
 });
+*/
 
 app.post('/createReview', (req, res) => {
 
