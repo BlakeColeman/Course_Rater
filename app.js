@@ -15,7 +15,7 @@ const app = express();
 const port = 3000;
 
 //connecting to the database
-let db = new sqlite3.Database('./public/database/UofRCourseRater', (err) => {
+let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
     if (err) 
     {
       console.error(err.message);
