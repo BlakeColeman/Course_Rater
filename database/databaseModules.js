@@ -281,8 +281,69 @@ module.exports =
             res.status(200).send('Email available');
         }
     })
-    db.sqlite3.cl
+  },
+
+
+
+  verifyPassword: function(email,password,done)
+  {
+    const sqlite3 = require('sqlite3').verbose(); 
+    let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
+      if (err) 
+      {
+        console.error(err.message);
+      }
+      else
+      {
+          console.log('Connected to the CourseRater database.');
+      }
+    });
+
+    db.get('SELECT * FROM users WHERE email = ?', [email], (err, row) => {
+      if (err) {
+        console.error(err); // Log the error
+        return done(err);
+       } 
+       if (!row) {
+        return done(null, false, { message: 'Incorrect email.' });
+        }
+    if (row.pword !== password) {
+        return done(null, false, { message: 'Incorrect password.' });
+        }
+    return done(null, row);
+    });
+  },
+
+  getUserData: function(uname,done)
+  {
+    const sqlite3 = require('sqlite3').verbose(); 
+    let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
+      if (err) 
+      {
+        console.error(err.message);
+      }
+      else
+      {
+          console.log('Connected to the CourseRater database.');
+      }
+    });
+    db.get('SELECT * FROM users WHERE uname = ?', [uname], (err, user) => {
+      done(err, user);
+  });
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 
