@@ -7,7 +7,7 @@ const adminRoutes = require('./public/routes/adminRoutes');
 const studentRoutes = require('./public/routes/studentRoutes');
 const loginRoutes = require('./public/routes/LoginRoutes');
 const signupRoutes = require('./public/routes/SignUpRoutes');
-//const courseDatabase = require('./database/databaseModules')
+const courseDatabase = require('./database/databaseModules')
 
 // import { SignupForm} from "./signup.js";
 
