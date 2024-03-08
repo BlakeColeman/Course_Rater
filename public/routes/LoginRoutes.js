@@ -6,9 +6,10 @@ const router = express.Router();
 const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
 const flash = require('connect-flash');
+const courseDatabase = require('../../database/databaseModules')
 
 // Connecting to the database
-let db = new sqlite3.Database('./public/database/UofRCourseRater', (err) => {
+let db = new sqlite3.Database('../../database/databaseModules', (err) => {
     if (err) {
         console.error(err.message);
     } else {
