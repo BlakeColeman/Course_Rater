@@ -15,7 +15,7 @@ fetch('/user')
         const urlParams = new URLSearchParams(window.location.search);
         const cName = urlParams.get('cname');
         
-        createReview.href = `/createReview?cname=${encodeURIComponent(cName)}`;
+        createReview.href = `/createReview?cname=${cName}`;
     })
     .catch(error => {
         console.error('Error fetching user:', error);
