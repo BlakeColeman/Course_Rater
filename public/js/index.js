@@ -45,8 +45,8 @@ function renderLoggedOutHeader() {
 }
 
 
-// Function to load data and handle response
-const load_data = function(query = '') {
+// Function to load courses given search
+const load_courses = function(query = '') {
     fetch('/getCourse?cname=' + query)
         .then(function(response) {
             return response.json();
@@ -79,5 +79,5 @@ const load_data = function(query = '') {
 var search_input = document.getElementById("search_input");
 search_input.addEventListener('input', function() {
     var query = search_input.value;
-    load_data(query);
+    load_courses(query);
 });

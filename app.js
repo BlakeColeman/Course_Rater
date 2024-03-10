@@ -85,8 +85,8 @@ app.get('/createReview', (req, res) => {
 //     }
 // });
 
-    // search for a course
-app.get('/search', (req, res) => {
+// search for a course
+app.get('/reviews', (req, res) => {
         const { cname } = req.query; 
         
         const sql = 'SELECT * FROM courses WHERE cname LIKE ?';
@@ -113,7 +113,7 @@ app.get('/search', (req, res) => {
         });
 });
     
-    // Retrives courses
+// Retrives courses
 app.get('/getCourse', function(req, res, next) {
     const { cname } = req.query;
 
@@ -141,22 +141,14 @@ app.get('/getCourse', function(req, res, next) {
     });
 });
 
-/*
-app.get('/createReview', (req, res) => {
-    const { cname } = req.query;
-    
-    res.redirect(`/createReview?cname=${cname}`);
-
-});
-*/
-
+// Posts review to database
 app.post('/createReview', (req, res) => {
 
     const uname = req.user.uname;  
     console.log(uname);
 
-    const cid = req.query.cid; 
-    console.log(cid);
+    const cname = req.query.cname;
+    console.log(cname);
     const { rdesc } = req.body;
 
     const sql = 'INSERT INTO reviews (cid, rdesc, uname) VALUES (?, ?, ?)';
