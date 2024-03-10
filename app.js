@@ -66,12 +66,11 @@ app.get('/studentAccount', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','html', 'studentAccount.html'));
 });
 
-
+/*
 app.get('/createReview', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','html', 'createReview.html'));
 });
-
-
+*/
 
 
 
@@ -141,6 +140,11 @@ app.get('/getCourse', function(req, res, next) {
     });
 });
 
+app.get('/createReview', (req, res) => {
+    console.log(req.query);
+    res.sendFile(path.join(__dirname, 'public','html', 'createReview.html'));
+  });
+  
 // Posts review to database
 app.post('/createReview', (req, res) => {
 
