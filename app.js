@@ -146,17 +146,36 @@ app.post('/createReview', (req, res) => {
 
     const cname = req.body.cname;
     console.log(cname);
-    const { rdesc } = req.body;
 
-    const sql = 'INSERT INTO reviews (cid, rdesc, uname) VALUES (?, ?, ?)';
-    db.serialize(() => {
-        db.run(sql, [cid, rdesc, uname], function(err) {
-            if (err) {
-                console.log(err.message);
-                res.status(500).send('Internal Server Error');
-                return;
-            }
-            res.redirect('/index'); 
+    const { content, grading, anotes, crating } = req.body;
+    
+    const sql = 'SELECT cid FROM courses WHERE cname LIKE ?';
+    db.get(sql, [cname], (err, row) => {
+        if (err) {
+            console.log(err.message);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+
+        if (!row) {
+            console.log('Course not found'); 
+            res.status(404).send('Course not found');
+            return;
+        }
+
+        const cid = row.cid;
+        
+        const insertSql = 'INSERT INTO reviews (cid, content, grading, anotes, crating, uname) VALUES (?, ?, ?, ?, ?, ?)';
+        db.serialize(() => {
+            db.run(insertSql, [cid, content, grading, anotes, crating, uname], function(err) {
+                if (err) {
+                    console.log(err.message);
+                    res.status(500).send('Internal Server Error');
+                    return;
+                }
+                console.log('Review inserted successfully');
+                res.redirect('/index'); 
+            });
         });
     });
 });
