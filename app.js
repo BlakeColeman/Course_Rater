@@ -66,11 +66,9 @@ app.get('/studentAccount', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','html', 'studentAccount.html'));
 });
 
-/*
 app.get('/createReview', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','html', 'createReview.html'));
 });
-*/
 
 
 
@@ -139,11 +137,6 @@ app.get('/getCourse', function(req, res, next) {
         }
     });
 });
-
-app.get('/createReview', (req, res) => {
-    console.log(req.query);
-    res.sendFile(path.join(__dirname, 'public','html', 'createReview.html'));
-  });
   
 // Posts review to database
 app.post('/createReview', (req, res) => {
@@ -151,7 +144,7 @@ app.post('/createReview', (req, res) => {
     const uname = req.user.uname;  
     console.log(uname);
 
-    const cname = req.query.cname;
+    const cname = req.body.cname;
     console.log(cname);
     const { rdesc } = req.body;
 
@@ -195,13 +188,11 @@ app.get('/account', (req, res) => {
     {
         // Direct to the admin account page
         res.sendFile(path.join(__dirname, 'public', 'html', 'adminAccount.html'));
-        console.log('User accessing account:', req.user.uname); // for testing, can delete later
     } 
     else if (!req.user.role) 
     {
         // Direct to the student account page is role is blank
         res.sendFile(path.join(__dirname, 'public', 'html', 'studentAccount.html'));
-        console.log('User accessing account:', req.user.uname); // for testing, can delete later
     } 
     else 
     {
@@ -210,7 +201,8 @@ app.get('/account', (req, res) => {
 });
 
 app.get('/userReviews',(req,res)=>{
-    const { uname } = req.query;
+    const uname = req.user.uname;  
+    console.log('User accessing account:', uname);
 
     const sql = 'SELECT * FROM reviews WHERE uname LIKE ?';
 

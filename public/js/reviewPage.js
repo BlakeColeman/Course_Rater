@@ -21,9 +21,6 @@ fetch('/user')
         console.error('Error fetching user:', error);
     });
 
-const urlParams = new URLSearchParams(window.location.search);
-const courseName = urlParams.get('cname');
-
 // Display the correct course name on the review page
 const courseNameHeader = document.getElementById('courseNameHeader');
 if (courseName) {

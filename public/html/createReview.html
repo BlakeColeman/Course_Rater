@@ -18,6 +18,7 @@
         <div class="over">
             <div class="subTitle"><b>Create Review: </b></div>
             <form action="/createReview" method="post">
+                <input type="hidden" id="cnameInput" name="cname" value="">
                 <h5>Enter the content covered in the course:</h5>
                 <center><textarea name="rdesc" rows="8" placeholder="What were the chapters and concepts covered?"></textarea></center>
                 <br>
@@ -51,7 +52,7 @@
     </div>
 
     <script src="../js/index.js"></script>
-    <script src="../js/reviewPage.js"></script>
+    <script src="../js/createReview.js"></script>
 
 </body>
 </html>
