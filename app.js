@@ -70,6 +70,10 @@ app.get('/createReview', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','html', 'createReview.html'));
 });
 
+app.get('/Review', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public','html', 'personalReview.html'));
+});
+
 
 
 // app.get('/user', (req, res) => {
