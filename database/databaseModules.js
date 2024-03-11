@@ -1,27 +1,11 @@
-//const sqlite3 = require('sqlite3').verbose(); 
-
+const sqlite3 = require('sqlite3').verbose(); 
+const path = require('path');
 
 module.exports = 
 { 
   hello: function() 
   {
      return "Hello";
-  },
-
-  connectToDatabase: function()
-  { 
-    const sqlite3 = require('sqlite3').verbose();
-    let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
-      if (err) 
-      {
-        console.error(err.message);
-      }
-      else
-      {
-          console.log('Connected to the CourseRater database.');
-      }
-    });
-    return db;
   },
 
   createReview: function(req,res)
@@ -32,25 +16,45 @@ module.exports =
       {
         console.error(err.message);
       }
-      else
-      {
-          console.log('Connected to the CourseRater database.');
-      }
     });
-    var {uname} = req.body.uname;
-    var {cname} = req.body.cname;
-    var {cid} = req.body.cid;
-    var {rdesc} = req.body.rdesc;
-    var {crating} = req.body.crating;
-    var {flags} = req.body.flags;
-    var sql = 'INSERT INTO reviews (cname, cid, rdesc, crating, flags,uname) Values(?,?,?,?,?,?)';
-    db.run(sql,[uname,cname,cid,rdesc,crating,flags], function(err)
-    {
-        if (err) 
-        {
-            return console.log(err.message);
+
+    const uname = req.user.uname;  
+    console.log(uname);
+
+    const cname = req.body.cname;
+    console.log(cname);
+
+    const { content, grading, anotes, crating } = req.body;
+    
+    const sql = 'SELECT cid FROM courses WHERE cname LIKE ?';
+    db.get(sql, [cname], (err, row) => {
+        if (err) {
+            console.log(err.message);
+            res.status(500).send('Internal Server Error');
+            return;
         }
-    })
+
+        if (!row) {
+            console.log('Course not found'); 
+            res.status(404).send('Course not found');
+            return;
+        }
+
+        const cid = row.cid;
+        
+        const insertSql = 'INSERT INTO reviews (cid, content, grading, anotes, crating, uname) VALUES (?, ?, ?, ?, ?, ?)';
+        db.serialize(() => {
+            db.run(insertSql, [cid, content, grading, anotes, crating, uname], function(err) {
+                if (err) {
+                    console.log(err.message);
+                    res.status(500).send('Internal Server Error');
+                    return;
+                }
+                console.log('Review inserted successfully');
+                res.redirect('/index'); 
+            });
+        });
+    });
   },
 
   searchCourse: function(req,res)
@@ -60,10 +64,6 @@ module.exports =
       if (err) 
       {
         console.error(err.message);
-      }
-      else
-      {
-          console.log('Connected to the CourseRater database.');
       }
     });
     const { cname } = req.query; // Extracting 'cname' from the query string
@@ -96,11 +96,8 @@ module.exports =
       {
         console.error(err.message);
       }
-      else
-      {
-          console.log('Connected to the CourseRater database.');
-      }
     });
+
     const { cname } = req.query;
 
     const sql = 'SELECT * FROM courses WHERE cname LIKE ? LIMIT 10'; // limit the number of courses shown
@@ -114,12 +111,15 @@ module.exports =
             return;
         }
 
-        if (rows.length === 0) {
+        if (rows.length === 0) 
+        {
             // Course doesn't exist, send a 404 Not Found response
             res.status(404).send('Course not found');
-        } else {
-            // Course found, send the list of matching courses
-            res.status(200).json(rows);
+        }
+        else 
+        {
+            // Course found send the list of matching courses
+            res.json(rows);
         }
     });
   },
@@ -131,10 +131,6 @@ module.exports =
       if (err) 
       {
         console.error(err.message);
-      }
-      else
-      {
-          console.log('Connected to the CourseRater database.');
       }
     });
     const { uname } = req.uname;
@@ -162,10 +158,6 @@ module.exports =
       {
         console.error(err.message);
       }
-      else
-      {
-          console.log('Connected to the CourseRater database.');
-      }
     });
     const {cid} = req.cid;
     db.all(sql,cname,(err,rows)=>
@@ -191,10 +183,6 @@ module.exports =
       {
         console.error(err.message);
       }
-      else
-      {
-          console.log('Connected to the CourseRater database.');
-      }
     });
     // SignupForm(req.body);
     console.log(req.body)
@@ -204,21 +192,17 @@ module.exports =
         return console.log(err.message);
       }
       console.log("New user has been added");
-      res.sendFile(path.join(__dirname, '../','html', 'login.html'));
+      res.sendFile(path.join(__dirname, '../','public/html', 'login.html'));
     });
   },
 
   checkUsername: function(req,res)
   {
-    const sqlite3 = require('sqlite3').verbose(); 
+    //const sqlite3 = require('sqlite3').verbose(); 
     let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
       if (err) 
       {
         console.error(err.message);
-      }
-      else
-      {
-          console.log('Connected to the CourseRater database.');
       }
     });
     const {uname} = req.body;
@@ -253,10 +237,6 @@ module.exports =
       {
         console.error(err.message);
       }
-      else
-      {
-          console.log('Connected to the CourseRater database.');
-      }
     });
     const {email} = req.body;
     console.log("checking Email",email,"for availability");
@@ -283,8 +263,6 @@ module.exports =
     })
   },
 
-
-
   verifyPassword: function(email,password,done)
   {
     const sqlite3 = require('sqlite3').verbose(); 
@@ -292,10 +270,6 @@ module.exports =
       if (err) 
       {
         console.error(err.message);
-      }
-      else
-      {
-          console.log('Connected to the CourseRater database.');
       }
     });
 
@@ -322,28 +296,74 @@ module.exports =
       {
         console.error(err.message);
       }
-      else
-      {
-          console.log('Connected to the CourseRater database.');
-      }
     });
     db.get('SELECT * FROM users WHERE uname = ?', [uname], (err, user) => {
       done(err, user);
   });
+  },
+
+  userReviews: function(req,res)
+  {
+    const sqlite3 = require('sqlite3').verbose(); 
+    let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
+      if (err) 
+      {
+        console.error(err.message);
+      }
+    });
+
+    const uname = req.user.uname;  
+    console.log('User accessing account:', uname);
+
+    const sql = 'SELECT * FROM reviews WHERE uname LIKE ?';
+
+    db.all(sql, [uname], (err, rows)=> {
+        if (err) 
+        {
+            console.error(err.message);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        else
+            res.json(rows);
+    })
+  },
+
+  reviews: function(req, res) {
+
+    const sqlite3 = require('sqlite3').verbose(); 
+    let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
+      if (err) 
+      {
+        console.error(err.message);
+      }
+    });
+
+    const { cname } = req.query; 
+    
+    const sql = 'SELECT * FROM courses WHERE cname LIKE ?';
+    
+    db.all(sql, [cname], (err, rows) => {
+        if (err) 
+        {
+            console.error(err.message);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        
+        if (rows.length === 0) 
+        {
+            // Course doesn't exist, send a 404 Not Found response
+            res.status(404).send('Course not found');
+        } 
+        else 
+        {
+            // Course found, send the list of matching courses
+            res.sendFile(path.join(__dirname, 'public','html', 'reviewpage.html'));
+
+        }
+    });
   }
 
 
-
-
-
-
-
-
-
-
-
-
-
 }
-
-
