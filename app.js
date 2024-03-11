@@ -2,30 +2,17 @@ const express = require('express');
 const session = require('express-session'); 
 const bodyParser = require('body-parser');
 const path = require('path');
-const sqlite3 = require('sqlite3').verbose(); 
 const adminRoutes = require('./public/routes/adminRoutes');
 const studentRoutes = require('./public/routes/studentRoutes');
 const loginRoutes = require('./public/routes/LoginRoutes');
 const signupRoutes = require('./public/routes/SignUpRoutes');
-const courseDatabase = require('./database/databaseModules')
+const courseDatabase = require('./database/databaseModules');
+const databaseModules = require('./database/databaseModules');
 
 // import { SignupForm} from "./signup.js";
 
 const app = express();
 const port = 3000;
-
-//connecting to the database
-let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
-    if (err) 
-    {
-      console.error(err.message);
-    }
-    else
-    {
-        console.log('Connected to the CourseRater database.');
-    }
-  });
-
 
 // Middleware
 // Serve static files from the 'public' directory
@@ -88,100 +75,17 @@ app.get('/Review', (req, res) => {
 
 // search for a course
 app.get('/reviews', (req, res) => {
-        const { cname } = req.query; 
-        
-        const sql = 'SELECT * FROM courses WHERE cname LIKE ?';
-        
-        db.all(sql, [cname], (err, rows) => {
-            if (err) 
-            {
-                console.error(err.message);
-                res.status(500).send('Internal Server Error');
-                return;
-            }
-            
-            if (rows.length === 0) 
-            {
-                // Course doesn't exist, send a 404 Not Found response
-                res.status(404).send('Course not found');
-            } 
-            else 
-            {
-                // Course found, send the list of matching courses
-                res.sendFile(path.join(__dirname, 'public','html', 'reviewpage.html'));
-
-            }
-        });
+    courseDatabase.reviews(req,res);
 });
     
 // Retrives courses
 app.get('/getCourse', function(req, res, next) {
-    const { cname } = req.query;
-
-    const sql = 'SELECT * FROM courses WHERE cname LIKE ? LIMIT 10'; // limit the number of courses shown
-    
-    const searchQuery = '%' + cname + '%';
-
-    db.all(sql, [searchQuery], (err, rows) => {
-        if (err) {
-            console.error(err.message);
-            res.status(500).send('Internal Server Error');
-            return;
-        }
-
-        if (rows.length === 0) 
-        {
-            // Course doesn't exist, send a 404 Not Found response
-            res.status(404).send('Course not found');
-        }
-        else 
-        {
-            // Course found, send the list of matching courses
-            res.json(rows);
-        }
-    });
+    databaseModules.getCourses(req,res);
 });
   
 // Posts review to database
 app.post('/createReview', (req, res) => {
-
-    const uname = req.user.uname;  
-    console.log(uname);
-
-    const cname = req.body.cname;
-    console.log(cname);
-
-    const { content, grading, anotes, crating } = req.body;
-    
-    const sql = 'SELECT cid FROM courses WHERE cname LIKE ?';
-    db.get(sql, [cname], (err, row) => {
-        if (err) {
-            console.log(err.message);
-            res.status(500).send('Internal Server Error');
-            return;
-        }
-
-        if (!row) {
-            console.log('Course not found'); 
-            res.status(404).send('Course not found');
-            return;
-        }
-
-        const cid = row.cid;
-        
-        const insertSql = 'INSERT INTO reviews (cid, content, grading, anotes, crating, uname) VALUES (?, ?, ?, ?, ?, ?)';
-        db.serialize(() => {
-            db.run(insertSql, [cid, content, grading, anotes, crating, uname], function(err) {
-                if (err) {
-                    console.log(err.message);
-                    res.status(500).send('Internal Server Error');
-                    return;
-                }
-                console.log('Review inserted successfully');
-                res.redirect('/index'); 
-            });
-        });
-    });
+ courseDatabase.createReview(req,res);
 });
 
 app.get('/user', (req, res) => {
@@ -224,21 +128,7 @@ app.get('/account', (req, res) => {
 });
 
 app.get('/userReviews',(req,res)=>{
-    const uname = req.user.uname;  
-    console.log('User accessing account:', uname);
-
-    const sql = 'SELECT * FROM reviews WHERE uname LIKE ?';
-
-    db.all(sql, [uname], (err, rows)=> {
-        if (err) 
-        {
-            console.error(err.message);
-            res.status(500).send('Internal Server Error');
-            return;
-        }
-        else
-            res.json(rows);
-    })
+    databaseModules. userReviews(req,res);
 })
 
 app.listen(port, () => {

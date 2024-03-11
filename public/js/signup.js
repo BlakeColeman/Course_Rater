@@ -1,4 +1,6 @@
 document.getElementById("SignUp").addEventListener("submit", function(event){
+	// Prevent the form from submitting by default
+	// testXhr();
 	 // Get form inputs
 	 var uname = document.getElementById("uname").value;
 	 var email = document.getElementById("email").value;

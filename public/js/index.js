@@ -1,5 +1,7 @@
 // index.js
 
+
+
 fetch('/user')
     .then(response => {
         if (!response.ok) {

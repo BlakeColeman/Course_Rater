@@ -82,7 +82,7 @@ module.exports =
             res.status(404).send('Course not found');
         } else {
             // Course found, send the list of matching courses
-            res.sendFile(path.join(__dirname, 'public','html', 'reviewpage.html'));
+            res.sendFile(path.join(__dirname,'../', 'public','html', 'reviewpage.html'));
 
         }
     });
@@ -134,7 +134,7 @@ module.exports =
       }
     });
     const { uname } = req.uname;
-    const sql = 'SELECT * FROM reviews WHERE uname LIKE ?'; // limit the number of courses shown
+    const sql = 'SELECT c.cname,r.uname,r.content,r.grading,r.anotes FROM reviews r WHERE uname LIKE ? LEFT JOIN courses c on c.cid = r.cid'; // limit the number of courses shown
 
     db.all(sql, uname, (err, rows)=> {
         if (err) 
@@ -160,6 +160,7 @@ module.exports =
       }
     });
     const {cid} = req.cid;
+    
     db.all(sql,cname,(err,rows)=>
     {
       if (err)
@@ -302,6 +303,7 @@ module.exports =
   });
   },
 
+
   userReviews: function(req,res)
   {
     const sqlite3 = require('sqlite3').verbose(); 
@@ -314,8 +316,9 @@ module.exports =
 
     const uname = req.user.uname;  
     console.log('User accessing account:', uname);
+    const sql = 'SELECT c.cname,r.uname,r.content,r.grading,r.anotes FROM reviews r LEFT JOIN courses c on c.cid = r.cid WHERE uname LIKE ? '; // limit the number of courses shown
 
-    const sql = 'SELECT * FROM reviews WHERE uname LIKE ?';
+    //const sql = 'SELECT * FROM reviews WHERE uname LIKE ?';
 
     db.all(sql, [uname], (err, rows)=> {
         if (err) 
@@ -359,7 +362,7 @@ module.exports =
         else 
         {
             // Course found, send the list of matching courses
-            res.sendFile(path.join(__dirname, 'public','html', 'reviewpage.html'));
+            res.sendFile(path.join(__dirname,'../', 'public','html', 'reviewpage.html'));
 
         }
     });
