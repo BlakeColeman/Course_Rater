@@ -11,16 +11,16 @@ const courseDatabase = require('../../database/databaseModules')
 
   
 
-  router.post('/checkUsername', (req, res) => 
-  {
-    courseDatabase.checkUsername(req,res);
-  });
+router.post('/checkUsername', (req, res) => 
+{
+  courseDatabase.checkUsername(req,res);
+});
 
 
 
 router.post('/checkEmail',(req,res) => 
 {
-    courseDatabase.checkEmail(req,res);
+  courseDatabase.checkEmail(req,res);
 });
 
 
