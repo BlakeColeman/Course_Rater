@@ -2,7 +2,6 @@ const express = require('express');
 const session = require('express-session'); 
 const bodyParser = require('body-parser');
 const path = require('path');
-const studentController = require('./public/controller/studentController');
 const loginController = require('./public/controller/loginController');
 const signupController = require('./public/controller/signupController');
 const courseDatabase = require('./database/databaseModules');
@@ -27,7 +26,6 @@ app.use(session({
 
 
 // Controllers
-app.use(studentController); // Student Controllers
 app.use(signupController); //signup Controllers
 app.use(loginController); // login Controllers
 
@@ -46,11 +44,6 @@ app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','view', 'signup.html'));
 });
 
-
-app.get('/studentAccount', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public','view', 'studentAccount.html'));
-});
-
 app.get('/createReview', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','view', 'createReview.html'));
 });
@@ -58,21 +51,6 @@ app.get('/createReview', (req, res) => {
 app.get('/editReview', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','view', 'editReview.html'));
 });
-
-
-
-// app.get('/user', (req, res) => {
-//     if (req.user) 
-//     {
-//         // User is logged in, send user information
-//         res.json({ username: req.user.username, email: req.user.email });
-//     } 
-//     else 
-//     {
-//         // User is not logged in
-//         res.status(401).send('Not logged in');
-//     }
-// });
 
 // search for a course
 app.get('/reviews', (req, res) => {
