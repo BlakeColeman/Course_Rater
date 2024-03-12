@@ -2,7 +2,6 @@ const express = require('express');
 const session = require('express-session'); 
 const bodyParser = require('body-parser');
 const path = require('path');
-const adminRoutes = require('./public/controller/adminRoutes');
 const studentController = require('./public/controller/studentController');
 const LoginController = require('./public/controller/LoginController');
 const SignUpController = require('./public/controller/SignUpController');
@@ -27,11 +26,10 @@ app.use(session({
 }));
 
 
-// Routes
-app.use(adminRoutes);// Admin Routes
-app.use(studentController); // Student Routes
-app.use(SignUpController); //signup routes
-app.use(LoginController); // login routes
+// Controllers
+app.use(studentController); // Student Controllers
+app.use(SignUpController); //signup Controllers
+app.use(LoginController); // login Controllers
 
 
 app.get('/index', (req, res) => {
