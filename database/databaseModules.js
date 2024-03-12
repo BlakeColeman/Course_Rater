@@ -310,7 +310,7 @@ module.exports =
   db.close()
   },
 
-  userReviews: function(req,res)
+    userReviews: function(req,res)
   {
     const sqlite3 = require('sqlite3').verbose(); 
     let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
@@ -322,9 +322,7 @@ module.exports =
 
     const uname = req.user.uname;  
     console.log('User accessing account:', uname);
-    const sql = 'SELECT c.cname,r.uname,r.content,r.grading,r.anotes,r.crating FROM reviews r LEFT JOIN courses c on c.cid = r.cid WHERE uname LIKE ? '; // limit the number of courses shown
-
-    //const sql = 'SELECT * FROM reviews WHERE uname LIKE ?';
+    const sql = 'SELECT c.cname,r.review_id, r.uname,r.content,r.grading,r.anotes,r.crating FROM reviews r LEFT JOIN courses c on c.cid = r.cid WHERE uname LIKE ? '; // limit the number of courses shown
 
     db.all(sql, [uname], (err, rows)=> {
         if (err) 
@@ -334,6 +332,29 @@ module.exports =
             return;
         }
         else
+            res.json(rows);
+    })
+    db.close()
+  },
+
+  reviewDetails: function(req, res) {
+    const sqlite3 = require('sqlite3').verbose();
+    let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
+        if (err) {
+            console.error(err.message);
+        }
+    });
+
+    const reviewId = req.params.id; // Extract review ID from URL parameter
+    console.log('Fetching review details for review ID:', reviewId);
+    const sql = 'SELECT c.cname,r.review_id, r.uname,r.content,r.grading,r.anotes,r.crating FROM reviews r LEFT JOIN courses c on c.cid = r.cid WHERE r.review_id = ?'; // Query modified to filter by review ID
+
+    db.all(sql, [reviewId], (err, rows) => {
+        if (err) {
+            console.error(err.message);
+            res.status(500).send('Internal Server Error');
+            return;
+        } else
             res.json(rows);
     })
     db.close()
