@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const adminRoutes = require('./public/routes/adminRoutes');
 const studentRoutes = require('./public/routes/studentRoutes');
-const loginRoutes = require('./public/routes/LoginRoutes');
+const LoginController = require('./public/routes/LoginController');
 const signupRoutes = require('./public/routes/SignUpRoutes');
 const courseDatabase = require('./database/databaseModules');
 const databaseModules = require('./database/databaseModules');
@@ -31,7 +31,7 @@ app.use(session({
 app.use(adminRoutes);// Admin Routes
 app.use(studentRoutes); // Student Routes
 app.use(signupRoutes); //signup routes
-app.use(loginRoutes); // login routes
+app.use(LoginController); // login routes
 
 
 app.get('/index', (req, res) => {
