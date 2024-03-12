@@ -64,10 +64,13 @@ app.get('/Review', (req, res) => {
 
 
 // app.get('/user', (req, res) => {
-//     if (req.user) {
+//     if (req.user) 
+//     {
 //         // User is logged in, send user information
 //         res.json({ username: req.user.username, email: req.user.email });
-//     } else {
+//     } 
+//     else 
+//     {
 //         // User is not logged in
 //         res.status(401).send('Not logged in');
 //     }
