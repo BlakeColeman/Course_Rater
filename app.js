@@ -107,8 +107,12 @@ app.get('/account', (req, res) => {
 });
 
 app.get('/userReviews',(req,res)=>{
-    databaseModules. userReviews(req,res);
-})
+    databaseModules.userReviews(req,res);
+});
+
+app.get('/reviewDetails/:id', (req, res) => {
+    databaseModules.reviewDetails(req,res);
+});
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
