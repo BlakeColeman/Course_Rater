@@ -55,8 +55,8 @@ app.get('/createReview', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','view', 'createReview.html'));
 });
 
-app.get('/Review', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public','view', 'personalReview.html'));
+app.get('/editReview', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public','view', 'editReview.html'));
 });
 
 
