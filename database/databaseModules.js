@@ -124,60 +124,6 @@ module.exports =
     db.close()
   },
 
-  getUsersReviews: function(req,res)
-  {
-    const sqlite3 = require('sqlite3').verbose(); 
-    let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
-      if (err) 
-      {
-        console.error(err.message);
-      }
-    });
-    const { uname } = req.uname;
-    const sql = 'SELECT c.cname,r.uname,r.content,r.grading,r.anotes FROM reviews r WHERE uname LIKE ? LEFT JOIN courses c on c.cid = r.cid'; // limit the number of courses shown
-
-    db.all(sql, uname, (err, rows)=> {
-        if (err) 
-        {
-            console.error(err.message);
-            res.status(500).send('Internal Server Error');
-            return;
-        }
-        else
-        {
-          res.send(rows);
-        }
-    })
-    db.close()
-  },
-
-  getCourseReviews: function(req,res)
-  {
-    const sqlite3 = require('sqlite3').verbose(); 
-    let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
-      if (err) 
-      {
-        console.error(err.message);
-      }
-    });
-    const {cid} = req.cid;
-    
-    db.all(sql,cname,(err,rows)=>
-    {
-      if (err)
-      {
-        console.error(err.message);
-        res.status(500).send('Internal Server Error');
-        return;
-      }
-      else
-      {
-        res.send(rows);
-      }
-    })
-    db.close()
-  },
-
   createUser: function(req,res)
   {
     const sqlite3 = require('sqlite3').verbose(); 
