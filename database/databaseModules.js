@@ -80,7 +80,7 @@ module.exports =
             res.status(404).send('Course not found');
         } else {
             // Course found, send the list of matching courses
-            res.sendFile(path.join(__dirname,'../', 'public','html', 'reviewpage.html'));
+            res.sendFile(path.join(__dirname,'../', 'public','view', 'reviewpage.html'));
 
         }
     });
