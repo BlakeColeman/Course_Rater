@@ -3,8 +3,8 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const path = require('path');
 const studentController = require('./public/controller/studentController');
-const LoginController = require('./public/controller/LoginController');
-const SignUpController = require('./public/controller/SignUpController');
+const loginController = require('./public/controller/loginController');
+const signupController = require('./public/controller/signupController');
 const courseDatabase = require('./database/databaseModules');
 const databaseModules = require('./database/databaseModules');
 
@@ -28,8 +28,8 @@ app.use(session({
 
 // Controllers
 app.use(studentController); // Student Controllers
-app.use(SignUpController); //signup Controllers
-app.use(LoginController); // login Controllers
+app.use(signupController); //signup Controllers
+app.use(loginController); // login Controllers
 
 
 app.get('/index', (req, res) => {
