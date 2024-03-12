@@ -13,14 +13,16 @@ module.exports =
       }
     });
 
+    console.log(req.body);
+    
     const uname = req.user.uname;  
     console.log(uname);
 
     const cname = req.body.cname;
     console.log(cname);
 
-    const { content, grading, anotes, crating } = req.body;
-    
+    const { content, grading, anotes, rate } = req.body;
+    console.log(rate);
     const sql = 'SELECT cid FROM courses WHERE cname LIKE ?';
     db.get(sql, [cname], (err, row) => {
         if (err) {
@@ -39,7 +41,7 @@ module.exports =
         
         const insertSql = 'INSERT INTO reviews (cid, content, grading, anotes, crating, uname) VALUES (?, ?, ?, ?, ?, ?)';
         db.serialize(() => {
-            db.run(insertSql, [cid, content, grading, anotes, crating, uname], function(err) {
+            db.run(insertSql, [cid, content, grading, anotes, rate, uname], function(err) {
                 if (err) {
                     console.log(err.message);
                     res.status(500).send('Internal Server Error');
@@ -50,7 +52,7 @@ module.exports =
             });
         });
     });
-    db.close()
+    //db.close()
   },
 
   searchCourse: function(req,res)
@@ -78,7 +80,7 @@ module.exports =
             res.status(404).send('Course not found');
         } else {
             // Course found, send the list of matching courses
-            res.sendFile(path.join(__dirname,'../', 'public','view', 'reviewpage.html'));
+            res.sendFile(path.join(__dirname,'../', 'public','html', 'reviewpage.html'));
 
         }
     });
@@ -193,7 +195,7 @@ module.exports =
         return console.log(err.message);
       }
       console.log("New user has been added");
-      res.sendFile(path.join(__dirname, '../','public/view', 'login.html'));
+      res.sendFile(path.join(__dirname, '../','public/html', 'login.html'));
     });
     db.close()
   },
@@ -308,7 +310,6 @@ module.exports =
   db.close()
   },
 
-
   userReviews: function(req,res)
   {
     const sqlite3 = require('sqlite3').verbose(); 
@@ -321,7 +322,7 @@ module.exports =
 
     const uname = req.user.uname;  
     console.log('User accessing account:', uname);
-    const sql = 'SELECT c.cname,r.uname,r.content,r.grading,r.anotes FROM reviews r LEFT JOIN courses c on c.cid = r.cid WHERE uname LIKE ? '; // limit the number of courses shown
+    const sql = 'SELECT c.cname,r.uname,r.content,r.grading,r.anotes,r.crating FROM reviews r LEFT JOIN courses c on c.cid = r.cid WHERE uname LIKE ? '; // limit the number of courses shown
 
     //const sql = 'SELECT * FROM reviews WHERE uname LIKE ?';
 
@@ -369,7 +370,7 @@ module.exports =
         else 
         {
             // Course found, send the list of matching courses
-            res.sendFile(path.join(__dirname,'../', 'public','view', 'reviewpage.html'));
+            res.sendFile(path.join(__dirname,'../', 'public','html', 'reviewpage.html'));
 
         }
     });
