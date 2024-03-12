@@ -15,7 +15,7 @@ const port = 3000;
 
 // Middleware
 // Serve static files from the 'public' directory
-app.use(express.static('public', { index: 'html/index.html' }));
+app.use(express.static('public', { index: 'view/index.html' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -33,30 +33,30 @@ app.use(loginController); // login Controllers
 
 
 app.get('/index', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public','html', 'index.html'));
+    res.sendFile(path.join(__dirname, 'public','view', 'index.html'));
 });
 
 //Deleted index2 route 
 //will delete index2file after a few days
 app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public','html', 'login.html'));
+    res.sendFile(path.join(__dirname, 'public','view', 'login.html'));
 });
 
 app.get('/signup', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public','html', 'signup.html'));
+    res.sendFile(path.join(__dirname, 'public','view', 'signup.html'));
 });
 
 
 app.get('/studentAccount', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public','html', 'studentAccount.html'));
+    res.sendFile(path.join(__dirname, 'public','view', 'studentAccount.html'));
 });
 
 app.get('/createReview', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public','html', 'createReview.html'));
+    res.sendFile(path.join(__dirname, 'public','view', 'createReview.html'));
 });
 
 app.get('/Review', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public','html', 'personalReview.html'));
+    res.sendFile(path.join(__dirname, 'public','view', 'personalReview.html'));
 });
 
 
@@ -115,12 +115,12 @@ app.get('/account', (req, res) => {
     if (req.user.role === 'admin') 
     {
         // Direct to the admin account page
-        res.sendFile(path.join(__dirname, 'public', 'html', 'adminAccount.html'));
+        res.sendFile(path.join(__dirname, 'public', 'view', 'adminAccount.html'));
     } 
     else if (!req.user.role) 
     {
         // Direct to the student account page is role is blank
-        res.sendFile(path.join(__dirname, 'public', 'html', 'studentAccount.html'));
+        res.sendFile(path.join(__dirname, 'public', 'view', 'studentAccount.html'));
     } 
     else 
     {
