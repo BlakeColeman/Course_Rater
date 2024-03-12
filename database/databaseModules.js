@@ -3,11 +3,6 @@ const path = require('path');
 
 module.exports = 
 { 
-  hello: function() 
-  {
-     return "Hello";
-  },
-
   createReview: function(req,res)
   {
     const sqlite3 = require('sqlite3').verbose(); 
@@ -55,6 +50,7 @@ module.exports =
             });
         });
     });
+    db.close()
   },
 
   searchCourse: function(req,res)
@@ -86,6 +82,7 @@ module.exports =
 
         }
     });
+    db.close()
   },
 
   getCourses: function(req,res)
@@ -122,6 +119,7 @@ module.exports =
             res.json(rows);
         }
     });
+    db.close()
   },
 
   getUsersReviews: function(req,res)
@@ -148,6 +146,7 @@ module.exports =
           res.send(rows);
         }
     })
+    db.close()
   },
 
   getCourseReviews: function(req,res)
@@ -174,6 +173,7 @@ module.exports =
         res.send(rows);
       }
     })
+    db.close()
   },
 
   createUser: function(req,res)
@@ -195,6 +195,7 @@ module.exports =
       console.log("New user has been added");
       res.sendFile(path.join(__dirname, '../','public/html', 'login.html'));
     });
+    db.close()
   },
 
   checkUsername: function(req,res)
@@ -228,6 +229,7 @@ module.exports =
             return;
         }
     });
+    db.close()
   },
 
   checkEmail: function(req,res)
@@ -262,6 +264,7 @@ module.exports =
             res.status(200).send('Email available');
         }
     })
+    db.close()
   },
 
   verifyPassword: function(email,password,done)
@@ -287,6 +290,7 @@ module.exports =
         }
     return done(null, row);
     });
+    db.close()
   },
 
   getUserData: function(uname,done)
@@ -301,6 +305,7 @@ module.exports =
     db.get('SELECT * FROM users WHERE uname = ?', [uname], (err, user) => {
       done(err, user);
   });
+  db.close()
   },
 
 
@@ -330,9 +335,11 @@ module.exports =
         else
             res.json(rows);
     })
+    db.close()
   },
 
-  reviews: function(req, res) {
+  reviews: function(req, res) 
+  {
 
     const sqlite3 = require('sqlite3').verbose(); 
     let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
@@ -366,7 +373,35 @@ module.exports =
 
         }
     });
-  }
+    db.close()
+  },
 
+  reportReview: function(req,res)
+  {
+    const sqlite3 = require('sqlite3').verbose(); 
+    let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
+      if (err) 
+      {
+        console.error(err.message);
+      }
+    });
+    const rid =req.body.rid;
+    const sql = 'UPDATE SET flags = flags+1 WHERE reviews.flags=?';
+    db.all(sql,[rid],(err,rows)=>{
+      if (err) 
+      {
+          console.error(err.message);
+          res.status(500).send('Internal Server Error');
+          return;
+      }
+      
+      if (rows.length === 0) 
+      {
+          // Course doesn't exist, send a 404 Not Found response
+          res.status(404).send('Review Not found');
+      } 
+    })
+    db.close()
+  }
 
 }
