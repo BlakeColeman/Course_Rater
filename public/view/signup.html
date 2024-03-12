@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>U of R Course Rating - Signup</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <script type="text/javascript" src="../js/signup.js"> </script>
+  </head>
+  
+  <body>
+    
+    <h2> U of R Course Rating </h2>
+
+      <div class="container">
+        <h1> Student Signup Form </h1> 
+        <hr> 
+        <h3> Please sign up to create an account </h3>
+        
+        <!-- <form  method = post id = SignUp onsubmit="return validateForm() " action="./createUser">        -->
+        <form  method = post id = SignUp action="/createUser">
+         
+          <fieldset>
+            <label>Username (*Other students can see this):</label>
+            <input type="text" placeholder="Enter Username" id ="uname" name = "uname" >
+      
+            <label>Email address:</label>
+            <input type="text" placeholder="Enter uregina email address" id="email" name = "email" > 
+            
+            <label>Enter Password : </label>   
+            <input type="password" placeholder="Enter Password" id="spword" name = "pword" >
+           
+            <label>Confirm Password : </label>   
+            <input  type="password" placeholder="Confirm Password" id="cpword" name ="pword2" >
+          </fieldset>
+          
+          <h3 id = feedback></h3>
+          <button name = "submit"   type="submit" value="Submit">Submit</button><br>
+
+        </form>
+        <p>Already have an account? <a href="/login"> Login here!</a></p>
+        
+        <script src="../js/signup.js"></script>
+
+        <!-- <script type = "module" src="../js/signup-r.js">
+        </script> -->
+      </div>   
+  </body>
+</html>
+

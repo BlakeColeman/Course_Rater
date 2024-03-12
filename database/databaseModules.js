@@ -78,7 +78,7 @@ module.exports =
             res.status(404).send('Course not found');
         } else {
             // Course found, send the list of matching courses
-            res.sendFile(path.join(__dirname,'../', 'public','html', 'reviewpage.html'));
+            res.sendFile(path.join(__dirname,'../', 'public','view', 'reviewpage.html'));
 
         }
     });
@@ -193,7 +193,7 @@ module.exports =
         return console.log(err.message);
       }
       console.log("New user has been added");
-      res.sendFile(path.join(__dirname, '../','public/html', 'login.html'));
+      res.sendFile(path.join(__dirname, '../','public/view', 'login.html'));
     });
     db.close()
   },
@@ -369,7 +369,7 @@ module.exports =
         else 
         {
             // Course found, send the list of matching courses
-            res.sendFile(path.join(__dirname,'../', 'public','html', 'reviewpage.html'));
+            res.sendFile(path.join(__dirname,'../', 'public','view', 'reviewpage.html'));
 
         }
     });
