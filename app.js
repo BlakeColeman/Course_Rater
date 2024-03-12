@@ -2,10 +2,10 @@ const express = require('express');
 const session = require('express-session'); 
 const bodyParser = require('body-parser');
 const path = require('path');
-const adminRoutes = require('./public/routes/adminRoutes');
-const studentController = require('./public/routes/studentController');
-const LoginController = require('./public/routes/LoginController');
-const SignUpController = require('./public/routes/SignUpController');
+const adminRoutes = require('./public/controller/adminRoutes');
+const studentController = require('./public/controller/studentController');
+const LoginController = require('./public/controller/LoginController');
+const SignUpController = require('./public/controller/SignUpController');
 const courseDatabase = require('./database/databaseModules');
 const databaseModules = require('./database/databaseModules');
 
