@@ -225,6 +225,25 @@ module.exports =
     db.close()
   },
 
+  // display reviews for a specific course
+  CourseReview: function(req, res) 
+  {
+    const db = connectToDatabase();
+
+    const courseName = req.params.id;
+    const sql = 'SELECT c.cname,r.review_id, r.uname,r.content,r.grading,r.anotes,r.crating FROM reviews r LEFT JOIN courses c on c.cid = r.cid WHERE c.cname = ?'; // Query modified to filter by review ID
+
+    db.all(sql, [courseName], (err, rows) => {
+        if (err) {
+            console.error(err.message);
+            res.status(500).send('Internal Server Error');
+            return;
+        } else
+            res.json(rows);
+    })
+    db.close()
+  },
+
   // deleting a review on the edit review page
   deleteReview: function(req,res)
   {

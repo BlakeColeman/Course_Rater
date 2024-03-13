@@ -118,6 +118,10 @@ app.delete('/deleteReview/:id', (req, res) => {
     databaseModules.deleteReview(req,res);
 });
 
+app.get('/reviews/:cname', (req, res) => {
+    databaseModules.CourseReview(req,res);
+});
+
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });

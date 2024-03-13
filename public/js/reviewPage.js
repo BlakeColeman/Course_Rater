@@ -23,6 +23,42 @@ fetch('/user')
 
 // Display the correct course name on the review page
 const courseNameHeader = document.getElementById('courseNameHeader');
+const urlParams = new URLSearchParams(window.location.search);
+const courseName = urlParams.get('cname');
+
+fetch(`/reviews/${courseName}`)
+.then(response => {
+    if (!response.ok) {
+        throw new Error('Failed to fetch user reviews');
+    }
+    return response.json();
+})
+.then(reviews => {
+    const reviews = document.getElementById('review-list');
+
+    reviews.innerHTML = '';
+
+    reviews.forEach(review => {
+        const reviewElement = document.createElement('div');
+        reviewElement.innerHTML = `
+            <article>
+                <div>
+                    <h3>${review.uname}</h3>
+                </div>
+                <div>
+                    <p>${review.content}</p>
+                    <div class="rating" style="font-weight:bold">${review.crating}</div>
+                    </div>
+                    
+                    <button type="button" id="reportButton">Report review</button>
+                    <br><br>
+            </article>
+        `;
+        reviewDetails.appendChild(reviewElement);
+    });
+})
+.catch(error => console.error('Error fetching user reviews:', error));
+
 if (courseName) {
-    courseNameHeader.innerText = `${courseName} reviews:`;
+    courseNameHeader.innerText = `${courseName.toUpperCase()} reviews:`;
 }
