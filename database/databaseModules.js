@@ -1,17 +1,19 @@
 const sqlite3 = require('sqlite3').verbose(); 
 const path = require('path');
 
+function connectToDatabase() {
+  return new sqlite3.Database('./database/UofRCourseRater', (err) => {
+      if (err) {
+          console.error(err.message);
+      }
+  });
+}
+
 module.exports = 
 { 
   createReview: function(req,res)
   {
-    const sqlite3 = require('sqlite3').verbose(); 
-    let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
-      if (err) 
-      {
-        console.error(err.message);
-      }
-    });
+    const db = connectToDatabase();
     
     const uname = req.user.uname;  
     const cname = req.body.cname;
@@ -52,13 +54,8 @@ module.exports =
   // takes the user to the correct review page given search
   searchCourse: function(req,res)
   {
-    const sqlite3 = require('sqlite3').verbose(); 
-    let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
-      if (err) 
-      {
-        console.error(err.message);
-      }
-    });
+    const db = connectToDatabase();
+
     const { cname } = req.query;
         
     const sql = 'SELECT * FROM courses WHERE cname LIKE ?';
@@ -83,13 +80,7 @@ module.exports =
   // get the courses will searching
   getCourses: function(req,res)
   {
-    const sqlite3 = require('sqlite3').verbose(); 
-    let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
-      if (err) 
-      {
-        console.error(err.message);
-      }
-    });
+    const db = connectToDatabase();
 
     const { cname } = req.query;
 
@@ -118,13 +109,8 @@ module.exports =
 
   createUser: function(req,res)
   {
-    const sqlite3 = require('sqlite3').verbose(); 
-    let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
-      if (err) 
-      {
-        console.error(err.message);
-      }
-    });
+    const db = connectToDatabase();
+    
     // SignupForm(req.body);
     console.log(req.body)
     db.run('INSERT INTO users(uname,email,pword) VALUES(?,?,?)', [req.body.uname,req.body.email, req.body.pword], function(err) {
@@ -140,13 +126,8 @@ module.exports =
 
   checkUsername: function(req,res)
   {
-    //const sqlite3 = require('sqlite3').verbose(); 
-    let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
-      if (err) 
-      {
-        console.error(err.message);
-      }
-    });
+    const db = connectToDatabase();
+
     const {uname} = req.body;
     console.log("Checking uname:",uname,"for availability");
     var sql = 'SELECT * FROM users WHERE uname = ?';
@@ -173,13 +154,8 @@ module.exports =
 
   checkEmail: function(req,res)
   {
-    const sqlite3 = require('sqlite3').verbose(); 
-    let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
-      if (err) 
-      {
-        console.error(err.message);
-      }
-    });
+    const db = connectToDatabase();
+
     const {email} = req.body;
     console.log("checking Email",email,"for availability");
     var sql ='SELECT * FROM users WHERE email = ?';
@@ -207,13 +183,7 @@ module.exports =
 
   verifyPassword: function(email,password,done)
   {
-    const sqlite3 = require('sqlite3').verbose(); 
-    let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
-      if (err) 
-      {
-        console.error(err.message);
-      }
-    });
+    const db = connectToDatabase();
 
     db.get('SELECT * FROM users WHERE email = ?', [email], (err, row) => {
       if (err) {
@@ -233,13 +203,8 @@ module.exports =
 
   getUserData: function(uname,done)
   {
-    const sqlite3 = require('sqlite3').verbose(); 
-    let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
-      if (err) 
-      {
-        console.error(err.message);
-      }
-    });
+    const db = connectToDatabase();
+
     db.get('SELECT * FROM users WHERE uname = ?', [uname], (err, user) => {
       done(err, user);
   });
@@ -247,15 +212,9 @@ module.exports =
   },
 
   // display all reviews a user has made in their account page
-    userReviews: function(req,res)
+  userReviews: function(req,res)
   {
-    const sqlite3 = require('sqlite3').verbose(); 
-    let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
-      if (err) 
-      {
-        console.error(err.message);
-      }
-    });
+    const db = connectToDatabase();
 
     const uname = req.user.uname;  
     const sql = 'SELECT c.cname,r.review_id, r.uname,r.content,r.grading,r.anotes,r.crating FROM reviews r LEFT JOIN courses c on c.cid = r.cid WHERE uname LIKE ? '; // limit the number of courses shown
@@ -274,13 +233,9 @@ module.exports =
   },
 
   // display a single review to either delete or edit
-  reviewDetails: function(req, res) {
-    const sqlite3 = require('sqlite3').verbose();
-    let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
-        if (err) {
-            console.error(err.message);
-        }
-    });
+  reviewDetails: function(req, res) 
+  {
+    const db = connectToDatabase();
 
     const reviewId = req.params.id;
     const sql = 'SELECT c.cname,r.review_id, r.uname,r.content,r.grading,r.anotes,r.crating FROM reviews r LEFT JOIN courses c on c.cid = r.cid WHERE r.review_id = ?'; // Query modified to filter by review ID
@@ -299,13 +254,7 @@ module.exports =
   // deleting a review on the edit review page
   deleteReview: function(req,res)
   {
-    const sqlite3 = require('sqlite3').verbose(); 
-    let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
-      if (err) 
-      {
-        console.error(err.message);
-      }
-    });
+    const db = connectToDatabase();
 
     const reviewId = req.params.id;
     const sql = 'DELETE FROM reviews WHERE review_id = ?';
@@ -324,14 +273,7 @@ module.exports =
 
   reviews: function(req, res) 
   {
-
-    const sqlite3 = require('sqlite3').verbose(); 
-    let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
-      if (err) 
-      {
-        console.error(err.message);
-      }
-    });
+    const db = connectToDatabase();
 
     const { cname } = req.query; 
     
@@ -360,13 +302,8 @@ module.exports =
 
   reportReview: function(req,res)
   {
-    const sqlite3 = require('sqlite3').verbose(); 
-    let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
-      if (err) 
-      {
-        console.error(err.message);
-      }
-    });
+    const db = connectToDatabase();
+
     const rid =req.body.rid;
     const sql = 'UPDATE SET flags = flags+1 WHERE reviews.flags=?';
     db.all(sql,[rid],(err,rows)=>{
