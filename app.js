@@ -118,6 +118,7 @@ app.delete('/deleteReview/:id', (req, res) => {
     databaseModules.deleteReview(req,res);
 });
 
+// all reviews for a course that was searched
 app.get('/reviews/:cname', (req, res) => {
     databaseModules.CourseReview(req,res);
 });
