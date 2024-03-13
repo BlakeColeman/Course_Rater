@@ -212,7 +212,7 @@ module.exports =
     const db = connectToDatabase();
 
     const reviewId = req.params.id;
-    const sql = 'SELECT c.cname,r.review_id, r.uname,r.content,r.grading,r.anotes,r.crating FROM reviews r LEFT JOIN courses c on c.cid = r.cid WHERE r.review_id = ?'; // Query modified to filter by review ID
+    const sql = 'SELECT c.cname,r.review_id, r.uname,r.content,r.grading,r.anotes,r.crating FROM reviews r LEFT JOIN courses c on c.cid = r.cid WHERE r.review_id = ?'; 
 
     db.all(sql, [reviewId], (err, rows) => {
         if (err) {
@@ -230,8 +230,8 @@ module.exports =
   {
     const db = connectToDatabase();
 
-    const courseName = req.params.id;
-    const sql = 'SELECT c.cname,r.review_id, r.uname,r.content,r.grading,r.anotes,r.crating FROM reviews r LEFT JOIN courses c on c.cid = r.cid WHERE c.cname = ?'; // Query modified to filter by review ID
+    const courseName = req.params.cname;
+    const sql = 'SELECT c.cname,r.review_id, r.uname,r.content,r.grading,r.anotes,r.crating FROM reviews r LEFT JOIN courses c on c.cid = r.cid WHERE cname LIKE ? ';
 
     db.all(sql, [courseName], (err, rows) => {
         if (err) {

@@ -27,37 +27,35 @@ const urlParams = new URLSearchParams(window.location.search);
 const courseName = urlParams.get('cname');
 
 fetch(`/reviews/${courseName}`)
-.then(response => {
-    if (!response.ok) {
-        throw new Error('Failed to fetch user reviews');
-    }
-    return response.json();
-})
-.then(reviews => {
-    const reviews = document.getElementById('review-list');
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to fetch user reviews');
+        }
+        return response.json();
+    })
+    .then(reviews => {
+        const reviewList = document.getElementById('review-list'); 
 
-    reviews.innerHTML = '';
+        reviewList.innerHTML = '';
 
-    reviews.forEach(review => {
-        const reviewElement = document.createElement('div');
-        reviewElement.innerHTML = `
+        reviews.forEach(review => {
+            const reviewElement = document.createElement('div');
+            reviewElement.innerHTML = `
             <article>
-                <div>
-                    <h3>${review.uname}</h3>
-                </div>
-                <div>
-                    <p>${review.content}</p>
-                    <div class="rating" style="font-weight:bold">${review.crating}</div>
-                    </div>
-                    
-                    <button type="button" id="reportButton">Report review</button>
-                    <br><br>
+                <h3><b>Review by user: </b>${review.uname}</h3>
+                <h3 style="text-align: left"><b>Description:</b> ${review.content}</h3>
+                <h3 style="text-align: left"><b>Grading:</b> ${review.grading}</h3> 
+                <h3 style="text-align: left"><b>Additional Notes:</b> ${review.anotes}</h3> 
+                <h3 style="text-align: left"><b>Rating:</b> ${review.crating}</h3>
+                <button type="button" id="reportButton">Report review</button> 
+                <br><br>
             </article>
-        `;
-        reviewDetails.appendChild(reviewElement);
-    });
-})
-.catch(error => console.error('Error fetching user reviews:', error));
+            <br>
+            `;
+            reviewList.appendChild(reviewElement);
+        });
+    })
+    .catch(error => console.error('Error fetching user reviews:', error));
 
 if (courseName) {
     courseNameHeader.innerText = `${courseName.toUpperCase()} reviews:`;
