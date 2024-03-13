@@ -11,6 +11,100 @@ function connectToDatabase() {
 
 module.exports = 
 { 
+  createUser: function(req,res)
+  {
+    const db = connectToDatabase();
+    
+    // SignupForm(req.body);
+    console.log(req.body)
+    db.run('INSERT INTO users(uname,email,pword) VALUES(?,?,?)', [req.body.uname,req.body.email, req.body.pword], function(err) {
+      if (err) 
+      {
+        return console.log(err.message);
+      }
+      console.log("New user has been added");
+      res.sendFile(path.join(__dirname, '../','public/view', 'login.html'));
+    });
+    db.close()
+  },
+
+  checkUsername: function(req,res)
+  {
+    const db = connectToDatabase();
+
+    const {uname} = req.body;
+    console.log("Checking uname:",uname,"for availability");
+    var sql = 'SELECT * FROM users WHERE uname = ?';
+    // Check if the username already exists in the database
+    db.all(sql, [uname], (err, rows)=> 
+    {
+        if (err) {
+            console.error(err.message);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        if (rows.length!=0) {
+            // Username already exists, send a 400 Bad Request response
+            res.status(400).send('Username already exists');
+            return;
+        } else {
+            // Username doesn't exist, send a 200 OK response
+            res.status(200).send('Username available');
+            return;
+        }
+    });
+    db.close()
+  },
+
+  checkEmail: function(req,res)
+  {
+    const db = connectToDatabase();
+
+    const {email} = req.body;
+    console.log("checking Email",email,"for availability");
+    var sql ='SELECT * FROM users WHERE email = ?';
+    db.all(sql,[email],(err, rows) =>
+    {
+        if (err) 
+        {
+            console.error(err.message);
+            res.status(500).send('internal Server Error');
+            return;
+        }
+        if (rows.length != 0) 
+        {
+            //Email already registered, send a 400 Bad Request response
+            res.status(400).send('Email already in use');
+        }
+        else
+        {
+            //Email not registered, send a 200 OK response
+            res.status(200).send('Email available');
+        }
+    })
+    db.close()
+  },
+
+  verifyPassword: function(email,password,done)
+  {
+    const db = connectToDatabase();
+
+    db.get('SELECT * FROM users WHERE email = ?', [email], (err, row) => {
+      if (err) {
+        console.error(err);
+        return done(err);
+       } 
+       if (!row) {
+        return done(null, false, { message: 'Incorrect email.' });
+        }
+    if (row.pword !== password) {
+        return done(null, false, { message: 'Incorrect password.' });
+        }
+    return done(null, row);
+    });
+    db.close()
+  },
+  
   createReview: function(req,res)
   {
     const db = connectToDatabase();
@@ -103,100 +197,6 @@ module.exports =
         {
             res.json(rows);
         }
-    });
-    db.close()
-  },
-
-  createUser: function(req,res)
-  {
-    const db = connectToDatabase();
-    
-    // SignupForm(req.body);
-    console.log(req.body)
-    db.run('INSERT INTO users(uname,email,pword) VALUES(?,?,?)', [req.body.uname,req.body.email, req.body.pword], function(err) {
-      if (err) 
-      {
-        return console.log(err.message);
-      }
-      console.log("New user has been added");
-      res.sendFile(path.join(__dirname, '../','public/view', 'login.html'));
-    });
-    db.close()
-  },
-
-  checkUsername: function(req,res)
-  {
-    const db = connectToDatabase();
-
-    const {uname} = req.body;
-    console.log("Checking uname:",uname,"for availability");
-    var sql = 'SELECT * FROM users WHERE uname = ?';
-    // Check if the username already exists in the database
-    db.all(sql, [uname], (err, rows)=> 
-    {
-        if (err) {
-            console.error(err.message);
-            res.status(500).send('Internal Server Error');
-            return;
-        }
-        if (rows.length!=0) {
-            // Username already exists, send a 400 Bad Request response
-            res.status(400).send('Username already exists');
-            return;
-        } else {
-            // Username doesn't exist, send a 200 OK response
-            res.status(200).send('Username available');
-            return;
-        }
-    });
-    db.close()
-  },
-
-  checkEmail: function(req,res)
-  {
-    const db = connectToDatabase();
-
-    const {email} = req.body;
-    console.log("checking Email",email,"for availability");
-    var sql ='SELECT * FROM users WHERE email = ?';
-    db.all(sql,[email],(err, rows) =>
-    {
-        if (err) 
-        {
-            console.error(err.message);
-            res.status(500).send('internal Server Error');
-            return;
-        }
-        if (rows.length != 0) 
-        {
-            //Email already registered, send a 400 Bad Request response
-            res.status(400).send('Email already in use');
-        }
-        else
-        {
-            //Email not registered, send a 200 OK response
-            res.status(200).send('Email available');
-        }
-    })
-    db.close()
-  },
-
-  verifyPassword: function(email,password,done)
-  {
-    const db = connectToDatabase();
-
-    db.get('SELECT * FROM users WHERE email = ?', [email], (err, row) => {
-      if (err) {
-        console.error(err);
-        return done(err);
-       } 
-       if (!row) {
-        return done(null, false, { message: 'Incorrect email.' });
-        }
-    if (row.pword !== password) {
-        return done(null, false, { message: 'Incorrect password.' });
-        }
-    return done(null, row);
     });
     db.close()
   },

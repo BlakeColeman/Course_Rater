@@ -34,8 +34,6 @@ app.get('/index', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','view', 'index.html'));
 });
 
-//Deleted index2 route 
-//will delete index2file after a few days
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','view', 'login.html'));
 });
