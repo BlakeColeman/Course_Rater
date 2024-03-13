@@ -137,7 +137,7 @@ module.exports =
                     res.status(500).send('Internal Server Error');
                     return;
                 }
-                console.log('Review inserted successfully');
+                console.log('Review was inserted successfully');
                 res.redirect('/index'); 
             });
         });
@@ -145,33 +145,7 @@ module.exports =
     //db.close()
   },
 
-  // takes the user to the correct review page given search
-  searchCourse: function(req,res)
-  {
-    const db = connectToDatabase();
-
-    const { cname } = req.query;
-        
-    const sql = 'SELECT * FROM courses WHERE cname LIKE ?';
-    
-    db.all(sql, [cname], (err, rows) => {
-        if (err) {
-            console.error(err.message);
-            res.status(500).send('Internal Server Error');
-            return;
-        }
-        
-        if (rows.length === 0) {
-            res.status(404).send('Course not found');
-        } else {
-            res.sendFile(path.join(__dirname,'../', 'public','view', 'reviewpage.html'));
-
-        }
-    });
-    db.close()
-  },
-
-  // get the courses will searching
+  // get the courses while searching
   getCourses: function(req,res)
   {
     const db = connectToDatabase();
@@ -191,7 +165,7 @@ module.exports =
 
         if (rows.length === 0) 
         {
-            res.status(404).send('Course not found');
+          res.status(404).send('Course does not exist');
         }
         else 
         {
@@ -271,6 +245,7 @@ module.exports =
     db.close()
   },
 
+  // takes the user to the correct review page given search
   reviews: function(req, res) 
   {
     const db = connectToDatabase();
@@ -289,7 +264,7 @@ module.exports =
         
         if (rows.length === 0) 
         {
-            res.status(404).send('Course not found');
+          res.redirect('/index');
         } 
         else 
         {

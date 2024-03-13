@@ -75,7 +75,6 @@ const load_courses = function(query = '') {
         });
 };
 
-// Add event listener to search input
 var search_input = document.getElementById("search_input");
 search_input.addEventListener('input', function() {
     var query = search_input.value;
