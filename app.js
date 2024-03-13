@@ -110,8 +110,14 @@ app.get('/userReviews',(req,res)=>{
     databaseModules.userReviews(req,res);
 });
 
+// details for a singular review on the edit review page
 app.get('/reviewDetails/:id', (req, res) => {
     databaseModules.reviewDetails(req,res);
+});
+
+// delete a review on the edit review page
+app.delete('/deleteReview/:id', (req, res) => {
+    databaseModules.deleteReview(req,res);
 });
 
 app.listen(port, () => {

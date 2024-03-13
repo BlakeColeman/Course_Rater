@@ -1,3 +1,6 @@
+// studentAccount.js
+
+// Find and display all reviews for a users account page
 fetch('/userReviews')
     .then(response => {
         if (!response.ok) {

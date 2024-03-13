@@ -12,17 +12,11 @@ module.exports =
         console.error(err.message);
       }
     });
-
-    console.log(req.body);
     
     const uname = req.user.uname;  
-    console.log(uname);
-
     const cname = req.body.cname;
-    console.log(cname);
 
     const { content, grading, anotes, rate } = req.body;
-    console.log(rate);
     const sql = 'SELECT cid FROM courses WHERE cname LIKE ?';
     db.get(sql, [cname], (err, row) => {
         if (err) {
@@ -55,6 +49,7 @@ module.exports =
     //db.close()
   },
 
+  // takes the user to the correct review page given search
   searchCourse: function(req,res)
   {
     const sqlite3 = require('sqlite3').verbose(); 
@@ -64,7 +59,7 @@ module.exports =
         console.error(err.message);
       }
     });
-    const { cname } = req.query; // Extracting 'cname' from the query string
+    const { cname } = req.query;
         
     const sql = 'SELECT * FROM courses WHERE cname LIKE ?';
     
@@ -76,10 +71,8 @@ module.exports =
         }
         
         if (rows.length === 0) {
-            // Course doesn't exist, send a 404 Not Found response
             res.status(404).send('Course not found');
         } else {
-            // Course found, send the list of matching courses
             res.sendFile(path.join(__dirname,'../', 'public','view', 'reviewpage.html'));
 
         }
@@ -87,6 +80,7 @@ module.exports =
     db.close()
   },
 
+  // get the courses will searching
   getCourses: function(req,res)
   {
     const sqlite3 = require('sqlite3').verbose(); 
@@ -112,12 +106,10 @@ module.exports =
 
         if (rows.length === 0) 
         {
-            // Course doesn't exist, send a 404 Not Found response
             res.status(404).send('Course not found');
         }
         else 
         {
-            // Course found send the list of matching courses
             res.json(rows);
         }
     });
@@ -162,7 +154,6 @@ module.exports =
     db.all(sql, [uname], (err, rows)=> 
     {
         if (err) {
-            // Handle any errors
             console.error(err.message);
             res.status(500).send('Internal Server Error');
             return;
@@ -196,7 +187,6 @@ module.exports =
     {
         if (err) 
         {
-            // Handle any errors
             console.error(err.message);
             res.status(500).send('internal Server Error');
             return;
@@ -227,7 +217,7 @@ module.exports =
 
     db.get('SELECT * FROM users WHERE email = ?', [email], (err, row) => {
       if (err) {
-        console.error(err); // Log the error
+        console.error(err);
         return done(err);
        } 
        if (!row) {
@@ -256,6 +246,7 @@ module.exports =
   db.close()
   },
 
+  // display all reviews a user has made in their account page
     userReviews: function(req,res)
   {
     const sqlite3 = require('sqlite3').verbose(); 
@@ -267,7 +258,6 @@ module.exports =
     });
 
     const uname = req.user.uname;  
-    console.log('User accessing account:', uname);
     const sql = 'SELECT c.cname,r.review_id, r.uname,r.content,r.grading,r.anotes,r.crating FROM reviews r LEFT JOIN courses c on c.cid = r.cid WHERE uname LIKE ? '; // limit the number of courses shown
 
     db.all(sql, [uname], (err, rows)=> {
@@ -283,6 +273,7 @@ module.exports =
     db.close()
   },
 
+  // display a single review to either delete or edit
   reviewDetails: function(req, res) {
     const sqlite3 = require('sqlite3').verbose();
     let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
@@ -291,8 +282,7 @@ module.exports =
         }
     });
 
-    const reviewId = req.params.id; // Extract review ID from URL parameter
-    console.log('Fetching review details for review ID:', reviewId);
+    const reviewId = req.params.id;
     const sql = 'SELECT c.cname,r.review_id, r.uname,r.content,r.grading,r.anotes,r.crating FROM reviews r LEFT JOIN courses c on c.cid = r.cid WHERE r.review_id = ?'; // Query modified to filter by review ID
 
     db.all(sql, [reviewId], (err, rows) => {
@@ -303,6 +293,32 @@ module.exports =
         } else
             res.json(rows);
     })
+    db.close()
+  },
+
+  // deleting a review on the edit review page
+  deleteReview: function(req,res)
+  {
+    const sqlite3 = require('sqlite3').verbose(); 
+    let db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
+      if (err) 
+      {
+        console.error(err.message);
+      }
+    });
+
+    const reviewId = req.params.id;
+    const sql = 'DELETE FROM reviews WHERE review_id = ?';
+
+    db.run(sql, [reviewId], function(err) {
+        if (err) {
+            console.error(err.message);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        console.log(`Review ${reviewId} deleted successfully`);
+        res.sendStatus(200); // Send success response
+    });
     db.close()
   },
 
@@ -331,12 +347,10 @@ module.exports =
         
         if (rows.length === 0) 
         {
-            // Course doesn't exist, send a 404 Not Found response
             res.status(404).send('Course not found');
         } 
         else 
         {
-            // Course found, send the list of matching courses
             res.sendFile(path.join(__dirname,'../', 'public','view', 'reviewpage.html'));
 
         }
@@ -365,11 +379,9 @@ module.exports =
       
       if (rows.length === 0) 
       {
-          // Course doesn't exist, send a 404 Not Found response
           res.status(404).send('Review Not found');
       } 
     })
     db.close()
   }
-
 }
