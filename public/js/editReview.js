@@ -21,10 +21,10 @@ fetch(`/reviewDetails/${reviewId}`)
             reviewElement.innerHTML = `
                 <article>
                 <h6>${review.cname}</h6>
-                <h5><b>Description:</b> ${review.content}</h5>
-                <h5><b>Grading:</b> ${review.grading}</h5> 
-                <h5><b>Additional Notes:</b> ${review.anotes}</h5> 
-                <h5><b>Rating:</b> ${review.crating}</h5>
+                <h3 style="text-align: left"><b>General Description:</b> ${review.content}</h3>
+                <h3 style="text-align: left"><b>Grading:</b> ${review.grading}</h3> 
+                <h3 style="text-align: left"><b>Additional Notes:</b> ${review.anotes}</h3> 
+                <h3 style="text-align: left"><b>Rating:</b> ${review.crating}/5</h3>
                 </a>
                 </article>
             `;

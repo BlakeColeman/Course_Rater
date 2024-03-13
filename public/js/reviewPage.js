@@ -42,11 +42,11 @@ fetch(`/reviews/${courseName}`)
             const reviewElement = document.createElement('div');
             reviewElement.innerHTML = `
             <article>
-                <h3><b>Review by user: </b>${review.uname}</h3>
-                <h3 style="text-align: left"><b>Description:</b> ${review.content}</h3>
+                <h5><u>Review by ${review.uname}</u></h5>
+                <h3 style="text-align: left"><b>General Description:</b> ${review.content}</h3>
                 <h3 style="text-align: left"><b>Grading:</b> ${review.grading}</h3> 
                 <h3 style="text-align: left"><b>Additional Notes:</b> ${review.anotes}</h3> 
-                <h3 style="text-align: left"><b>Rating:</b> ${review.crating}</h3>
+                <h3 style="text-align: left"><b>Rating:</b> ${review.crating}/5</h3>
                 <button type="button" id="reportButton">Report review</button> 
                 <br><br>
             </article>
