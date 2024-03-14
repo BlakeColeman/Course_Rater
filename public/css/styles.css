@@ -244,7 +244,7 @@ article {
     border: 2px solid black;
     padding: 15px;
     overflow-wrap: break-word; 
-    word-break: break-all; 
+    word-break: break-word; 
 }
 
 

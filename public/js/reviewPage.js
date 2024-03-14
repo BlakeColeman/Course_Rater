@@ -39,9 +39,9 @@ fetch(`/reviews/${courseName}`)
         reviewList.innerHTML = '';
 
         if (reviews.length === 0) {
-            const messageElement = document.createElement('div');
-            messageElement.textContent = 'No reviews available for this course.';
-            reviewList.appendChild(messageElement);
+            const noReviews = document.createElement('div');
+            noReviews.textContent = 'No reviews available for this course.';
+            reviewList.appendChild(noReviews);
         } else {
             reviews.forEach(review => {
                 const reviewElement = document.createElement('div');
