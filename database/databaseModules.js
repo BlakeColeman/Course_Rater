@@ -111,9 +111,8 @@ module.exports =
     
     const uname = req.user.uname;  
     const cname = req.body.cname;
-    const currentDate = new Date().toISOString().split('T')[0];
 
-    const { prof, content, grading, anotes, rate } = req.body;
+    const { content, grading, anotes, rate } = req.body;
     const sql = 'SELECT cid FROM courses WHERE cname LIKE ?';
     db.get(sql, [cname], (err, row) => {
         if (err) {
@@ -130,9 +129,9 @@ module.exports =
 
         const cid = row.cid;
         
-        const insertSql = 'INSERT INTO reviews (cid, prof, content, grading, anotes, crating, uname, rcreated) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+        const insertSql = 'INSERT INTO reviews (cid, content, grading, anotes, crating, uname) VALUES (?, ?, ?, ?, ?, ?)';
         db.serialize(() => {
-            db.run(insertSql, [cid,prof,content, grading, anotes, rate, uname, currentDate], function(err) {
+            db.run(insertSql, [cid, content, grading, anotes, rate, uname], function(err) {
                 if (err) {
                     console.log(err.message);
                     res.status(500).send('Internal Server Error');
@@ -143,7 +142,7 @@ module.exports =
             });
         });
     });
-    //db.close()
+    db.close()
   },
 
   // get the courses while searching
@@ -192,7 +191,7 @@ module.exports =
     const db = connectToDatabase();
 
     const uname = req.user.uname;  
-    const sql = 'SELECT c.cname,r.review_id,r.uname,r.prof,r.content,r.grading,r.anotes,r.crating,r.rcreated FROM reviews r LEFT JOIN courses c on c.cid = r.cid WHERE uname LIKE ? '; // limit the number of courses shown
+    const sql = 'SELECT c.cname,r.review_id, r.uname,r.content,r.grading,r.anotes,r.crating FROM reviews r LEFT JOIN courses c on c.cid = r.cid WHERE uname LIKE ? '; // limit the number of courses shown
 
     db.all(sql, [uname], (err, rows)=> {
         if (err) 
@@ -213,7 +212,7 @@ module.exports =
     const db = connectToDatabase();
 
     const reviewId = req.params.id;
-    const sql = 'SELECT c.cname,r.review_id,r.uname,r.prof,r.content,r.grading,r.anotes,r.crating,r.rcreated FROM reviews r LEFT JOIN courses c on c.cid = r.cid WHERE r.review_id = ?'; 
+    const sql = 'SELECT c.cname,r.review_id, r.uname,r.content,r.grading,r.anotes,r.crating FROM reviews r LEFT JOIN courses c on c.cid = r.cid WHERE r.review_id = ?'; 
 
     db.all(sql, [reviewId], (err, rows) => {
         if (err) {
@@ -232,7 +231,7 @@ module.exports =
     const db = connectToDatabase();
 
     const courseName = req.params.cname;
-    const sql = 'SELECT c.cname,r.review_id,r.uname,r.prof,r.content,r.grading,r.anotes,r.crating,r.rcreated FROM reviews r LEFT JOIN courses c on c.cid = r.cid WHERE cname LIKE ? ';
+    const sql = 'SELECT c.cname,r.review_id, r.uname,r.content,r.grading,r.anotes,r.crating FROM reviews r LEFT JOIN courses c on c.cid = r.cid WHERE cname LIKE ? ';
 
     db.all(sql, [courseName], (err, rows) => {
         if (err) {
@@ -313,22 +312,31 @@ module.exports =
       {
           res.status(404).send('Review Not found');
       } 
-    });
+    })
     db.close()
   },
 
-  // get all of the suspended accounts
-  suspended: function(req, res) {
+  editReview: function(req,res)
+  {
     const db = connectToDatabase();
+  
+    console.log(req.body);
 
-    db.all('SELECT * FROM users WHERE suspended = 1', (err, rows) => {
-        if (err) {
-          console.error(err.message);
+    const {rid, content, grading, anotes, rate } = req.body;
+    const updateSQL = 'UPDATE reviews SET content = ?, grading = ?, anotes = ?, crating =? WHERE review_id=? ;'
+    db.serialize(() => 
+    {
+      db.run(updateSQL, [content, grading, anotes, rate, rid], function(err) 
+      {
+        if (err) 
+        {
+          console.log(err.message);
           res.status(500).send('Internal Server Error');
           return;
-        } else {
-            res.json(rows);
         }
+        console.log('Review was inserted successfully');
+        res.redirect('/index'); 
+      });
     });
     db.close()
   }
