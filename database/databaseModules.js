@@ -315,5 +315,20 @@ module.exports =
       } 
     })
     db.close()
+  },
+
+  // get all of the suspended accounts
+  suspended: function(req,res){
+    const db = connectToDatabase();
+
+    db.query('SELECT * FROM users WHERE is_suspended = true', (err, res) => {
+        if (err) {
+            console.error('Error fetching suspended users:', err);
+            res.status(500).json({ error: 'Internal server error' });
+        } else {
+            res.json(res);
+        }
+    })
+    db.close()
   }
 }

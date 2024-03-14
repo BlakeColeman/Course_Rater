@@ -1,31 +1,28 @@
 // adminAccount.js
-//copy of studentAccount (March 12th)
 
-fetch('/userReviews')
+
+// For viewing the suspended accounts
+fetch('/admin/suspendedUsers')
     .then(response => {
-        if (!response.ok) 
-        {
-            throw new Error('Failed to fetch user reviews');
+        if (!response.ok) {
+            throw new Error('Failed to fetch suspended users');
         }
         return response.json();
     })
-    .then(reviews => {
-        const userReviews = document.getElementById('userReviews');
+    .then(suspendedUsers => {
+        const suspendedUsersList = document.getElementById('suspendedUsersList');
 
-        userReviews.innerHTML = '';
+        suspendedUsersList.innerHTML = '';
 
-        reviews.forEach(review => {
-            const reviewElement = document.createElement('div');
-            reviewElement.innerHTML = `
-                <p><b>Course Name:</b> ${review.cname}</p>
-                <p><b>Professor of course:</b> ${review.prof}</p>
-                <p><b>Description:</b> ${review.content}</p>
-                <p><b>Grading:</b> ${review.grading}</p> 
-                <p><b>Additional Notes:</b> ${review.anotes}</p> 
-                <p><b>Rating:</b> ${review.crating}</p>
-                <br>
+        suspendedUsers.forEach(user => {
+            const suspendedElement = document.createElement('div');
+            suspendedElement.innerHTML = `
+                <div>
+                <h3 style="text-align: left"><b>Username: ${user.username}</h3>
+                <h3 style="text-align: left"><b>Email: ${user.email}</h3>
+                </div>
             `;
-            userReviews.appendChild(reviewElement);
+            suspendedUsersList.appendChild(suspendedElement);
         });
     })
-    .catch(error => console.error('Error fetching user reviews:', error));
+    .catch(error => console.error('Error fetching suspended users:', error));
