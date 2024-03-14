@@ -6,7 +6,8 @@ const reviewId = urlParams.get('id');
 // Check if the user is the user of the review
 fetch('/user')
     .then(response => {
-        if (!response.ok) {
+        if (!response.ok) 
+        {
             // If the user is not logged in, take them to the login page
             window.location.href = '/login'; 
         }
@@ -16,7 +17,8 @@ fetch('/user')
         // Displaying the selected review
         fetch(`/reviewDetails/${reviewId}`)
             .then(response => {
-                if (!response.ok) {
+                if (!response.ok) 
+                {
                     throw new Error('Failed to fetch user reviews');
                 }
                 return response.json();
@@ -26,7 +28,8 @@ fetch('/user')
                 reviewDetails.innerHTML = '';
 
                 // Check if the current user is the owner of the review
-                if (currentUser.uname === reviews[0].uname) {
+                if (currentUser.uname === reviews[0].uname) 
+                {
                     reviews.forEach(review => {
                         const reviewElement = document.createElement('div');
                         reviewElement.innerHTML = `
@@ -47,7 +50,9 @@ fetch('/user')
                     deleteReviewButton.addEventListener('click', () => {
                         deleteReview(reviewId); 
                     });
-                } else {
+                } 
+                else 
+                {
                     // If the current user is not the owner of the review, redirect to index page
                     window.location.href = '/index'; 
                 }
@@ -62,7 +67,8 @@ function deleteReview(reviewId) {
         method: 'DELETE',
     })
     .then(response => {
-        if (!response.ok) {
+        if (!response.ok) 
+        {
             throw new Error('Failed to delete review');
         }
         window.location.href = '/account'; 
@@ -72,7 +78,8 @@ function deleteReview(reviewId) {
 
 fetch(`/reviewDetails/${reviewId}`)
     .then(response => {
-        if (!response.ok) {
+        if (!response.ok) 
+        {
             throw new Error('Failed to fetch user reviews');
         }
         return response.json();
