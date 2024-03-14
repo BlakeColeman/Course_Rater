@@ -125,7 +125,7 @@ app.get('/reviews/:cname', (req, res) => {
 
 // all of the suspended accounts
 app.get('/admin/suspendedUsers', (req, res) => {
-    databaseModules.suspended(req,res);
+    databaseModules.suspended(req, res);
 });
 
 app.listen(port, () => {

@@ -313,22 +313,23 @@ module.exports =
       {
           res.status(404).send('Review Not found');
       } 
-    })
+    });
     db.close()
   },
 
   // get all of the suspended accounts
-  suspended: function(req,res){
+  suspended: function(req, res) {
     const db = connectToDatabase();
 
-    db.all('SELECT * FROM users WHERE is_suspended = true', (err, res) => {
+    db.all('SELECT * FROM users WHERE suspended = 1', (err, rows) => {
         if (err) {
-            console.error('Error fetching suspended users:', err);
-            res.status(500).json({ error: 'Internal server error' });
+          console.error(err.message);
+          res.status(500).send('Internal Server Error');
+          return;
         } else {
-            res.json(res);
+            res.json(rows);
         }
-    })
+    });
     db.close()
   }
 }

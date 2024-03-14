@@ -1,6 +1,5 @@
 // adminAccount.js
 
-
 // For viewing the suspended accounts
 fetch('/admin/suspendedUsers')
     .then(response => {
@@ -17,9 +16,10 @@ fetch('/admin/suspendedUsers')
         suspendedUsers.forEach(user => {
             const suspendedElement = document.createElement('div');
             suspendedElement.innerHTML = `
-                <div>
-                <h3 style="text-align: left"><b>Username: ${user.username}</h3>
-                <h3 style="text-align: left"><b>Email: ${user.email}</h3>
+                <div class='suspendedAccounts'>
+                    <button type="button" id="unsusButton">unsuspend</button> 
+                    <h3 style="text-align: left"><b>Username: ${user.uname}</h3>
+                    <h3 style="text-align: left"><b>Email: ${user.email}</h3>
                 </div>
             `;
             suspendedUsersList.appendChild(suspendedElement);
