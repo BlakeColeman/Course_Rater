@@ -18,6 +18,7 @@ fetch('/userReviews')
             reviewElement.innerHTML = `
                 <article>
                 <a href="/editReview?id=${review.review_id}" class="review-link">
+                <p><b>Professor of course:</b> ${review.prof}</p>
                 <p><b>Course Name:</b> ${review.cname}</p>
                 <p><b>Description:</b> ${review.content}</p>
                 <p><b>Grading:</b> ${review.grading}</p> 

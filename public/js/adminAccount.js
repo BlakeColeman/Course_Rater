@@ -18,6 +18,7 @@ fetch('/userReviews')
             const reviewElement = document.createElement('div');
             reviewElement.innerHTML = `
                 <p><b>Course Name:</b> ${review.cname}</p>
+                <p><b>Professor of course:</b> ${review.prof}</p>
                 <p><b>Description:</b> ${review.content}</p>
                 <p><b>Grading:</b> ${review.grading}</p> 
                 <p><b>Additional Notes:</b> ${review.anotes}</p> 
