@@ -3,7 +3,8 @@
 // Find and display all reviews for a users account page
 fetch('/userReviews')
     .then(response => {
-        if (!response.ok) {
+        if (!response.ok) 
+        {
             throw new Error('Failed to fetch user reviews');
         }
         return response.json();
