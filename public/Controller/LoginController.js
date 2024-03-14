@@ -44,14 +44,17 @@ passport.deserializeUser((uname, done) => {
 // Login route
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
-        if (err) {
+        if (err) 
+        {
             return res.status(500).json({ success: false, message: 'An error occurred. Please try again later.' });
         }
-        if (!user) {
+        if (!user) 
+        {
             return res.status(401).json({ success: false, message: info.message });
         }
         req.logIn(user, (err) => {
-            if (err) {
+            if (err) 
+            {
                 return res.status(500).json({ success: false, message: 'An error occurred. Please try again later.' });
             }
             // If authentication succeeds, return success and redirect URL
