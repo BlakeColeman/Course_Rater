@@ -38,26 +38,33 @@ fetch(`/reviews/${courseName}`)
 
         reviewList.innerHTML = '';
 
-        reviews.forEach(review => {
-            const reviewElement = document.createElement('div');
-            reviewElement.innerHTML = `
-            <article>
-                <h5><u>Review by ${review.uname}</u></h5>
-                <h3 style="text-align: left"><b>Professor of course:</b> ${review.prof}</h3>
-                <h3 style="text-align: left"><b>General Description:</b> ${review.content}</h3>
-                <h3 style="text-align: left"><b>Grading:</b> ${review.grading}</h3> 
-                <h3 style="text-align: left"><b>Additional Notes:</b> ${review.anotes}</h3> 
-                <h3 style="text-align: left"><b>Rating:</b> ${review.crating}/5</h3>
-                <button type="button" id="reportButton">Report review</button> 
-                <br><br>
-            </article>
-            <br>
-            `;
-            reviewList.appendChild(reviewElement);
-        });
+        if (reviews.length === 0) {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = 'No reviews available for this course.';
+            reviewList.appendChild(messageElement);
+        } else {
+            reviews.forEach(review => {
+                const reviewElement = document.createElement('div');
+                reviewElement.innerHTML = `
+                <article>
+                    <h3 style="text-align: right"><b>${review.rcreated}</b></h3>
+                    <h5><b>Review by ${review.uname}</b></h5>
+                    <h3 style="text-align: left"><b>Professor of the Course:</b> ${review.prof}</h3>
+                    <h3 style="text-align: left"><b>General Description:</b> ${review.content}</h3>
+                    <h3 style="text-align: left"><b>Assessment:</b> ${review.grading}</h3> 
+                    <h3 style="text-align: left"><b>Additional Notes:</b> ${review.anotes}</h3> 
+                    <h3 style="text-align: left"><b>Rating:</b> ${review.crating}/5</h3>
+                    <button type="button" id="reportButton">Report review</button> 
+                    <br><br>
+                </article>
+                <br>
+                `;
+                reviewList.appendChild(reviewElement);
+            });
+        }
     })
     .catch(error => console.error('Error fetching user reviews:', error));
 
 if (courseName) {
-    courseNameHeader.innerText = `${courseName.toUpperCase()} reviews:`;
+    courseNameHeader.innerText = `${courseName.toUpperCase()} Reviews`;
 }

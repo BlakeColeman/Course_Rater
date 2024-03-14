@@ -19,15 +19,16 @@
             <div class="subTitle"><b>Create Review: </b></div>
             <form action="/createReview" method="post">
                 <input type="hidden" id="cnameInput" name="cname" value="">
+                <input type="hidden" id="rcreatedInput" name="rcreated">
                 <center><textarea name="prof" rows="1" placeholder="Professor of the course"></textarea></center>
                 <h5>Enter the content covered in the course:</h5>
-                <center><textarea name="content" rows="8" placeholder="What were the chapters and concepts covered?"></textarea></center>
+                <center><textarea name="content" rows="6" placeholder="What were the chapters and concepts covered?"></textarea></center>
                 <br>
                 <h5>Enter the grading and assignment structure of the course:</h5>
-                <center><textarea name="grading" rows="8" placeholder="The assignments made up 30% of your grade..."></textarea></center>
+                <center><textarea name="grading" rows="6" placeholder="The assignments made up 30% of your grade..."></textarea></center>
                 <br>
                 <h5>Any additional notes:</h5>
-                <center><textarea name="anotes" rows="8" placeholder="Feel free to RESTPECTFULLY talk about the professor or any other related information about the course"></textarea></center>
+                <center><textarea name="anotes" rows="6" placeholder="Feel free to RESTPECTFULLY talk about the professor or any other related information about the course"></textarea></center>
             
             <h5>Rating:</h5>
             <div class="rate" name="crating">
