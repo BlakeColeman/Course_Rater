@@ -35,8 +35,8 @@ function renderLoggedInHeader(uname) {
 function renderLoggedOutHeader() {
     const header = document.getElementById('header');
     header.innerHTML = `
-        <a href="/login" class="homeButton">Log in</a>
         <a href="/signup" class="homeButton">Sign up</a>
+        <a href="/login" class="homeButton">Log in</a>
 
         <a href="/index" class="title-link">
             <h4 class="title">U of R Course Rating</h4>
