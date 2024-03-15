@@ -11,11 +11,16 @@ fetch('/user')
     // Takes user to the create review page and passes course name in url
     .then(user => {
         
-        const createReview = document.getElementById('createReview');
-        const urlParams = new URLSearchParams(window.location.search);
-        const cName = urlParams.get('cname');
-        
-        createReview.href = `/createReview?cname=${cName}`;
+        if (user.suspended) {
+            // If the user is suspended, hide the create review button
+            document.getElementById('createButton').style.display = 'none';
+        } else {
+            const createReview = document.getElementById('createReview');
+            const urlParams = new URLSearchParams(window.location.search);
+            const cName = urlParams.get('cname');
+            
+            createReview.href = `/createReview?cname=${cName}`;
+        }
     })
     .catch(error => {
         console.error('Error fetching user:', error);

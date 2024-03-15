@@ -69,7 +69,7 @@ app.get('/user', (req, res) => {
     if (req.user) 
     {
         // User is logged in, send user information
-        res.json({ uname: req.user.uname, email: req.user.email });
+        res.json({ uname: req.user.uname, email: req.user.email, suspended: req.user.suspended });
     } 
     else 
     {
