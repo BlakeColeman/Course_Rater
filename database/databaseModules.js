@@ -295,11 +295,12 @@ module.exports =
     db.close()
   },
 
+  // report a review
   reportReview: function(req,res)
   {
     const db = connectToDatabase();
 
-    const rid =req.body.rid;
+    const rid = req.body.rid;
     const sql = 'UPDATE SET flags = flags+1 WHERE reviews.flags=?';
     db.all(sql,[rid],(err,rows)=>{
       if (err) 
@@ -331,7 +332,8 @@ module.exports =
     db.close()
   },
   
-    editReview: function(req,res)
+  // edit a review
+  editReview: function(req,res)
   {
     const db = connectToDatabase();
   
