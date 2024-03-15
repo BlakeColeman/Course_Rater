@@ -65,10 +65,6 @@ app.post('/createReview', (req, res) => {
  courseDatabase.createReview(req,res);
 });
 
-app.post('/editReview', (req, res) => {
-    courseDatabase.editReview(req,res);
-   });
-
 app.get('/user', (req, res) => {
     if (req.user) 
     {
@@ -125,6 +121,11 @@ app.delete('/deleteReview/:id', (req, res) => {
 // all reviews for a course that was searched
 app.get('/reviews/:cname', (req, res) => {
     databaseModules.CourseReview(req,res);
+});
+
+// all of the suspended accounts
+app.get('/admin/suspendedUsers', (req, res) => {
+    databaseModules.suspended(req, res);
 });
 
 app.listen(port, () => {
