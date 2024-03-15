@@ -22,7 +22,9 @@ fetch('/userReviews')
                     <p style="text-align: right"><b>${review.rcreated}</b></p>
                     <p><b>Course Name:</b> ${review.cname}</p>
                     <p><b>Professor of the Course:</b> ${review.prof}</p>
-                    <p>...</p>
+                    <p><b>General Description:</b> ${review.content}</p>
+                    <p><b>Assessment:</b> ${review.grading}</p> 
+                    <p><b>Additional Notes:</b> ${review.anotes}</p> 
                     <p><b>Rating:</b> ${review.crating}/5</p>
                 </a>
                 </article>

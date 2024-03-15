@@ -21,8 +21,12 @@ fetch(`/reviewDetails/${rid}`)
             reviewElement.innerHTML = `
 
             <form action="/editReview" method="post">
+                <button type="button" id="deleteReviewButton">Delete</button>    
+                <br>
                 <input type="hidden" id="cnameInput" name="cname" value="${review.cname}">
                 <input type="hidden" id="ridInput" name="rid" value="${rid}">
+                <h5>Enter the professor or instructor of the course:</h5>
+                <center><textarea name="prof" rows="1">${review.prof}</textarea></center>
                 <h5>Enter the content covered in the course:</h5>
                 <center><textarea name="content" id ="content" rows="8" >${review.content}</textarea></center>
                 <br>
@@ -45,8 +49,7 @@ fetch(`/reviewDetails/${rid}`)
                 <input type="radio" id="star1" name="rate" value="1" />
                 <label for="star1" title="text">1 star</label>
             </div>
-            <button type="submit" class="submitButton">Post Review</a>
-            <button type="button" id="deleteReviewButton">Delete</button>                
+            <button type="submit" class="submitButton">Confirm Edit</a>            
             </form>
             `;
             reviewDetails.appendChild(reviewElement);

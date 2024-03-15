@@ -336,8 +336,6 @@ module.exports =
   editReview: function(req,res)
   {
     const db = connectToDatabase();
-  
-    console.log(req.body);
 
     const {rid, content, grading, anotes, rate } = req.body;
     const updateSQL = 'UPDATE reviews SET content = ?, grading = ?, anotes = ?, crating =? WHERE review_id=? ;'
@@ -352,7 +350,7 @@ module.exports =
           return;
         }
         console.log('Review was inserted successfully');
-        res.redirect('/index'); 
+        res.redirect('/account'); 
       });
     });
     db.close()
