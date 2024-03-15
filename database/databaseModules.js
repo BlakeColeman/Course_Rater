@@ -335,6 +335,27 @@ module.exports =
     db.close()
   },
   
+  // Unsuspend user option for admin
+  unsuspend: function(req, res) {
+    const db = connectToDatabase();
+
+    const uname = req.params.uname;
+
+    db.run('UPDATE users SET suspended = 0 WHERE uname = ?', [uname], function(err) {
+        if (err) {
+            console.error(err.message);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        else{
+          console.log(`User ${uname} unsuspended successfully`);
+          res.sendStatus(200); // Send success response
+        }
+    });
+
+    db.close();
+  },
+
   // edit a review
   editReview: function(req,res)
   {

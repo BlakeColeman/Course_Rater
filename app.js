@@ -133,6 +133,11 @@ app.post('/editReview', (req, res) => {
     courseDatabase.editReview(req,res);
 });
 
+// Unsuspend account
+app.put('/admin/unsuspendUser/:uname', (req, res) => {
+    courseDatabase.unsuspend(req,res);
+}); 
+
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });

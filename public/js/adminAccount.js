@@ -17,7 +17,7 @@ fetch('/admin/suspendedUsers')
             const suspendedElement = document.createElement('div');
             suspendedElement.innerHTML = `
                 <div class='suspendedAccounts'>
-                    <button type="button" id="unsusButton">unsuspend</button> 
+                    <button type="button" id="unsusButton" onclick="unsuspendUser('${user.uname}')">Unsuspend</button>
                     <h3 style="text-align: left"><b>Username: ${user.uname}</h3>
                     <h3 style="text-align: left"><b>Email: ${user.email}</h3>
                 </div>
@@ -26,3 +26,17 @@ fetch('/admin/suspendedUsers')
         });
     })
     .catch(error => console.error('Error fetching suspended users:', error));
+
+function unsuspendUser(username) {
+    fetch(`/admin/unsuspendUser/${username}`, {
+        method: 'PUT',
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to unsuspend user');
+        }
+        // Reload the page
+        location.reload();
+    })
+    .catch(error => console.error('Error unsuspending user:', error));
+}
