@@ -329,5 +329,30 @@ module.exports =
         }
     });
     db.close()
+  },
+  
+    editReview: function(req,res)
+  {
+    const db = connectToDatabase();
+  
+    console.log(req.body);
+
+    const {rid, content, grading, anotes, rate } = req.body;
+    const updateSQL = 'UPDATE reviews SET content = ?, grading = ?, anotes = ?, crating =? WHERE review_id=? ;'
+    db.serialize(() => 
+    {
+      db.run(updateSQL, [content, grading, anotes, rate, rid], function(err) 
+      {
+        if (err) 
+        {
+          console.log(err.message);
+          res.status(500).send('Internal Server Error');
+          return;
+        }
+        console.log('Review was inserted successfully');
+        res.redirect('/index'); 
+      });
+    });
+    db.close()
   }
 }
