@@ -128,6 +128,11 @@ app.get('/admin/suspendedUsers', (req, res) => {
     databaseModules.suspended(req, res);
 });
 
+// Edit a review
+app.post('/editReview', (req, res) => {
+    courseDatabase.editReview(req,res);
+});
+
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
