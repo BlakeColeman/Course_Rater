@@ -19,7 +19,7 @@ fetch(`/reviewDetails/${rid}`)
         reviews.forEach(review => {
             const reviewElement = document.createElement('div');
             reviewElement.innerHTML = `
-
+            <h6><b>${review.cname} Review</b></h6>
             <form action="/editReview" method="post">
                 <button type="button" id="deleteReviewButton">Delete</button>    
                 <br>

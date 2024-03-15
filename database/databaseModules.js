@@ -3,9 +3,9 @@ const path = require('path');
 
 function connectToDatabase() {
   return new sqlite3.Database('./database/UofRCourseRater', (err) => {
-      if (err) {
-          console.error(err.message);
-      }
+    if (err) {
+        console.error(err.message);
+    }
   });
 }
 
@@ -39,18 +39,18 @@ module.exports =
     db.all(sql, [uname], (err, rows)=> 
     {
         if (err) {
-            console.error(err.message);
-            res.status(500).send('Internal Server Error');
-            return;
+          console.error(err.message);
+          res.status(500).send('Internal Server Error');
+          return;
         }
         if (rows.length!=0) {
-            // Username already exists, send a 400 Bad Request response
-            res.status(400).send('Username already exists');
-            return;
+          // Username already exists, send a 400 Bad Request response
+          res.status(400).send('Username already exists');
+          return;
         } else {
-            // Username doesn't exist, send a 200 OK response
-            res.status(200).send('Username available');
-            return;
+          // Username doesn't exist, send a 200 OK response
+          res.status(200).send('Username available');
+          return;
         }
     });
     db.close()
@@ -67,19 +67,19 @@ module.exports =
     {
         if (err) 
         {
-            console.error(err.message);
-            res.status(500).send('internal Server Error');
-            return;
+          console.error(err.message);
+          res.status(500).send('internal Server Error');
+          return;
         }
         if (rows.length != 0) 
         {
-            //Email already registered, send a 400 Bad Request response
-            res.status(400).send('Email already in use');
+          //Email already registered, send a 400 Bad Request response
+          res.status(400).send('Email already in use');
         }
         else
         {
-            //Email not registered, send a 200 OK response
-            res.status(200).send('Email available');
+          //Email not registered, send a 200 OK response
+          res.status(200).send('Email available');
         }
     })
     db.close()
@@ -93,14 +93,15 @@ module.exports =
       if (err) {
         console.error(err);
         return done(err);
-       } 
-       if (!row) {
+      } 
+      if (!row) {
         return done(null, false, { message: 'Incorrect email.' });
-        }
-    if (row.pword !== password) {
+      }
+      if (row.pword !== password) {
         return done(null, false, { message: 'Incorrect password.' });
-        }
-    return done(null, row);
+      }
+
+      return done(null, row);
     });
     db.close()
   },
@@ -117,15 +118,15 @@ module.exports =
     const sql = 'SELECT cid FROM courses WHERE cname LIKE ?';
     db.get(sql, [cname], (err, row) => {
         if (err) {
-            console.log(err.message);
-            res.status(500).send('Internal Server Error');
-            return;
+          console.log(err.message);
+          res.status(500).send('Internal Server Error');
+          return;
         }
 
         if (!row) {
-            console.log('Course not found'); 
-            res.status(404).send('Course not found');
-            return;
+          console.log('Course not found'); 
+          res.status(404).send('Course not found');
+          return;
         }
 
         const cid = row.cid;
@@ -159,9 +160,9 @@ module.exports =
 
     db.all(sql, [searchQuery], (err, rows) => {
         if (err) {
-            console.error(err.message);
-            res.status(500).send('Internal Server Error');
-            return;
+          console.error(err.message);
+          res.status(500).send('Internal Server Error');
+          return;
         }
 
         if (rows.length === 0) 
@@ -170,7 +171,7 @@ module.exports =
         }
         else 
         {
-            res.json(rows);
+          res.json(rows);
         }
     });
     db.close()
@@ -197,12 +198,12 @@ module.exports =
     db.all(sql, [uname], (err, rows)=> {
         if (err) 
         {
-            console.error(err.message);
-            res.status(500).send('Internal Server Error');
-            return;
+          console.error(err.message);
+          res.status(500).send('Internal Server Error');
+          return;
         }
         else
-            res.json(rows);
+          res.json(rows);
     })
     db.close()
   },
@@ -217,11 +218,11 @@ module.exports =
 
     db.all(sql, [reviewId], (err, rows) => {
         if (err) {
-            console.error(err.message);
-            res.status(500).send('Internal Server Error');
-            return;
+          console.error(err.message);
+          res.status(500).send('Internal Server Error');
+          return;
         } else
-            res.json(rows);
+          res.json(rows);
     })
     db.close()
   },
@@ -236,11 +237,11 @@ module.exports =
 
     db.all(sql, [courseName], (err, rows) => {
         if (err) {
-            console.error(err.message);
-            res.status(500).send('Internal Server Error');
-            return;
+          console.error(err.message);
+          res.status(500).send('Internal Server Error');
+          return;
         } else
-            res.json(rows);
+          res.json(rows);
     })
     db.close()
   },
@@ -255,9 +256,9 @@ module.exports =
 
     db.run(sql, [reviewId], function(err) {
         if (err) {
-            console.error(err.message);
-            res.status(500).send('Internal Server Error');
-            return;
+          console.error(err.message);
+          res.status(500).send('Internal Server Error');
+          return;
         }
         console.log(`Review ${reviewId} deleted successfully`);
         res.sendStatus(200); // Send success response
@@ -288,7 +289,7 @@ module.exports =
         } 
         else 
         {
-            res.sendFile(path.join(__dirname,'../', 'public','view', 'reviewpage.html'));
+          res.sendFile(path.join(__dirname,'../', 'public','view', 'reviewpage.html'));
 
         }
     });
@@ -305,9 +306,9 @@ module.exports =
     db.all(sql,[rid],(err,rows)=>{
       if (err) 
       {
-          console.error(err.message);
-          res.status(500).send('Internal Server Error');
-          return;
+        console.error(err.message);
+        res.status(500).send('Internal Server Error');
+        return;
       }
       
       if (rows.length === 0) 
@@ -324,7 +325,9 @@ module.exports =
 
     db.all('SELECT * FROM users WHERE suspended = 1', (err, rows) => {
         if (err) {
-            res.status(500).json({ error: 'Internal server error' });
+          console.log(err.message);
+          res.status(500).send('Internal Server Error');
+          return;
         } else {
             res.json(rows);
         }
@@ -337,11 +340,11 @@ module.exports =
   {
     const db = connectToDatabase();
 
-    const {rid, content, grading, anotes, rate } = req.body;
-    const updateSQL = 'UPDATE reviews SET content = ?, grading = ?, anotes = ?, crating =? WHERE review_id=? ;'
+    const {rid, prof, content, grading, anotes, crating } = req.body;
+    const updateSQL = 'UPDATE reviews SET prof = ?, content = ?, grading = ?, anotes = ?, crating =? WHERE review_id=? ;'
     db.serialize(() => 
     {
-      db.run(updateSQL, [content, grading, anotes, rate, rid], function(err) 
+      db.run(updateSQL, [prof, content, grading, anotes, crating, rid], function(err) 
       {
         if (err) 
         {
