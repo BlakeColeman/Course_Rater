@@ -27,6 +27,7 @@ fetch('/admin/suspendedUsers')
     })
     .catch(error => console.error('Error fetching suspended users:', error));
 
+// Unsuspend user feature
 function unsuspendUser(username) {
     fetch(`/admin/unsuspendUser/${username}`, {
         method: 'PUT',

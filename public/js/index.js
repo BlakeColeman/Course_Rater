@@ -1,7 +1,5 @@
 // index.js
 
-
-
 fetch('/user')
     .then(response => {
         if (!response.ok) {
@@ -18,6 +16,7 @@ fetch('/user')
         renderLoggedOutHeader();
     });
 
+// header for if the user is logged in
 function renderLoggedInHeader(uname) {
     const header = document.getElementById('header');
     header.innerHTML = `
@@ -32,6 +31,7 @@ function renderLoggedInHeader(uname) {
     `;
 }
 
+// header for if the user is not logged in
 function renderLoggedOutHeader() {
     const header = document.getElementById('header');
     header.innerHTML = `
@@ -43,7 +43,6 @@ function renderLoggedOutHeader() {
         </a>
     `;
 }
-
 
 // Function to load courses given search
 const load_courses = function(query = '') {

@@ -1,3 +1,5 @@
+// login.js
+
 document.getElementById("Login").addEventListener("submit", function(event) {
     // Prevent the form from submitting by default
     event.preventDefault();
@@ -55,6 +57,7 @@ document.getElementById("Login").addEventListener("submit", function(event) {
     }
 });
 
+// ensure the email is not empty or null
 function validateEmail(email, feedback) {
     var valid = true;
     if (email == null || email === "") 
@@ -66,6 +69,7 @@ function validateEmail(email, feedback) {
     return valid;
 }
 
+// ensure the password is not empty or null
 function validatePassword(pword, feedback) {
     var valid = true;
     if (pword == null || pword === "") 

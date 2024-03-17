@@ -70,6 +70,7 @@ fetch(`/reviews/${courseName}`)
     })
     .catch(error => console.error('Error fetching user reviews:', error));
 
+// Display the correct course name on page
 if (courseName) {
     courseNameHeader.innerText = `${courseName.toUpperCase()} Reviews`;
 }

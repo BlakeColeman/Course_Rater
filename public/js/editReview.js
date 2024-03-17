@@ -3,7 +3,7 @@
 const urlParams = new URLSearchParams(window.location.search);
 const rid = urlParams.get('id');
 
-// displaying the selected review
+// displaying the selected review to edit similar to the create page
 fetch(`/reviewDetails/${rid}`)
     .then(response => {
         if (!response.ok) {
@@ -36,20 +36,20 @@ fetch(`/reviewDetails/${rid}`)
                 <h5>Any additional notes:</h5>
                 <center><textarea name="anotes" id = "anotes" rows="8">${review.anotes}</textarea></center>
             
-            <h5>Rating:</h5>
-            <div class="rate" name="crating" id = "crating" value=${review.crating}>
-                <input type="radio" id="star5" name="rate" value="5" />
-                <label for="star5" title="text">5 stars</label>
-                <input type="radio" id="star4" name="rate" value="4" />
-                <label for="star4" title="text">4 stars</label>
-                <input type="radio" id="star3" name="rate" value="3" />
-                <label for="star3" title="text">3 stars</label>
-                <input type="radio" id="star2" name="rate" value="2" />
-                <label for="star2" title="text">2 stars</label>
-                <input type="radio" id="star1" name="rate" value="1" />
-                <label for="star1" title="text">1 star</label>
-            </div>
-            <button type="submit" class="submitButton">Confirm Edit</a>            
+                <h5>Rating:</h5>
+                <div class="rate" name="crating" id = "crating" value=${review.crating}>
+                    <input type="radio" id="star5" name="rate" value="5" />
+                    <label for="star5" title="text">5 stars</label>
+                    <input type="radio" id="star4" name="rate" value="4" />
+                    <label for="star4" title="text">4 stars</label>
+                    <input type="radio" id="star3" name="rate" value="3" />
+                    <label for="star3" title="text">3 stars</label>
+                    <input type="radio" id="star2" name="rate" value="2" />
+                    <label for="star2" title="text">2 stars</label>
+                    <input type="radio" id="star1" name="rate" value="1" />
+                    <label for="star1" title="text">1 star</label>
+                </div>
+                <button type="submit" class="submitButton">Confirm Edit</a>            
             </form>
             `;
             reviewDetails.appendChild(reviewElement);
@@ -79,8 +79,6 @@ fetch(`/reviewDetails/${rid}`)
                 console.log('1');
                 document.getElementById('star1').checked=true;
             }
-
-
         });
     })
     .catch(error => console.error('Error fetching user reviews:', error));
@@ -98,15 +96,6 @@ function deleteReview(reviewId) {
     })
     .catch(error => console.error('Error deleting review:', error));
 }
-
-fetch(`/reviewDetails/${reviewId}`)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Failed to fetch user reviews');
-        }
-        return response.json();
-    })
-    .catch(error => console.error('Error fetching user reviews:', error));
 
 const deleteReviewButton = document.getElementById('deleteReviewButton');
 deleteReviewButton.addEventListener('click', () => {
