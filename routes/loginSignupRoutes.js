@@ -19,6 +19,12 @@ router.get('verifyPassword', loginSignupController.verifyPassword);
 // get the users account
 router.get('getUserData', loginSignupController.getUserData);
 
+// take user to appropriate account
+router.get('/account', loginSignupController.account);
+
+// Determines if the user is logged in
+router.get('/user', loginSignupController.userLoggedIn);
+
 // login to account
 //router.post('/login', loginSignupController.login);
 

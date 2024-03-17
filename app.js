@@ -44,47 +44,8 @@ app.get('/editReview', (req, res) => {
 });
 
 // Controllers
-app.use(loginController); // login Controller
-
-// Determines if the user is logged in
-app.get('/user', (req, res) => {
-    if (req.user) 
-    {
-        // User is logged in, send user information
-        res.json({ uname: req.user.uname, email: req.user.email, suspended: req.user.suspended });
-    } 
-    else 
-    {
-        // User is not logged in
-        res.status(401).send('Not logged in');
-    }
-});
-
-// Takes user to account info
-app.get('/account', (req, res) => {
-    // Check if the user is logged in
-    if (!req.user) 
-    {
-        res.redirect('/login');
-        return;
-    }
-
-    // Check the user's role
-    if (req.user.role === 'admin') 
-    {
-        // Direct to the admin account page
-        res.sendFile(path.join(__dirname, 'public', 'view', 'adminAccount.html'));
-    } 
-    else if (!req.user.role) 
-    {
-        // Direct to the student account page is role is blank
-        res.sendFile(path.join(__dirname, 'public', 'view', 'studentAccount.html'));
-    } 
-    else 
-    {
-        res.status(404).send('Error handling account');
-    }
-});
+// will eventually remove this line
+app.use(loginController); 
 
 // blog routes
 app.use(studentRoutes);

@@ -137,5 +137,9 @@ const deleteReview = (req, res) => {
 
 module.exports = 
 { 
-    userReviews,reviewDetails,createReview,editReview,deleteReview
+    userReviews,
+    reviewDetails,
+    createReview,
+    editReview,
+    deleteReview
 }

@@ -93,5 +93,7 @@ const courseReview = (req, res) => {
 
 module.exports = 
 { 
-    getCourses,reviews,courseReview
+    getCourses,
+    reviews,
+    courseReview
 }

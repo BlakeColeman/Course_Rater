@@ -120,6 +120,46 @@ const getUserData = (uname,done) => {
 db.close()
 }
 
+// Takes user to account info
+const account = (req, res) => {
+    // Check if the user is logged in
+    if (!req.user) 
+    {
+        res.redirect('/login');
+        return;
+    }
+
+    // Check the user's role
+    if (req.user.role === 'admin') 
+    {
+        // Direct to the admin account page
+        res.sendFile(path.join(__dirname, '../','public/view', 'adminAccount.html'));
+    } 
+    else if (!req.user.role) 
+    {
+        // Direct to the student account page is role is blank
+        res.sendFile(path.join(__dirname, '../','public/view', 'studentAccount.html'));
+    } 
+    else 
+    {
+        res.status(404).send('Error handling account');
+    }
+}
+
+// Determines if the user is logged in
+const userLoggedIn = (req, res) => {
+    if (req.user) 
+    {
+        // User is logged in, send user information
+        res.json({ uname: req.user.uname, email: req.user.email, suspended: req.user.suspended });
+    } 
+    else 
+    {
+        // User is not logged in
+        res.status(401).send('Not logged in');
+    }
+}
+
 /*
 // Login 
 const login = (req, res, next) => {
@@ -153,5 +193,11 @@ const logout = (req, res) => {
 
 module.exports = 
 { 
-    createUser,checkUsername,checkEmail,verifyPassword,getUserData
+    createUser,
+    checkUsername,
+    checkEmail,
+    verifyPassword,
+    getUserData,
+    account,
+    userLoggedIn
 }

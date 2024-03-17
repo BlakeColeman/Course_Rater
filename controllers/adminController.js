@@ -52,5 +52,6 @@ const unsuspend = (req, res) => {
 
 module.exports = 
 {
-    suspended,unsuspend
+    suspended,
+    unsuspend
 }
