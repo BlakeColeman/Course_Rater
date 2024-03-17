@@ -1,3 +1,5 @@
+// dont need this page. Implemented in loginSignupController
+
 const express = require('express');
 const router = express.Router();
 const path = require('path');

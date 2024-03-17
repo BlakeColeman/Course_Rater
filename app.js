@@ -5,8 +5,8 @@ const path = require('path');
 const studentRoutes = require('./routes/studentRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
+const loginSignupRoutes = require('./routes/loginSignupRoutes');
 const loginController = require('./public/controller/loginController');
-const signupController = require('./public/controller/signupController');
 
 const app = express();
 const port = 3000;
@@ -44,7 +44,6 @@ app.get('/editReview', (req, res) => {
 });
 
 // Controllers
-app.use(signupController); //signup Controller
 app.use(loginController); // login Controller
 
 // Determines if the user is logged in
@@ -91,6 +90,7 @@ app.get('/account', (req, res) => {
 app.use(studentRoutes);
 app.use(adminRoutes);
 app.use(reviewRoutes);
+app.use(loginSignupRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
