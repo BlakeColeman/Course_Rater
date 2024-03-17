@@ -21,7 +21,7 @@ fetch(`/reviewDetails/${rid}`)
             reviewElement.innerHTML = `
             <h6><b>${review.cname} Review</b></h6>
             <form action="/editReview" method="post">
-                <button type="button" id="deleteReviewButton">Delete</button>    
+                <button type="button" onclick="deleteReview(${rid})" id="deleteReviewButton">Delete</button>    
                 <br>
                 <input type="hidden" id="cnameInput" name="cname" value="${review.cname}">
                 <input type="hidden" id="ridInput" name="rid" value="${rid}">
@@ -85,6 +85,7 @@ fetch(`/reviewDetails/${rid}`)
 
 // For deleting a review
 function deleteReview(reviewId) {
+    console.log("HERE");
     fetch(`/deleteReview/${reviewId}`, {
         method: 'DELETE',
     })
@@ -105,8 +106,3 @@ fetch(`/reviewDetails/${reviewId}`)
         return response.json();
     })
     .catch(error => console.error('Error fetching user reviews:', error));
-
-const deleteReviewButton = document.getElementById('deleteReviewButton');
-deleteReviewButton.addEventListener('click', () => {
-    deleteReview(reviewId); 
-});
