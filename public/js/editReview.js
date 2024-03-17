@@ -97,6 +97,15 @@ function deleteReview(reviewId) {
     .catch(error => console.error('Error deleting review:', error));
 }
 
+fetch(`/reviewDetails/${reviewId}`)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to fetch user reviews');
+        }
+        return response.json();
+    })
+    .catch(error => console.error('Error fetching user reviews:', error));
+
 const deleteReviewButton = document.getElementById('deleteReviewButton');
 deleteReviewButton.addEventListener('click', () => {
     deleteReview(reviewId); 

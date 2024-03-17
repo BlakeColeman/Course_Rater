@@ -1,6 +1,9 @@
+// dont need anymore will delete later as this is in the controllers
+
 const sqlite3 = require('sqlite3').verbose(); 
 const path = require('path');
 
+// connect to the database
 function connectToDatabase() {
   return new sqlite3.Database('./database/UofRCourseRater', (err) => {
     if (err) {

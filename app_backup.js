@@ -1,12 +1,15 @@
+// backup of the original
+
 const express = require('express');
 const session = require('express-session'); 
 const bodyParser = require('body-parser');
 const path = require('path');
-const studentRoutes = require('./routes/studentRoutes');
-const adminRoutes = require('./routes/adminRoutes');
-const reviewRoutes = require('./routes/reviewRoutes');
 const loginController = require('./public/controller/loginController');
 const signupController = require('./public/controller/signupController');
+const courseDatabase = require('./database/databaseModules');
+const databaseModules = require('./database/databaseModules');
+
+// import { SignupForm} from "./signup.js";
 
 const app = express();
 const port = 3000;
@@ -22,6 +25,12 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
+
+
+// Controllers
+app.use(signupController); //signup Controllers
+app.use(loginController); // login Controllers
+
 
 app.get('/index', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','view', 'index.html'));
@@ -43,11 +52,21 @@ app.get('/editReview', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','view', 'editReview.html'));
 });
 
-// Controllers
-app.use(signupController); //signup Controller
-app.use(loginController); // login Controller
+// search for a course
+app.get('/reviews', (req, res) => {
+    courseDatabase.reviews(req,res);
+});
+    
+// Retrives courses
+app.get('/getCourse', function(req, res, next) {
+    databaseModules.getCourses(req,res);
+});
+  
+// Posts review to database
+app.post('/createReview', (req, res) => {
+ courseDatabase.createReview(req,res);
+});
 
-// Determines if the user is logged in
 app.get('/user', (req, res) => {
     if (req.user) 
     {
@@ -61,7 +80,7 @@ app.get('/user', (req, res) => {
     }
 });
 
-// Takes user to account info
+// Takes user to appropriate account info
 app.get('/account', (req, res) => {
     // Check if the user is logged in
     if (!req.user) 
@@ -87,10 +106,39 @@ app.get('/account', (req, res) => {
     }
 });
 
-// blog routes
-app.use(studentRoutes);
-app.use(adminRoutes);
-app.use(reviewRoutes);
+app.get('/userReviews',(req,res)=>{
+    databaseModules.userReviews(req,res);
+});
+
+// details for a singular review on the edit review page
+app.get('/reviewDetails/:id', (req, res) => {
+    databaseModules.reviewDetails(req,res);
+});
+
+// delete a review on the edit review page
+app.delete('/deleteReview/:id', (req, res) => {
+    databaseModules.deleteReview(req,res);
+});
+
+// all reviews for a course that was searched
+app.get('/reviews/:cname', (req, res) => {
+    databaseModules.CourseReview(req,res);
+});
+
+// all of the suspended accounts
+app.get('/admin/suspendedUsers', (req, res) => {
+    databaseModules.suspended(req, res);
+});
+
+// Edit a review
+app.post('/editReview', (req, res) => {
+    courseDatabase.editReview(req,res);
+});
+
+// Unsuspend account
+app.put('/admin/unsuspendUser/:uname', (req, res) => {
+    courseDatabase.unsuspend(req,res);
+}); 
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
