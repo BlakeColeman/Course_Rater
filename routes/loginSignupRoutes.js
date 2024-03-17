@@ -20,7 +20,7 @@ router.get('verifyPassword', loginSignupController.verifyPassword);
 router.get('getUserData', loginSignupController.getUserData);
 
 // login to account
-//router.post('/login', passport.authenticate('local'), loginSignupController.login);
+//router.post('/login', loginSignupController.login);
 
 // logout of account
 //router.get('/logout', loginSignupController.logout);
