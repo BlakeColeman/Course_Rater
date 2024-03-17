@@ -7,16 +7,12 @@ const router = express.Router();
 // search for a course
 router.get('/reviews', reviewController.reviews);
 
-// Posts review to database
-router.post('/createReview', reviewController.createReview);
-
-// details for a singular review on the edit review page
-router.get('/reviewDetails/:id', reviewController.reviewDetails);
-
-// delete a review on the edit review page
-router.delete('/deleteReview/:id', reviewController.deleteReview);
+// Retrives courses
+router.get('/getCourse', reviewController.getCourses);
 
 // all reviews for a course that was searched
 router.get('/reviews/:cname', reviewController.courseReview);
+
+// report a review goes here
 
 module.exports = router;

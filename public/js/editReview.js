@@ -85,7 +85,6 @@ fetch(`/reviewDetails/${rid}`)
 
 // For deleting a review
 function deleteReview(reviewId) {
-    console.log("HERE");
     fetch(`/deleteReview/${reviewId}`, {
         method: 'DELETE',
     })
