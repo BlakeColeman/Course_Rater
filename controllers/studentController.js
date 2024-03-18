@@ -97,11 +97,11 @@ const createReview = (req, res) => {
 const editReview = (req, res) => {
     const db = connectToDatabase();
 
-    const {rid, prof, content, grading, anotes, crating } = req.body;
+    const {rid, prof, content, grading, anotes, rate } = req.body;
     const updateSQL = 'UPDATE reviews SET prof = ?, content = ?, grading = ?, anotes = ?, crating =? WHERE review_id=? ;'
     db.serialize(() => 
     {
-        db.run(updateSQL, [prof, content, grading, anotes, crating, rid], function(err) 
+        db.run(updateSQL, [prof, content, grading, anotes, rate, rid], function(err) 
         {
             if (err) 
             {
