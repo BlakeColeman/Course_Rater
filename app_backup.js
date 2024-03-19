@@ -1,11 +1,12 @@
 // backup of the original
+// will eventually delete
 
 const express = require('express');
 const session = require('express-session'); 
 const bodyParser = require('body-parser');
 const path = require('path');
 const loginController = require('./public/controller/loginController');
-const signupController = require('./public/controller/signupController');
+//const signupController = require('./public/controller/signupController');
 const courseDatabase = require('./database/databaseModules');
 const databaseModules = require('./database/databaseModules');
 

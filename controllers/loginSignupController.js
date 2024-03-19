@@ -3,6 +3,7 @@
 const sqlite3 = require('sqlite3').verbose(); 
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 const path = require('path');
 
 // connect to the database
@@ -160,7 +161,7 @@ const userLoggedIn = (req, res) => {
     }
 }
 
-/*
+
 // Login 
 const login = (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
@@ -189,7 +190,7 @@ const logout = (req, res) => {
         res.redirect('/index');
     });
 };
-*/
+
 
 module.exports = 
 { 
@@ -199,5 +200,7 @@ module.exports =
     verifyPassword,
     getUserData,
     account,
-    userLoggedIn
+    userLoggedIn,
+    login,
+    logout
 }

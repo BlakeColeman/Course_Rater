@@ -4,7 +4,6 @@ const express = require('express');
 const adminController = require('../controllers/adminController');
 const router = express.Router();
 
-
 // all of the suspended accounts
 router.get('/admin/suspendedUsers', adminController.suspended);
 

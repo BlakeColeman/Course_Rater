@@ -26,9 +26,9 @@ router.get('/account', loginSignupController.account);
 router.get('/user', loginSignupController.userLoggedIn);
 
 // login to account
-//router.post('/login', loginSignupController.login);
+router.post('/login', loginSignupController.login);
 
-// logout of account
-//router.get('/logout', loginSignupController.logout);
+// log out of account
+router.get('/logout', loginSignupController.logout);
 
 module.exports = router;

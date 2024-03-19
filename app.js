@@ -1,3 +1,5 @@
+// app.js
+
 const express = require('express');
 const session = require('express-session'); 
 const bodyParser = require('body-parser');
@@ -6,7 +8,7 @@ const studentRoutes = require('./routes/studentRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const loginSignupRoutes = require('./routes/loginSignupRoutes');
-const loginController = require('./public/controller/loginController');
+const passport = require('./passport-config');
 
 const app = express();
 const port = 3000;
@@ -43,9 +45,8 @@ app.get('/editReview', (req, res) => {
     res.sendFile(path.join(__dirname, 'public','view', 'editReview.html'));
 });
 
-// Controllers
-// will eventually remove this line
-app.use(loginController); 
+// passport configuration
+app.use(passport); 
 
 // blog routes
 app.use(studentRoutes);
