@@ -1,3 +1,5 @@
+/* styles for all html files */
+
 /* Reset default browser styles */
 body, h1, h2, h3, p, ul, li {
     margin: 0;
@@ -40,6 +42,7 @@ main {
     padding: 50px 0;
 }
 
+/* container for entering a course and searching */
 .search-container {
     max-width: 400px;
     text-align: left;
@@ -58,11 +61,7 @@ main {
     border-radius: 5px;
 }
 
-Body {  
-    font-family: Calibri, Helvetica, sans-serif;  
-    background-color: rgb(#fff);  
-}  
-
+/* Button for signing up, logging in and searching*/
 button {   
     background-color: #004f2e;   
     width: 100%;  
@@ -81,11 +80,13 @@ input[type=text], input[type=password] {
     border: 2px solid #004f2e;   
     box-sizing: border-box;   
 }  
-   
+
+/* hover over buttons changes opacity */
 button:hover, .homeButton:hover, .submitButton:hover, .review-link:hover{   
     opacity: 0.7;   
 }     
 
+/* container for signup and login form */
 .container{
     max-width: 400px;
     background: white;
@@ -134,10 +135,17 @@ h6 {
     padding: auto;
 }
 
+/* horizontal break */
 hr {
     margin: 10px 10px;
     border: 1.3px solid #004f2e;
 }
+
+/* Font style for all pages */
+Body {  
+    font-family: Calibri, Helvetica, sans-serif;  
+    background-color: rgb(#fff);  
+}  
 
 /* Button in header*/
 .homeButton {
@@ -154,6 +162,7 @@ hr {
     cursor: pointer;
 }
 
+/* submit button for creating and editing review */
 .submitButton {
     background-color: #004f2e;
     width: 100%;
@@ -168,13 +177,14 @@ hr {
     border-radius: 5px;
 }
 
+/* Subtitle for pages */
 .subTitle {
     text-align: left; 
     font-size: 32px; 
     padding: 10px 10px 10px 0;
 }
 
-
+/* container for html files used for side padding */
 .over {
     text-align: left;
     width: auto;
@@ -255,10 +265,12 @@ textarea {
     float: right;
 }
 
+/* field set for login and signup page */
 fieldset {
     border: 0;
 }
 
+/* used to display each review */
 article {
     border: 2px solid black;
     padding: 15px;
@@ -266,6 +278,7 @@ article {
     word-break: break-word; 
 }
 
+/* For displaying username in header */
 #header span {
     font-size: 28px; 
     margin-left: 20px;
@@ -278,6 +291,7 @@ article {
     
 }
 
+/* U of R course Rating acts as a link to go back to home page */
 .title-link {
     color: white; 
     text-decoration: none; 
