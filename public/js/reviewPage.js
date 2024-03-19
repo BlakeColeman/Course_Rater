@@ -59,7 +59,7 @@ fetch(`/reviews/${courseName}`)
                     <h3 style="text-align: left"><b>Assessment:</b> ${review.grading}</h3> 
                     <h3 style="text-align: left"><b>Additional Notes:</b> ${review.anotes}</h3> 
                     <h3 style="text-align: left"><b>Rating:</b> ${review.crating}/5</h3>
-                    <button type="button" id="reportButton">Report review</button> 
+                    <button type="button" id="reportButton" data-review-id= "${review.review_id}">Report review</button> 
                     <br><br>
                 </article>
                 <br>
@@ -73,4 +73,30 @@ fetch(`/reviews/${courseName}`)
 // Display the correct course name on page
 if (courseName) {
     courseNameHeader.innerText = `${courseName.toUpperCase()} Reviews`;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const reviewList = document.getElementById('review-list');
+
+    reviewList.addEventListener('click', (event) => {
+        if (event.target.id === 'reportButton') {
+            const reviewId =  event.target.getAttribute('data-review-id');
+            reportReview(reviewId);
+        }
+    });
+});
+
+function reportReview(reviewId) {
+    fetch(`/report/${reviewId}`, {
+        method: 'POST',
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to report review');
+        }
+        console.log('Review reported successfully');
+    })
+    .catch(error => {
+        console.error('Error reporting review:', error);
+    });
 }

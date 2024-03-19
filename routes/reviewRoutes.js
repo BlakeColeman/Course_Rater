@@ -14,5 +14,6 @@ router.get('/getCourse', reviewController.getCourses);
 router.get('/reviews/:cname', reviewController.courseReview);
 
 // report a review goes here
+router.post('/report/:reviewId', reviewController.reportReview);
 
 module.exports = router;

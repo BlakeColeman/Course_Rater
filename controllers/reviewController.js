@@ -91,9 +91,31 @@ const courseReview = (req, res) => {
     db.close()
 }
 
+// Report a review
+const reportReview = (req, res) => {
+    const db = connectToDatabase();
+
+    const reviewId = req.params.reviewId;
+    
+    const sql = 'UPDATE reviews SET flags = 1 WHERE review_id = ?';
+
+    db.run(sql, [reviewId], (err) => {
+        if (err) {
+            console.error(err.message);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        console.log(`Review ${reviewId} reported successfully`);
+        res.status(200)
+    });
+
+    db.close();
+}
+
 module.exports = 
 { 
     getCourses,
     reviews,
-    courseReview
+    courseReview,
+    reportReview
 }
