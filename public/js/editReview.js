@@ -35,15 +35,19 @@ fetch('/user')
                             <input type="hidden" id="cnameInput" name="cname" value="${review.cname}">
                             <input type="hidden" id="ridInput" name="rid" value="${rid}">
                             <h5>Enter the professor or instructor of the course:</h5>
-                            <center><textarea name="prof" rows="1">${review.prof}</textarea></center>
+                            <center><textarea name="prof" maxlength="30" rows="1" onkeyup="countChars(this);">${review.prof}</textarea></center>
+                            <span id="charNumProf">0/30</span>
                             <h5>Enter the content covered in the course:</h5>
-                            <center><textarea name="content" id ="content" rows="8" >${review.content}</textarea></center>
+                            <center><textarea name="content" id ="content" rows="8" maxlength="100" onkeyup="countCharsContent(this);">${review.content}</textarea></center>
+                            <span id="charNumContent">0/100</span>
                             <br>
                             <h5>Enter the grading and assignment structure of the course:</h5>
-                            <center><textarea name="grading" id = "grading" rows="8">${review.grading}</textarea></center>
+                            <center><textarea name="grading" id = "grading" rows="8" maxlength="100" onkeyup="countCharsGrading(this);">${review.grading}</textarea></center>
+                            <span id="charNumGrading">0/100</span>
                             <br>
                             <h5>Any additional notes:</h5>
-                            <center><textarea name="anotes" id = "anotes" rows="8">${review.anotes}</textarea></center>
+                            <center><textarea name="anotes" id = "anotes" rows="8" maxlength="100" onkeyup="countCharsAnotes(this);">${review.anotes}</textarea></center>
+                            <span id="charNumAnotes">0/100</span>
                         
                             <h5>Rating:</h5>
                             <div class="rate" name="crating" id = "crating" value=${review.crating}>
@@ -121,3 +125,22 @@ fetch(`/reviewDetails/${reviewId}`)
         return response.json();
     })
     .catch(error => console.error('Error fetching user reviews:', error));
+
+// display character count for prof input
+function countChars(obj){
+    document.getElementById('charNumProf').innerHTML = obj.value.length+ '/30';
+}
+// display character count for content input
+function countCharsContent(obj){
+    document.getElementById('charNumContent').innerHTML = obj.value.length+ '/100';
+}
+
+// display character count for grading input
+function countCharsGrading(obj){
+    document.getElementById('charNumGrading').innerHTML = obj.value.length+ '/100';
+}
+
+// display character count for additional notes input
+function countCharsAnotes(obj){
+    document.getElementById('charNumAnotes').innerHTML = obj.value.length+ '/100';
+}
