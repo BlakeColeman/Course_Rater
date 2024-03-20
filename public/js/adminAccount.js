@@ -51,7 +51,14 @@ fetch('/reported-reviews')
         reviews.forEach(review => {
             const reviewElement = document.createElement('div');
             reviewElement.classList.add('review');
-            reviewElement.innerHTML = `
+
+            // Button to see the full reported review 
+            const toggleButton = document.createElement('button');
+            toggleButton.textContent = `Course ID: ${review.cid}, Review ID: ${review.review_id}`;
+
+            const reviewContent = document.createElement('div');
+            reviewContent.classList.add('review-content');
+            reviewContent.innerHTML = `
                 <article>
                     <p><b>User Name:</b> ${review.uname}</p>
                     <p><b>Content:</b> ${review.content}</p>
@@ -60,6 +67,20 @@ fetch('/reported-reviews')
                     <p><b>Additional Notes:</b> ${review.anotes}</p> 
                 </article>
             `;
+            reviewContent.style.display = 'none'; 
+
+            toggleButton.addEventListener('click', () => {
+                if (reviewContent.style.display === 'none') {
+                    reviewContent.style.display = 'block';
+                    toggleButton.textContent = 'Hide Review';
+                } else {
+                    reviewContent.style.display = 'none';
+                    toggleButton.textContent = `Course ID: ${review.cid}, Review ID: ${review.review_id}`;
+                }
+            });
+
+            reviewElement.appendChild(toggleButton);
+            reviewElement.appendChild(reviewContent);
             displayReviews.appendChild(reviewElement);
         });
     })
