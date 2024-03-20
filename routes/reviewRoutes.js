@@ -13,7 +13,7 @@ router.get('/getCourse', reviewController.getCourses);
 // all reviews for a course that was searched
 router.get('/reviews/:cname', reviewController.courseReview);
 
-// report a review goes here
+// report a review
 router.post('/report/:reviewId', reviewController.reportReview);
 
 module.exports = router;

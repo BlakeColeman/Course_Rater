@@ -1,4 +1,3 @@
 CREATE TABLE users(uname varchar(255),email varchar(255) UNIQUE,pword varchar(255),role varchar(255),suspended BOOLEAN DEFAULT FALSE,PRIMARY KEY (uname));
 CREATE TABLE courses(cid int,cname varchar(255),PRIMARY KEY(cid));
-CREATE TABLE reviews(review_id integer PRIMARY KEY,cid integer, uname text, content text,grading text,anotes text,crating integer,flags int,rcreated date,FOREIGN KEY(cid) REFERENCES courses(cid),FOREIGN KEY(uname) REFERENCES users(uname));
-CREATE TABLE reports(report_id integer PRIMARY KEY, review_id INTEGER,runame text,FOREIGN KEY(review_id) REFERENCES reviews(review_id),FOREIGN KEY(runame) REFERENCES users(uname));
+CREATE TABLE reviews(review_id integer PRIMARY KEY,cid integer, uname text, content text,grading text,anotes text,crating integer,flags BOOLEAN DEFAULT FALSE,rcreated date,FOREIGN KEY(cid) REFERENCES courses(cid),FOREIGN KEY(uname) REFERENCES users(uname));

@@ -10,4 +10,7 @@ router.get('/admin/suspendedUsers', adminController.suspended);
 // Unsuspend account
 router.put('/admin/unsuspendUser/:uname', adminController.unsuspend);
 
+// display a reported review
+router.get('/reported-reviews', adminController.displayReports);
+
 module.exports = router;

@@ -41,3 +41,26 @@ function unsuspendUser(username) {
     })
     .catch(error => console.error('Error unsuspending user:', error));
 }
+
+// Get all of the reported reviews
+fetch('/reported-reviews')
+        .then(response => response.json())
+        .then(reviews => {
+            const displayReviews = document.getElementById('displayReports');
+
+            reviews.forEach(review => {
+                const reviewElement = document.createElement('div');
+                reviewElement.classList.add('review');
+                reviewElement.innerHTML = `
+                <article>
+                    <p><b>User Name:</b> ${review.uname}</p>
+                    <p><b>Content:</b> ${review.content}</p>
+                    <p><b>General Description:</b> ${review.content}</p>
+                    <p><b>Assessment:</b> ${review.grading}</p> 
+                    <p><b>Additional Notes:</b> ${review.anotes}</p> 
+                </article>
+                `;
+                displayReviews.appendChild(reviewElement);
+            });
+        })
+        .catch(error => console.error('Error fetching reported reviews:', error));

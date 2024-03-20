@@ -22,15 +22,14 @@ fetch('/user')
             createReview.href = `/createReview?cname=${cName}`;
         }
     })
-    .catch(error => {
-        console.error('Error fetching user:', error);
-    });
+    .catch(error => console.error('Error fetching user: ', error));
 
 // Display the correct course name on the review page
 const courseNameHeader = document.getElementById('courseNameHeader');
 const urlParams = new URLSearchParams(window.location.search);
 const courseName = urlParams.get('cname');
 
+// List of reviews for a course
 fetch(`/reviews/${courseName}`)
     .then(response => {
         if (!response.ok) {
@@ -75,17 +74,15 @@ if (courseName) {
     courseNameHeader.innerText = `${courseName.toUpperCase()} Reviews`;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const reviewList = document.getElementById('review-list');
-
-    reviewList.addEventListener('click', (event) => {
-        if (event.target.id === 'reportButton') {
-            const reviewId =  event.target.getAttribute('data-review-id');
-            reportReview(reviewId);
-        }
-    });
+const reviewList = document.getElementById('review-list');
+reviewList.addEventListener('click', (event) => {
+    if (event.target.id === 'reportButton') {
+        const reviewId =  event.target.getAttribute('data-review-id');
+        reportReview(reviewId);
+    }
 });
 
+// report review
 function reportReview(reviewId) {
     fetch(`/report/${reviewId}`, {
         method: 'POST',

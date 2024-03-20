@@ -17,7 +17,8 @@ function connectToDatabase() {
 const suspended = (req, res) => {
     const db = connectToDatabase();
 
-    db.all('SELECT * FROM users WHERE suspended = 1', (err, rows) => {
+    const sql = 'SELECT * FROM users WHERE suspended = 1';
+    db.all(sql, (err, rows) => {
         if (err) {
           console.log(err.message);
           res.status(500).send('Internal Server Error');
@@ -35,7 +36,9 @@ const unsuspend = (req, res) => {
 
     const uname = req.params.uname;
 
-    db.run('UPDATE users SET suspended = 0 WHERE uname = ?', [uname], function(err) {
+    const sql = 'UPDATE users SET suspended = 0 WHERE uname = ?';
+    
+    db.run(sql, [uname], function(err) {
         if (err) {
             console.error(err.message);
             res.status(500).send('Internal Server Error');
@@ -50,8 +53,26 @@ const unsuspend = (req, res) => {
     db.close();
   }
 
+// Display the reports for the admin
+const displayReports = (req, res) => {
+    const db = connectToDatabase();
+
+    const sql = 'SELECT * FROM reviews WHERE flags = 1';
+    db.all(sql, (err, rows) => {
+        if (err) {
+            console.log(err.message);
+            res.status(500).send('Internal Server Error');
+            return;
+        } else {
+            res.json(rows); 
+        }
+    });
+    db.close();
+};
+
 module.exports = 
 {
     suspended,
-    unsuspend
+    unsuspend,
+    displayReports
 }
