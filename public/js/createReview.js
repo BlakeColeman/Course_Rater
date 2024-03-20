@@ -12,7 +12,8 @@ document.getElementById('rcreatedInput').value = currentDate;
 // Ensure the user is logged in
 fetch('/user')
     .then(response => {
-        if (!response.ok) {
+        if (!response.ok) 
+        {
             window.location.href = '/index'; 
         }
         return response.json();
