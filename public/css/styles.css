@@ -265,6 +265,14 @@ textarea {
     float: right;
 }
 
+/* toggle button in admin account */
+.toggle-button {
+    padding: 10px; 
+    background-color: #dc2a1a; 
+    color: #fff; 
+    cursor: pointer; 
+}
+
 /* field set for login and signup page */
 fieldset {
     border: 0;
