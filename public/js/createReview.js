@@ -27,15 +27,15 @@ function countChars(obj){
 
 // display character count for content input
 function countCharsContent(obj){
-    document.getElementById('charNumContent').innerHTML = obj.value.length+ '/100';
+    document.getElementById('charNumContent').innerHTML = obj.value.length+ '/500';
 }
 
 // display character count for grading input
 function countCharsGrading(obj){
-    document.getElementById('charNumGrading').innerHTML = obj.value.length+ '/100';
+    document.getElementById('charNumGrading').innerHTML = obj.value.length+ '/500';
 }
 
 // display character count for additional notes input
 function countCharsAnotes(obj){
-    document.getElementById('charNumAnotes').innerHTML = obj.value.length+ '/100';
+    document.getElementById('charNumAnotes').innerHTML = obj.value.length+ '/500';
 }
