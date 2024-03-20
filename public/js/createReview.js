@@ -18,3 +18,19 @@ fetch('/user')
         return response.json();
     })
     .catch(error => console.error('Error fetching user:', error));
+
+function countChars(obj){
+    document.getElementById('charNumProf').innerHTML = obj.value.length+ '/150';
+}
+    
+function countCharsContent(obj){
+    document.getElementById('charNumContent').innerHTML = obj.value.length+ '/150';
+}
+
+function countCharsGrading(obj){
+    document.getElementById('charNumGrading').innerHTML = obj.value.length+ '/150';
+}
+
+function countCharsAnotes(obj){
+    document.getElementById('charNumAnotes').innerHTML = obj.value.length+ '/150';
+}
