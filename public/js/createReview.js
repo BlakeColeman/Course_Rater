@@ -19,18 +19,22 @@ fetch('/user')
     })
     .catch(error => console.error('Error fetching user:', error));
 
+// display character count for prof input
 function countChars(obj){
-    document.getElementById('charNumProf').innerHTML = obj.value.length+ '/150';
+    document.getElementById('charNumProf').innerHTML = obj.value.length+ '/30';
 }
-    
+
+// display character count for content input
 function countCharsContent(obj){
-    document.getElementById('charNumContent').innerHTML = obj.value.length+ '/150';
+    document.getElementById('charNumContent').innerHTML = obj.value.length+ '/100';
 }
 
+// display character count for grading input
 function countCharsGrading(obj){
-    document.getElementById('charNumGrading').innerHTML = obj.value.length+ '/150';
+    document.getElementById('charNumGrading').innerHTML = obj.value.length+ '/100';
 }
 
+// display character count for additional notes input
 function countCharsAnotes(obj){
-    document.getElementById('charNumAnotes').innerHTML = obj.value.length+ '/150';
+    document.getElementById('charNumAnotes').innerHTML = obj.value.length+ '/100';
 }
