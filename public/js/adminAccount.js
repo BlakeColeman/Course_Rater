@@ -3,7 +3,8 @@
 // For viewing the suspended accounts
 fetch('/admin/suspendedUsers')
     .then(response => {
-        if (!response.ok) {
+        if (!response.ok) 
+        {
             throw new Error('Failed to fetch suspended users');
         }
         return response.json();
@@ -33,7 +34,8 @@ function unsuspendUser(username) {
         method: 'PUT',
     })
     .then(response => {
-        if (!response.ok) {
+        if (!response.ok) 
+        {
             throw new Error('Failed to unsuspend user');
         }
         // Reload the page
@@ -71,10 +73,13 @@ fetch('/reported-reviews')
             reviewContent.style.display = 'none'; 
 
             toggleButton.addEventListener('click', () => {
-                if (reviewContent.style.display === 'none') {
+                if (reviewContent.style.display === 'none') 
+                {
                     reviewContent.style.display = 'block';
                     toggleButton.textContent = 'Hide Review';
-                } else {
+                } 
+                else 
+                {
                     reviewContent.style.display = 'none';
                     toggleButton.textContent = `Course ID: ${review.cid}, Review ID: ${review.review_id}`;
                 }
