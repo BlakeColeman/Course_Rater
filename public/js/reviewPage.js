@@ -58,7 +58,7 @@ fetch(`/reviews/${courseName}`)
                     <h3 style="text-align: left"><b>Assessment:</b> ${review.grading}</h3> 
                     <h3 style="text-align: left"><b>Additional Notes:</b> ${review.anotes}</h3> 
                     <h3 style="text-align: left"><b>Rating:</b> ${review.crating}/5</h3>
-                    <button type="button" id="reportButton" data-review-id= "${review.review_id}">Report review</button> 
+                    <button type="button" id="reportButton" data-review-id= "${review.review_id}">Report Review</button> 
                     <br><br>
                 </article>
                 <br>

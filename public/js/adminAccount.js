@@ -55,6 +55,7 @@ fetch('/reported-reviews')
             // Button to see the full reported review 
             const toggleButton = document.createElement('button');
             toggleButton.textContent = `Course ID: ${review.cid}, Review ID: ${review.review_id}`;
+            toggleButton.classList.add('toggle-button')
 
             const reviewContent = document.createElement('div');
             reviewContent.classList.add('review-content');
