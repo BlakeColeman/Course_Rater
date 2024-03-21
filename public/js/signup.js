@@ -64,6 +64,12 @@ function validateUsername(uname,feedback)
        	feedback.style.color = "red";
 		valid = false;
     }
+	else if (uname.length < 3 || uname.length > 12) 
+	{
+		feedback.innerHTML += "\n*Username must be between 3 and 12 characters long";
+		feedback.style.color = "red";
+		valid =  false;
+	}
 	return valid;
 };
 

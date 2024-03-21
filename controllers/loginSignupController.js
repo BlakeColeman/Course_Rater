@@ -152,7 +152,7 @@ const userLoggedIn = (req, res) => {
     if (req.user) 
     {
         // User is logged in, send user information
-        res.json({ uname: req.user.uname, email: req.user.email, suspended: req.user.suspended });
+        res.json({ uname: req.user.uname, email: req.user.email, suspended: req.user.suspended, role: req.user.role });
     } 
     else 
     {

@@ -9,7 +9,7 @@ fetch('/user')
     })
     .then(user => {
         // User is logged in, render logged in header
-        renderLoggedInHeader(user.uname);
+        renderLoggedInHeader(user.uname, user.role);
     })
     .catch(error => {
         // User is not logged in, render logged out header
@@ -17,8 +17,15 @@ fetch('/user')
     });
 
 // header for if the user is logged in
-function renderLoggedInHeader(uname) {
+function renderLoggedInHeader(uname, role) {
     const header = document.getElementById('header');
+    
+    let welcomeMessage = `Welcome, ${uname}`;
+    // if the user logged in is the addmin, display they are admin on welcome
+    if (role && role.toLowerCase() === 'admin') {
+        welcomeMessage += ' (*Admin)';
+    }
+
     header.innerHTML = `
         <a href="/logout" class="homeButton">Logout</a>
         <a onclick="window.location.href='/account'" class="homeButton">Account</a>
@@ -27,7 +34,7 @@ function renderLoggedInHeader(uname) {
             <h4 class="title">U of R Course Rating</h4>
         </a>
 
-        <span>Welcome, ${uname}</span>
+        <span>${welcomeMessage}</span>
     `;
 }
 
