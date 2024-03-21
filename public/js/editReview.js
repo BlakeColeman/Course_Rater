@@ -1,5 +1,23 @@
 // editReview.js
 
+// Show the delete confirmation modal
+function displayDeleteModal() {
+    const modal = document.getElementById('deleteModal');
+    modal.style.display = 'block';
+  
+    const confirmButton = document.getElementById('confirmDelete');
+    const cancelButton = document.getElementById('cancelDelete');
+  
+    confirmButton.addEventListener('click', () => {
+        deleteReview(rid);
+        modal.style.display = 'none'; 
+    });
+  
+    cancelButton.addEventListener('click', () => {
+        modal.style.display = 'none'; 
+    });
+}
+
 const urlParams = new URLSearchParams(window.location.search);
 const rid = urlParams.get('id');
 
@@ -33,7 +51,7 @@ fetch('/user')
                         reviewElement.innerHTML = `
                         <h6><b>${review.cname} Review</b></h6>
                         <form action="/editReview" method="post">
-                            <button type="button" onclick="deleteReview(${rid})" id="deleteReviewButton">Delete</button>    
+                            <button type="button" onclick="displayDeleteModal()" id="deleteReviewButton">Delete</button>
                             <br>
                             <input type="hidden" id="cnameInput" name="cname" value="${review.cname}">
                             <input type="hidden" id="ridInput" name="rid" value="${rid}">
@@ -137,6 +155,7 @@ fetch(`/reviewDetails/${reviewId}`)
 function countChars(obj){
     document.getElementById('charNumProf').innerHTML = obj.value.length+ '/30';
 }
+
 // display character count for content input
 function countCharsContent(obj){
     document.getElementById('charNumContent').innerHTML = obj.value.length+ '/500';
