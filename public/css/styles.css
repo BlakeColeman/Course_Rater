@@ -62,7 +62,7 @@ main {
 }
 
 /* Button for signing up, logging in and searching*/
-button {   
+.button1 {
     background-color: #004f2e;   
     width: 100%;  
     color: #fff;   
@@ -70,7 +70,7 @@ button {
     margin: 10px 0px;   
     border: none;   
     cursor: pointer;   
-}     
+}
    
 input[type=text], input[type=password] {   
     width: 100%;   
@@ -82,7 +82,7 @@ input[type=text], input[type=password] {
 }  
 
 /* hover over buttons changes opacity */
-button:hover, .homeButton:hover, .submitButton:hover, .review-link:hover{   
+.button1:hover, .homeButton:hover, .submitButton:hover, .review-link:hover, .more-button:hover{   
     opacity: 0.7;   
 }     
 
@@ -167,7 +167,7 @@ Body {
     background-color: #004f2e;
     width: 100%;
     color: #fff;
-    padding-top: 15px;
+    padding: 12px;
     margin: 10px 0px;
     border: none;
     cursor: pointer;
@@ -223,20 +223,6 @@ textarea {
     float: right;
 }
 
-/* button for reporting a review */
-#reportButton {
-    padding: 8px 16px; 
-    font-size: 14px; 
-    font-weight: 400;
-    border: none;
-    background-color: #dc2a1a; 
-    color: #fff; 
-    border-radius: 5px; 
-    cursor: pointer;
-    width: 150px; 
-    float: right;
-}
-
 /* button for deleting a review in the edit review page */
 #deleteReviewButton {
     padding: 8px 16px; 
@@ -265,14 +251,6 @@ textarea {
     float: right;
 }
 
-/* toggle button in admin account */
-.toggle-button {
-    padding: 10px; 
-    background-color: #dc2a1a; 
-    color: #fff; 
-    cursor: pointer; 
-}
-
 /* field set for login and signup page */
 fieldset {
     border: 0;
@@ -297,6 +275,41 @@ article {
     border-radius: 5px; 
     text-align: left; 
     
+}
+
+/* dropdown container for review page */
+.dropdown-container {
+    position: relative;
+}
+
+/* '...' button that turns into dropdown */ 
+.more-button {
+    float: right;
+    font-size: 32px;
+    border: none;
+    cursor: pointer;
+    background-color: none;
+    margin-left: 15px;
+}
+
+/* dropdown for the report review feature */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%; /* Position below the button */
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    right: 0;
+    list-style: none;
+    background-color: #fff;
+}
+
+/* Report review button */
+.report-button {
+    cursor: pointer;
+    text-decoration: none; 
+    background-color: #fff;
 }
 
 /* U of R course Rating acts as a link to go back to home page */

@@ -70,7 +70,7 @@ const reviews = (req, res) => {
 
         }
     });
-  db.close()
+    db.close()
 }
 
 // display reviews for a specific course
