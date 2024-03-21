@@ -93,6 +93,25 @@ const suspend = (req, res) => {
     db.close();
 }
 
+// deleting a review on the edit review page
+const deleteReview = (req, res) => {
+    const db = connectToDatabase();
+
+    const reviewId = req.params.id;
+    const sql = 'DELETE FROM reviews WHERE review_id = ?';
+
+    db.run(sql, [reviewId], function(err) {
+        if (err) {
+            console.error(err.message);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        console.log(`Review ${reviewId} deleted successfully`);
+        res.sendStatus(200); // Send success response
+    });
+    db.close()
+}
+
 module.exports = 
 {
     suspended,
