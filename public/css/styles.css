@@ -82,7 +82,7 @@ input[type=text], input[type=password] {
 }  
 
 /* hover over buttons changes opacity */
-.button1:hover, .homeButton:hover, .submitButton:hover, .review-link:hover, .more-button:hover{   
+.button1:hover, .homeButton:hover, .submitButton:hover, .review-link:hover, .more-button:hover, .dismissButton:hover, .adminButton:hover, .unsusButton:hover{   
     opacity: 0.7;   
 }     
 
@@ -238,7 +238,7 @@ textarea {
 }
 
 /* button to unsuspend an account */
-#unsusButton {
+.unsusButton {
     padding: 8px 16px; 
     font-size: 14px; 
     font-weight: 400;
@@ -248,6 +248,35 @@ textarea {
     border-radius: 5px; 
     cursor: pointer;
     width: 150px; 
+    float: right;
+}
+
+/*button for suspending an account and deleting a review */
+.adminButton {
+    padding: 8px 10px; 
+    font-size: 14px; 
+    font-weight: 400;
+    border: none;
+    background-color: #dc2a1a; 
+    color: #fff; 
+    border-radius: 5px; 
+    cursor: pointer;
+    width: 100px; 
+    float: right;
+    margin: 15px;
+}
+
+/*button for dismissing a reported review */
+.dismissButton {
+    padding: 8px 10px; 
+    font-size: 14px; 
+    font-weight: 400;
+    border: none;
+    background-color: lightgray; 
+    color: black; 
+    border-radius: 5px; 
+    cursor: pointer;
+    width: 80px; 
     float: right;
 }
 

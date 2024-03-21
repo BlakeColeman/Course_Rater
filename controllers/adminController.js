@@ -70,9 +70,33 @@ const displayReports = (req, res) => {
     db.close();
 };
 
+// Suspend user option for admin
+const suspend = (req, res) => {
+    const db = connectToDatabase();
+
+    const uname = req.params.uname;
+
+    const sql = 'UPDATE users SET suspended = 1 WHERE uname = ?';
+    
+    db.run(sql, [uname], function(err) {
+        if (err) {
+            console.error(err.message);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        else{
+          console.log(`User ${uname} Suspended successfully`);
+          res.sendStatus(200); // Send success response
+        }
+    });
+
+    db.close();
+}
+
 module.exports = 
 {
     suspended,
     unsuspend,
-    displayReports
+    displayReports,
+    suspend
 }

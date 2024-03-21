@@ -18,10 +18,11 @@ fetch('/admin/suspendedUsers')
             const suspendedElement = document.createElement('div');
             suspendedElement.innerHTML = `
                 <div class='suspendedAccounts'>
-                    <button type="button" id="unsusButton" onclick="unsuspendUser('${user.uname}')">Unsuspend</button>
+                    <button type="button" class="unsusButton" onclick="unsuspendUser('${user.uname}')">Unsuspend</button>
                     <h3 style="text-align: left"><b>Username: ${user.uname}</h3>
                     <h3 style="text-align: left"><b>Email: ${user.email}</h3>
                 </div>
+                <br>
             `;
             suspendedUsersList.appendChild(suspendedElement);
         });
@@ -44,6 +45,22 @@ function unsuspendUser(username) {
     .catch(error => console.error('Error unsuspending user:', error));
 }
 
+//suspend user
+function suspendUser(username) {
+    fetch(`/admin/suspendUser/${username}`, {
+        method: 'PUT',
+    })
+    .then(response => {
+        if (!response.ok) 
+        {
+            throw new Error('Failed to suspend user');
+        }
+        // Reload the page
+        location.reload();
+    })
+    .catch(error => console.error('Error suspending user:', error));
+}
+
 // Get all of the reported reviews
 fetch('/reported-reviews')
     .then(response => response.json())
@@ -63,11 +80,17 @@ fetch('/reported-reviews')
             reviewContent.classList.add('review-content');
             reviewContent.innerHTML = `
                 <article>
+                    <button type="button" onclick="dismissReview(${review.review_id})" class="dismissButton">Dismiss</button>
+                    <br>
                     <p><b>User Name:</b> ${review.uname}</p>
                     <p><b>Content:</b> ${review.content}</p>
                     <p><b>General Description:</b> ${review.content}</p>
                     <p><b>Assessment:</b> ${review.grading}</p> 
                     <p><b>Additional Notes:</b> ${review.anotes}</p> 
+                    <button type="button" class="adminButton" onclick="suspendUser('${review.uname}')">Suspend</button>
+                    
+                    <button type="button" onclick="deleteReview(${review.review_id})" class="adminButton">Delete</button>
+                    <br><br>
                 </article>
             `;
             reviewContent.style.display = 'none'; 
