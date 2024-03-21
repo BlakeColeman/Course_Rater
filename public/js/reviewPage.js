@@ -3,17 +3,21 @@
 // Displays the create review button if signed in, otherwise it is not displayed
 fetch('/user')
     .then(response => {
-        if (!response.ok) {
+        if (!response.ok) 
+        {
             document.getElementById('createButton').style.display = 'none';
         }
         return response.json();
     })
     // Takes user to the create review page and passes course name in url
     .then(user => {
-        if (user.suspended) {
+        if (user.suspended) 
+        {
             // If the user is suspended, hide the create review button
             document.getElementById('createButton').style.display = 'none';
-        } else {
+        } 
+        else 
+        {
             const createReview = document.getElementById('createReview');
             const urlParams = new URLSearchParams(window.location.search);
             const cName = urlParams.get('cname');
@@ -31,7 +35,8 @@ const courseName = urlParams.get('cname');
 // List of reviews for a course
 fetch(`/reviews/${courseName}`)
     .then(response => {
-        if (!response.ok) {
+        if (!response.ok) 
+        {
             throw new Error('Failed to fetch user reviews');
         }
         return response.json();
@@ -41,11 +46,14 @@ fetch(`/reviews/${courseName}`)
 
         reviewList.innerHTML = '';
 
-        if (reviews.length === 0) {
+        if (reviews.length === 0) 
+        {
             const noReviews = document.createElement('div');
             noReviews.textContent = 'No reviews have been made for this course.';
             reviewList.appendChild(noReviews);
-        } else {
+        } 
+        else 
+        {
             reviews.forEach(review => {
                 const reviewElement = document.createElement('div');
                 reviewElement.innerHTML = `
@@ -74,18 +82,22 @@ fetch(`/reviews/${courseName}`)
     .catch(error => console.error('Error fetching user reviews:', error));
 
 // Display the correct course name on page
-if (courseName) {
+if (courseName) 
+{
     courseNameHeader.innerText = `${courseName.toUpperCase()} Reviews`;
 }
 
 const reviewList = document.getElementById('review-list');
 reviewList.addEventListener('click', (event) => {
     const target = event.target;
-    if (target.classList.contains('more-button')) {
+    if (target.classList.contains('more-button')) 
+    {
         // Toggle the visibility of the dropdown
         const dropdownContent = target.nextElementSibling;
         dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
-    } else if (target.classList.contains('report-button')) {
+    } 
+    else if (target.classList.contains('report-button')) 
+    {
         // Handle reporting when the "Report Review" option is clicked
         const reviewId = target.getAttribute('reviewId');
         reportReview(reviewId);
@@ -101,7 +113,8 @@ function reportReview(reviewId) {
         method: 'POST',
     })
     .then(response => {
-        if (!response.ok) {
+        if (!response.ok) 
+        {
             throw new Error('Failed to report review');
         }
         console.log('Review reported successfully');
