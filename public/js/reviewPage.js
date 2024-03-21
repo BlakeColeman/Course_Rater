@@ -50,14 +50,14 @@ fetch(`/reviews/${courseName}`)
                 const reviewElement = document.createElement('div');
                 reviewElement.innerHTML = `
                     <article>
+                        <h3 style="text-align: right"><b>${review.rcreated}</b></h3>
                         <div class="dropdown-container">
                             <button type="button" class="more-button">...</button>
                             <ul class="dropdown-content">
-                                <li class="report-button" data-review-id="${review.review_id}">Report Review</li>
+                                <li class="report-button" reviewId="${review.review_id}">Report Review</li>
                             </ul>
                         </div>
                         
-                        <h3 style="text-align: right"><b>${review.rcreated}</b></h3>
                         <h5><b>Review by ${review.uname}</b></h5>
                         <h3 style="text-align: left"><b>Professor of the Course:</b> ${review.prof}</h3>
                         <h3 style="text-align: left"><b>General Description:</b> ${review.content}</h3>
@@ -87,12 +87,13 @@ reviewList.addEventListener('click', (event) => {
         dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
     } else if (target.classList.contains('report-button')) {
         // Handle reporting when the "Report Review" option is clicked
-        const reviewId = target.getAttribute('data-review-id');
+        const reviewId = target.getAttribute('reviewId');
         reportReview(reviewId);
         // Hide the dropdown when "Report Review" is clicked
         target.closest('.dropdown-content').style.display = 'none';
     }
 });
+
 
 // report review
 function reportReview(reviewId) {
