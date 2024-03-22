@@ -61,6 +61,21 @@ function suspendUser(username) {
     .catch(error => console.error('Error suspending user:', error));
 }
 
+// For deleting a review
+function deleteReview(reviewId) {
+    fetch(`/deleteReview/${reviewId}`, {
+        method: 'DELETE',
+    })
+    .then(response => {
+        if (!response.ok) 
+        {
+            throw new Error('Failed to delete review');
+        }
+        window.location.href = '/account'; 
+    })
+    .catch(error => console.error('Error deleting review:', error));
+}
+
 // Get all of the reported reviews
 fetch('/reported-reviews')
     .then(response => response.json())

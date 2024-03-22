@@ -16,4 +16,7 @@ router.get('/reported-reviews', adminController.displayReports);
 // suspend account
 router.put('/admin/suspendUser/:uname',adminController.suspend);
 
+// delete a reported review
+router.delete('/deleteReview/:id', adminController.deleteReview);
+
 module.exports = router;
