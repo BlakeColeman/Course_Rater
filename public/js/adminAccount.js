@@ -16,9 +16,14 @@ fetch('/admin/suspendedUsers')
 
         suspendedUsers.forEach(user => {
             const suspendedElement = document.createElement('div');
+
+            // Generate and set an ID for each suspended account element
+            const suspendedElementId = `${user.uname}`; 
+            suspendedElement.id = suspendedElementId;
+
             suspendedElement.innerHTML = `
                 <div class='suspendedAccounts'>
-                    <button type="button" class="unsusButton" onclick="unsuspendUser('${user.uname}')">Unsuspend</button>
+                <button type="button" class="unsusButton" onclick="unsuspendUser('${user.uname}', '${suspendedElementId}')">Unsuspend</button>
                     <h3 style="text-align: left"><b>Username: ${user.uname}</h3>
                     <h3 style="text-align: left"><b>Email: ${user.email}</h3>
                 </div>
@@ -30,7 +35,7 @@ fetch('/admin/suspendedUsers')
     .catch(error => console.error('Error fetching suspended users:', error));
 
 // Unsuspend user feature
-function unsuspendUser(username) {
+function unsuspendUser(username, suspendedElementId) {
     fetch(`/admin/unsuspendUser/${username}`, {
         method: 'PUT',
     })
@@ -39,14 +44,18 @@ function unsuspendUser(username) {
         {
             throw new Error('Failed to unsuspend user');
         }
-        // Reload the page
-        location.reload();
+
+        // Hide the suspended account after unsuspending
+        const suspendedElement = document.getElementById(suspendedElementId);
+        if (suspendedElement) {
+            suspendedElement.style.display = 'none';
+        }
     })
     .catch(error => console.error('Error unsuspending user:', error));
 }
 
 //suspend user
-function suspendUser(username) {
+function suspendUser(username, buttonElement) {
     fetch(`/admin/suspendUser/${username}`, {
         method: 'PUT',
     })
@@ -55,8 +64,9 @@ function suspendUser(username) {
         {
             throw new Error('Failed to suspend user');
         }
-        // Reload the page
-        location.reload();
+        
+        // Hide the suspend button after it's clicked
+        buttonElement.style.display = 'none';
     })
     .catch(error => console.error('Error suspending user:', error));
 }
@@ -86,9 +96,7 @@ function dismissReport(reviewId) {
         {
             throw new Error('Failed to report review');
         }
-        console.log('Review dismissed successfully');
-        // Reload the page
-        location.reload();
+        window.location.href = '/account'; 
     })
     .catch(error => {
         console.error('Error reporting review:', error);
@@ -121,9 +129,9 @@ fetch('/reported-reviews')
                     <p><b>General Description:</b> ${review.content}</p>
                     <p><b>Assessment:</b> ${review.grading}</p> 
                     <p><b>Additional Notes:</b> ${review.anotes}</p> 
-                    <button type="button" class="adminButton" onclick="suspendUser('${review.uname}')">Suspend</button>
                     
                     <button type="button" onclick="deleteReview('${review.review_id}')" class="adminButton">Delete</button>
+                    <button type="button" class="adminButton" onclick="suspendUser('${review.uname}', this)">Suspend Account</button>
                     <br><br>
                 </article>
             `;

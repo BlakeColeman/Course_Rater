@@ -127,7 +127,7 @@ const dismissReport = (req, res) => {
             return;
         }
         console.log(`Review ${reviewId} dismissed successfully`);
-        res.status(200)
+        res.status(200); // Send success response
     });
 
     db.close();
