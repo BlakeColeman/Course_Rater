@@ -61,7 +61,7 @@ function suspendUser(username) {
     .catch(error => console.error('Error suspending user:', error));
 }
 
-// For deleting a review
+// deleting a reported review
 function deleteReview(reviewId) {
     fetch(`/deleteReview/${reviewId}`, {
         method: 'DELETE',
@@ -74,6 +74,25 @@ function deleteReview(reviewId) {
         window.location.href = '/account'; 
     })
     .catch(error => console.error('Error deleting review:', error));
+}
+
+// dismiss a reported review
+function dismissReport(reviewId) {
+    fetch(`/admin/dismissReport/${reviewId}`, {
+        method: 'PUT',
+    })
+    .then(response => {
+        if (!response.ok) 
+        {
+            throw new Error('Failed to report review');
+        }
+        console.log('Review dismissed successfully');
+        // Reload the page
+        location.reload();
+    })
+    .catch(error => {
+        console.error('Error reporting review:', error);
+    });
 }
 
 // Get all of the reported reviews
@@ -95,7 +114,7 @@ fetch('/reported-reviews')
             reviewContent.classList.add('review-content');
             reviewContent.innerHTML = `
                 <article>
-                    <button type="button" onclick="dismissReview(${review.review_id})" class="dismissButton">Dismiss</button>
+                    <button type="button" onclick="dismissReport('${review.review_id}')" class="dismissButton">Dismiss</button>
                     <br>
                     <p><b>User Name:</b> ${review.uname}</p>
                     <p><b>Content:</b> ${review.content}</p>
@@ -104,7 +123,7 @@ fetch('/reported-reviews')
                     <p><b>Additional Notes:</b> ${review.anotes}</p> 
                     <button type="button" class="adminButton" onclick="suspendUser('${review.uname}')">Suspend</button>
                     
-                    <button type="button" onclick="deleteReview(${review.review_id})" class="adminButton">Delete</button>
+                    <button type="button" onclick="deleteReview('${review.review_id}')" class="adminButton">Delete</button>
                     <br><br>
                 </article>
             `;

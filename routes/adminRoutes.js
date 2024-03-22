@@ -19,4 +19,7 @@ router.put('/admin/suspendUser/:uname',adminController.suspend);
 // delete a reported review
 router.delete('/deleteReview/:id', adminController.deleteReview);
 
+// dismiss a reported review
+router.put('/dismissReport/:reviewId', adminController.dismissReport);
+
 module.exports = router;

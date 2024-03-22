@@ -93,7 +93,7 @@ const suspend = (req, res) => {
     db.close();
 }
 
-// deleting a review on the edit review page
+// deleting a reported review 
 const deleteReview = (req, res) => {
     const db = connectToDatabase();
 
@@ -112,10 +112,33 @@ const deleteReview = (req, res) => {
     db.close()
 }
 
+// dismiss a reported review
+const dismissReport = (req, res) => {
+    const db = connectToDatabase();
+
+    const reviewId = req.params.reviewId;
+    
+    const sql = 'UPDATE reviews SET flags = 0 WHERE review_id = ?';
+
+    db.run(sql, [reviewId], function(err) {
+        if (err) {
+            console.error(err.message);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        console.log(`Review ${reviewId} dismissed successfully`);
+        res.status(200)
+    });
+
+    db.close();
+}
+
 module.exports = 
 {
     suspended,
     unsuspend,
     displayReports,
-    suspend
+    suspend,
+    deleteReview,
+    dismissReport
 }
