@@ -11,15 +11,15 @@ router.get('/admin/suspendedUsers', adminController.suspended);
 router.put('/admin/unsuspendUser/:uname', adminController.unsuspend);
 
 // display a reported review
-router.get('/reported-reviews', adminController.displayReports);
+router.get('/admin/reported-reviews', adminController.displayReports);
 
 // suspend account
 router.put('/admin/suspendUser/:uname',adminController.suspend);
 
 // delete a reported review
-router.delete('/deleteReview/:id', adminController.deleteReview);
+router.delete('/admin/deleteReview/:id', adminController.deleteReview);
 
 // dismiss a reported review
-router.put('/dismissReport/:reviewId', adminController.dismissReport);
+router.put('/admin/dismissReport/:reviewId', adminController.dismissReport);
 
 module.exports = router;

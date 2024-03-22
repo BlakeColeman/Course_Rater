@@ -73,7 +73,7 @@ function suspendUser(username, buttonElement) {
 
 // deleting a reported review
 function deleteReview(reviewId) {
-    fetch(`/deleteReview/${reviewId}`, {
+    fetch(`/admin/deleteReview/${reviewId}`, {
         method: 'DELETE',
     })
     .then(response => {
@@ -94,7 +94,7 @@ function dismissReport(reviewId) {
     .then(response => {
         if (!response.ok) 
         {
-            throw new Error('Failed to report review');
+            throw new Error('Failed to dismiss review');
         }
         window.location.href = '/account'; 
     })
@@ -104,7 +104,7 @@ function dismissReport(reviewId) {
 }
 
 // Get all of the reported reviews
-fetch('/reported-reviews')
+fetch('/admin/reported-reviews')
     .then(response => response.json())
     .then(reviews => {
         const displayReviews = document.getElementById('displayReports');
