@@ -7,8 +7,15 @@ body, h1, h2, h3, p, ul, li {
 
 }
 
+html{
+    min-height: 100%;
+    position: relative;
+}
+
 /* Global styles */
 body {
+    min-height: 100%;
+    margin-bottom: 75px;
     line-height: 1.6;
     background-color: #f8f8f8;
 }
@@ -30,6 +37,8 @@ main {
     left: 0;
     bottom: 0;
     width: 100%;
+    position: absolute;
+    height: 35px;
     background-color: #333;
     color: #fff;
     text-align: center;
@@ -37,6 +46,7 @@ main {
   }
 
 
+/* container for index page search */
 .search {
     text-align: center;
     padding: 50px 0;
@@ -104,7 +114,6 @@ h1 {
 h2 {
     text-align: center;
     font-size: 42px;
-    padding: auto;
 }
 
 h3 {
@@ -144,7 +153,6 @@ hr {
 /* Font style for all pages */
 Body {  
     font-family: Calibri, Helvetica, sans-serif;  
-    background-color: rgb(#fff);  
 }  
 
 /* Button in header*/
@@ -187,10 +195,9 @@ Body {
 /* container for html files used for side padding */
 .over {
     text-align: left;
-    width: auto;
+    min-height:100%;
+    position:relative;
     padding: 0 60px;
-    position: relative;
-    min-height: 69.7vh;
 }
 
 /* box for suspended accounts */
