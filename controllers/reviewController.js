@@ -5,7 +5,7 @@ const router = express.Router();
 const path = require('path');
 const databaseModules = require('../database/databaseModules');
 
-const db=new databaseModules();
+const db = new databaseModules();
 
 
 // get the courses while searching

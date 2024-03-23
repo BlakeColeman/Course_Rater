@@ -5,7 +5,7 @@ const passport = require('passport');
 const path = require('path');
 const databaseModules = require('../database/databaseModules.js');
 
-const db=new databaseModules();
+const db = new databaseModules();
 
 // create an account
 const createUser = (req, res) => {
@@ -102,7 +102,7 @@ const logout = (req, res) => {
     req.logout(() => {
         res.redirect('/index');
     });
-};
+}
 
 
 module.exports = 

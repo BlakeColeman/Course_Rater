@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 const databaseModules = require('../database/databaseModules');
 
-const db=new databaseModules();
+const db = new databaseModules();
 
 // connect to the database
 function connectToDatabase() {
@@ -19,12 +19,12 @@ function connectToDatabase() {
 // get all of the suspended accounts
 const suspended = (req, res) => {
     db.databaseModules(req,res);
-  }
+}
   
 // Unsuspend user option for admin
 const unsuspend = (req, res) => {
     db.databaseModules(req,res);
-  }
+}
 
 // Display the reports for the admin
 const displayReports = (req, res) => {

@@ -4,24 +4,20 @@ const router = express.Router();
 const path = require('path');
 const databaseModules = require('../database/databaseModules');
 
-const db=new databaseModules();
+const db = new databaseModules();
 
 // display all reviews a user has made in their account page
-const userReviews = (req, res) => 
-{
+const userReviews = (req, res) => {
     db.userReviews(req,res);
 }
 
 // display a single review to either delete or edit
-const reviewDetails = (req, res) => 
-{
-
+const reviewDetails = (req, res) => {
     db.reviewDetails(req,res);
 }
 
 // creating a review
-const createReview = (req, res) => 
-{
+const createReview = (req, res) => {
     db.createReview(req,res);
 }
 
