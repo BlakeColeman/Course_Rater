@@ -3,6 +3,9 @@
 const sqlite3 = require('sqlite3').verbose(); 
 const express = require('express');
 const router = express.Router();
+const databaseModules = require('../database/databaseModules');
+
+const db=new databaseModules();
 
 // connect to the database
 function connectToDatabase() {
@@ -15,59 +18,17 @@ function connectToDatabase() {
 
 // get all of the suspended accounts
 const suspended = (req, res) => {
-    const db = connectToDatabase();
-
-    const sql = 'SELECT * FROM users WHERE suspended = 1';
-    db.all(sql, (err, rows) => {
-        if (err) {
-          console.log(err.message);
-          res.status(500).send('Internal Server Error');
-          return;
-        } else {
-            res.json(rows);
-        }
-    });
-    db.close()
+    db.databaseModules(req,res);
   }
   
 // Unsuspend user option for admin
 const unsuspend = (req, res) => {
-    const db = connectToDatabase();
-
-    const uname = req.params.uname;
-
-    const sql = 'UPDATE users SET suspended = 0 WHERE uname = ?';
-    
-    db.run(sql, [uname], function(err) {
-        if (err) {
-            console.error(err.message);
-            res.status(500).send('Internal Server Error');
-            return;
-        }
-        else{
-          console.log(`User ${uname} unsuspended successfully`);
-          res.sendStatus(200); // Send success response
-        }
-    });
-
-    db.close();
+    db.databaseModules(req,res);
   }
 
 // Display the reports for the admin
 const displayReports = (req, res) => {
-    const db = connectToDatabase();
-
-    const sql = 'SELECT * FROM reviews WHERE flags = 1';
-    db.all(sql, (err, rows) => {
-        if (err) {
-            console.log(err.message);
-            res.status(500).send('Internal Server Error');
-            return;
-        } else {
-            res.json(rows); 
-        }
-    });
-    db.close();
+    db.databaseModules(req,res);
 };
 
 // Suspend user option for admin
@@ -95,21 +56,7 @@ const suspend = (req, res) => {
 
 // deleting a reported review 
 const deleteReview = (req, res) => {
-    const db = connectToDatabase();
-
-    const reviewId = req.params.id;
-    const sql = 'DELETE FROM reviews WHERE review_id = ?';
-
-    db.run(sql, [reviewId], function(err) {
-        if (err) {
-            console.error(err.message);
-            res.status(500).send('Internal Server Error');
-            return;
-        }
-        console.log(`Review ${reviewId} deleted successfully`);
-        res.sendStatus(200); // Send success response
-    });
-    db.close()
+    db.deleteReview(req,res);
 }
 
 // dismiss a reported review
