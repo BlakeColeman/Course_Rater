@@ -3,9 +3,9 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const path = require('path');
-const databaseModules = require('../database/databaseModules.js');
+const databaseFacade = require('../database/databaseFacade.js');
 
-const db = new databaseModules();
+const db = new databaseFacade();
 
 // create an account
 const createUser = (req, res) => {

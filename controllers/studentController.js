@@ -2,9 +2,9 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
-const databaseModules = require('../database/databaseModules');
+const databaseFacade = require('../database/databaseFacade');
 
-const db = new databaseModules();
+const db = new databaseFacade();
 
 // display all reviews a user has made in their account page
 const userReviews = (req, res) => {

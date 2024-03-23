@@ -3,9 +3,9 @@
 const sqlite3 = require('sqlite3').verbose(); 
 const express = require('express');
 const router = express.Router();
-const databaseModules = require('../database/databaseModules');
+const databaseFacade = require('../database/databaseFacade');
 
-const db = new databaseModules();
+const db = new databaseFacade();
 
 // get all of the suspended accounts
 const suspended = (req, res) => {
