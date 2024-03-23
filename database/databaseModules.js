@@ -1,7 +1,7 @@
 const sqlite3 = require('sqlite3').verbose(); 
 const path = require('path');
 
-export class database 
+module.exports  = class database 
 {
   
   constructor() 
@@ -17,7 +17,7 @@ export class database
   //Create a user
   createUser(req,res)
   {
-    db.run('INSERT INTO users(uname,email,pword) VALUES(?,?,?)', [req.body.uname,req.body.email, req.body.pword], function(err) {
+    this.db.run('INSERT INTO users(uname,email,pword) VALUES(?,?,?)', [req.body.uname,req.body.email, req.body.pword], function(err) {
       if (err) 
       {
           return console.log(err.message);
@@ -33,7 +33,7 @@ export class database
     const {uname} = req.body;
     var sql = 'SELECT * FROM users WHERE uname = ?';
     // Check if the username already exists in the database
-    db.all(sql, [uname], (err, rows)=> 
+    this.db.all(sql, [uname], (err, rows)=> 
     {
         if (err) {
           console.error(err.message);
@@ -57,7 +57,7 @@ export class database
   {
     const {email} = req.body;
     var sql ='SELECT * FROM users WHERE email = ?';
-    db.all(sql,[email],(err, rows) =>
+    this.db.all(sql,[email],(err, rows) =>
     {
         if (err) 
         {
@@ -81,7 +81,7 @@ export class database
   //Verify a users password is correct
   verifyPassword(email,password,done)
   {
-    db.get('SELECT * FROM users WHERE email = ?', [email], (err, row) => {
+    this.db.get('SELECT * FROM users WHERE email = ?', [email], (err, row) => {
       if (err) {
           console.error(err);
           return done(err);
@@ -105,7 +105,7 @@ export class database
 
     const { prof, content, grading, anotes, rate } = req.body;
     const sql = 'SELECT cid FROM courses WHERE cname LIKE ?';
-    db.get(sql, [cname], (err, row) => {
+    this.db.get(sql, [cname], (err, row) => {
         if (err) {
             console.log(err.message);
             res.status(500).send('Internal Server Error');
@@ -121,8 +121,8 @@ export class database
         const cid = row.cid;
         
         const insertSql = 'INSERT INTO reviews (cid, prof, content, grading, anotes, crating, uname, rcreated) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
-        db.serialize(() => {
-            db.run(insertSql, [cid,prof,content, grading, anotes, rate, uname, currentDate], function(err) {
+        this.db.serialize(() => {
+            this.db.run(insertSql, [cid,prof,content, grading, anotes, rate, uname, currentDate], function(err) {
                 if (err) {
                     console.log(err.message);
                     res.status(500).send('Internal Server Error');
@@ -144,7 +144,7 @@ export class database
     
     const searchQuery = '%' + cname + '%';
 
-    db.all(sql, [searchQuery], (err, rows) => {
+    this.db.all(sql, [searchQuery], (err, rows) => {
         if (err) {
           console.error(err.message);
           res.status(500).send('Internal Server Error');
@@ -165,7 +165,7 @@ export class database
   //Get a users data based on their username
   getUserData(uname,done)
   {
-    db.get('SELECT * FROM users WHERE uname = ?', [uname], (err, user) => {
+    this.db.get('SELECT * FROM users WHERE uname = ?', [uname], (err, user) => {
       done(err, user);
   });
   }
@@ -177,7 +177,7 @@ export class database
     const uname = req.user.uname;  
     const sql = 'SELECT c.cname,r.review_id,r.uname,r.prof,r.content,r.grading,r.anotes,r.crating,r.rcreated FROM reviews r LEFT JOIN courses c on c.cid = r.cid WHERE uname LIKE ? '; // limit the number of courses shown
 
-    db.all(sql, [uname], (err, rows)=> {
+    this.db.all(sql, [uname], (err, rows)=> {
         if (err) 
         {
           console.error(err.message);
@@ -196,7 +196,7 @@ export class database
     const reviewId = req.params.id;
     const sql = 'SELECT c.cname,r.review_id,r.uname,r.prof,r.content,r.grading,r.anotes,r.crating,r.rcreated FROM reviews r LEFT JOIN courses c on c.cid = r.cid WHERE r.review_id = ?'; 
   
-    db.all(sql, [reviewId], (err, rows) => {
+    this.db.all(sql, [reviewId], (err, rows) => {
       if (err) 
       {
         console.error(err.message);
@@ -216,7 +216,7 @@ export class database
     const courseName = req.params.cname;
     const sql = 'SELECT c.cname,r.review_id,r.uname,r.prof,r.content,r.grading,r.anotes,r.crating,r.rcreated FROM reviews r LEFT JOIN courses c on c.cid = r.cid WHERE cname LIKE ? ';
 
-    db.all(sql, [courseName], (err, rows) => {
+    this.db.all(sql, [courseName], (err, rows) => {
         if (err) {
             console.error(err.message);
             res.status(500).send('Internal Server Error');
@@ -232,7 +232,7 @@ export class database
     const reviewId = req.params.id;
     const sql = 'DELETE FROM reviews WHERE review_id = ?';
 
-    db.run(sql, [reviewId], function(err) {
+    this.db.run(sql, [reviewId], function(err) {
         if (err) {
             console.error(err.message);
             res.status(500).send('Internal Server Error');
@@ -250,7 +250,7 @@ export class database
     
     const sql = 'SELECT * FROM courses WHERE cname LIKE ?';
     
-    db.all(sql, [cname], (err, rows) => {
+    this.db.all(sql, [cname], (err, rows) => {
         if (err) 
         {
             console.error(err.message);
@@ -277,7 +277,7 @@ export class database
     
     const sql = 'UPDATE reviews SET flags = 1 WHERE review_id = ?';
 
-    db.run(sql, [reviewId], (err) => {
+    this.db.run(sql, [reviewId], (err) => {
         if (err) {
             console.error(err.message);
             res.status(500).send('Internal Server Error');
@@ -293,7 +293,7 @@ export class database
   suspended(req, res) 
   {
     const sql = 'SELECT * FROM users WHERE suspended = 1';
-    db.all(sql, (err, rows) => {
+    this.db.all(sql, (err, rows) => {
         if (err) {
           console.log(err.message);
           res.status(500).send('Internal Server Error');
@@ -310,7 +310,7 @@ export class database
 
     const sql = 'UPDATE users SET suspended = 0 WHERE uname = ?';
     
-    db.run(sql, [uname], function(err) {
+    this.db.run(sql, [uname], function(err) {
         if (err) {
             console.error(err.message);
             res.status(500).send('Internal Server Error');
@@ -326,13 +326,11 @@ export class database
   // edit a review
   editReview(req,res)
   {
-    const db = connectToDatabase();
-
-    const {rid, prof, content, grading, anotes, crating } = req.body;
+    const {rid, prof, content, grading, anotes, rate } = req.body;
     const updateSQL = 'UPDATE reviews SET prof = ?, content = ?, grading = ?, anotes = ?, crating =? WHERE review_id=? ;'
-    db.serialize(() => 
+    this.db.serialize(() => 
     {
-      db.run(updateSQL, [prof, content, grading, anotes, crating, rid], function(err) 
+      this.db.run(updateSQL, [prof, content, grading, anotes, rate, rid], function(err) 
       {
         if (err) 
         {
@@ -340,18 +338,17 @@ export class database
           res.status(500).send('Internal Server Error');
           return;
         }
-        console.log('Review was inserted successfully');
+        console.log('Review was edited successfully');
         res.redirect('/account'); 
       });
     });
-    db.close()
   }
 
   // Display the reports for the admin
   displayReports(req, res)
   {
     const sql = 'SELECT * FROM reviews WHERE flags = 1';
-    db.all(sql, (err, rows) => {
+    this.db.all(sql, (err, rows) => {
         if (err) {
             console.log(err.message);
             res.status(500).send('Internal Server Error');
@@ -368,7 +365,7 @@ suspend(req, res) {
 
   const sql = 'UPDATE users SET suspended = 1 WHERE uname = ?';
   
-  db.run(sql, [uname], function(err) {
+  this.db.run(sql, [uname], function(err) {
       if (err) {
           console.error(err.message);
           res.status(500).send('Internal Server Error');
@@ -387,7 +384,7 @@ dismissReport (req, res) {
   const reviewId = req.params.reviewId;
   const sql = 'UPDATE reviews SET flags = 0 WHERE review_id = ?';
 
-  db.run(sql, [reviewId], function(err) {
+  this.db.run(sql, [reviewId], function(err) {
       if (err) {
           console.error(err.message);
           res.status(500).send('Internal Server Error');
