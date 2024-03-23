@@ -375,12 +375,12 @@ module.exports  = class database
   }
 
   // Suspend user option for admin
-suspend(req, res) {
-  const uname = req.params.uname;
+  suspend(req, res) {
+    const uname = req.params.uname;
 
-  const sql = 'UPDATE users SET suspended = 1 WHERE uname = ?';
-  
-  this.db.run(sql, [uname], function(err) {
+    const sql = 'UPDATE users SET suspended = 1 WHERE uname = ?';
+    
+    this.db.run(sql, [uname], function(err) {
       if (err) 
       {
           console.error(err.message);
@@ -392,25 +392,24 @@ suspend(req, res) {
         console.log(`User ${uname} Suspended successfully`);
         res.sendStatus(200); // Send success response
       }
-  });
-}
+    });
+  }
 
-// dismiss a reported review
-dismissReport (req, res) {
-  const reviewId = req.params.reviewId;
+  // dismiss a reported review
+  dismissReport (req, res) {
+    const reviewId = req.params.reviewId;
 
-  const sql = 'UPDATE reviews SET flags = 0 WHERE review_id = ?';
+    const sql = 'UPDATE reviews SET flags = 0 WHERE review_id = ?';
 
-  this.db.run(sql, [reviewId], function(err) {
+    this.db.run(sql, [reviewId], function(err) {
       if (err) 
       {
-          console.error(err.message);
-          res.status(500).send('Internal Server Error');
-          return;
+        console.error(err.message);
+        res.status(500).send('Internal Server Error');
+        return;
       }
       console.log(`Review ${reviewId} dismissed successfully`);
       res.status(200); // Send success response
-  });
-}
-
+    });
+  }
 }
