@@ -1,42 +1,36 @@
-// dont need anymore will delete later as this is in the controllers
-
 const sqlite3 = require('sqlite3').verbose(); 
 const path = require('path');
 
-// connect to the database
-function connectToDatabase() {
-  return new sqlite3.Database('./database/UofRCourseRater', (err) => {
-    if (err) {
-        console.error(err.message);
-    }
-  });
-}
-
-module.exports = 
-{ 
-  createUser: function(req,res)
+export class database 
+{
+  
+  constructor() 
   {
-    const db = connectToDatabase();
-    
-    // SignupForm(req.body);
-    console.log(req.body)
+    this.db = new sqlite3.Database('./database/UofRCourseRater', (err) => {
+      if (err) 
+      {
+          console.error(err.message);
+      }
+    });
+  }
+
+  //Create a user
+  createUser(req,res)
+  {
     db.run('INSERT INTO users(uname,email,pword) VALUES(?,?,?)', [req.body.uname,req.body.email, req.body.pword], function(err) {
       if (err) 
       {
-        return console.log(err.message);
+          return console.log(err.message);
       }
       console.log("New user has been added");
       res.sendFile(path.join(__dirname, '../','public/view', 'login.html'));
-    });
-    db.close()
-  },
+  });
+  }
 
-  checkUsername: function(req,res)
+  //Check if a username is already being used
+  checkUsername(req,res) 
   {
-    const db = connectToDatabase();
-
     const {uname} = req.body;
-    console.log("Checking uname:",uname,"for availability");
     var sql = 'SELECT * FROM users WHERE uname = ?';
     // Check if the username already exists in the database
     db.all(sql, [uname], (err, rows)=> 
@@ -56,15 +50,12 @@ module.exports =
           return;
         }
     });
-    db.close()
-  },
+  }
 
-  checkEmail: function(req,res)
+  //Check if an email is already being used
+  checkEmail(req,res)
   {
-    const db = connectToDatabase();
-
     const {email} = req.body;
-    console.log("checking Email",email,"for availability");
     var sql ='SELECT * FROM users WHERE email = ?';
     db.all(sql,[email],(err, rows) =>
     {
@@ -85,34 +76,29 @@ module.exports =
           res.status(200).send('Email available');
         }
     })
-    db.close()
-  },
+  }
 
-  verifyPassword: function(email,password,done)
+  //Verify a users password is correct
+  verifyPassword(email,password,done)
   {
-    const db = connectToDatabase();
-
     db.get('SELECT * FROM users WHERE email = ?', [email], (err, row) => {
       if (err) {
-        console.error(err);
-        return done(err);
+          console.error(err);
+          return done(err);
       } 
       if (!row) {
-        return done(null, false, { message: 'Incorrect email.' });
+          return done(null, false, { message: 'Incorrect email.' });
       }
       if (row.pword !== password) {
-        return done(null, false, { message: 'Incorrect password.' });
+          return done(null, false, { message: 'Incorrect password.' });
       }
-
       return done(null, row);
-    });
-    db.close()
-  },
-  
-  createReview: function(req,res)
+  });
+  }
+
+  //Create a Review with the specified values
+  createReview(req,res)
   {
-    const db = connectToDatabase();
-    
     const uname = req.user.uname;  
     const cname = req.body.cname;
     const currentDate = new Date().toISOString().split('T')[0];
@@ -121,15 +107,15 @@ module.exports =
     const sql = 'SELECT cid FROM courses WHERE cname LIKE ?';
     db.get(sql, [cname], (err, row) => {
         if (err) {
-          console.log(err.message);
-          res.status(500).send('Internal Server Error');
-          return;
+            console.log(err.message);
+            res.status(500).send('Internal Server Error');
+            return;
         }
 
         if (!row) {
-          console.log('Course not found'); 
-          res.status(404).send('Course not found');
-          return;
+            console.log('Course not found'); 
+            res.status(404).send('Course not found');
+            return;
         }
 
         const cid = row.cid;
@@ -147,14 +133,11 @@ module.exports =
             });
         });
     });
-    //db.close()
-  },
+  }
 
-  // get the courses while searching
-  getCourses: function(req,res)
+  //Get top 10 courses with course name similar to *
+  getCourses(req,res)
   {
-    const db = connectToDatabase();
-
     const { cname } = req.query;
 
     const sql = 'SELECT * FROM courses WHERE cname LIKE ? LIMIT 10'; // limit the number of courses shown
@@ -177,23 +160,19 @@ module.exports =
           res.json(rows);
         }
     });
-    db.close()
-  },
+  }
 
-  getUserData: function(uname,done)
+  //Get a users data based on their username
+  getUserData(uname,done)
   {
-    const db = connectToDatabase();
-
     db.get('SELECT * FROM users WHERE uname = ?', [uname], (err, user) => {
       done(err, user);
   });
-  db.close()
-  },
+  }
 
   // display all reviews a user has made in their account page
-  userReviews: function(req,res)
+  userReviews(req,res)
   {
-    const db = connectToDatabase();
 
     const uname = req.user.uname;  
     const sql = 'SELECT c.cname,r.review_id,r.uname,r.prof,r.content,r.grading,r.anotes,r.crating,r.rcreated FROM reviews r LEFT JOIN courses c on c.cid = r.cid WHERE uname LIKE ? '; // limit the number of courses shown
@@ -208,72 +187,65 @@ module.exports =
         else
           res.json(rows);
     })
-    db.close()
-  },
+  }
 
   // display a single review to either delete or edit
-  reviewDetails: function(req, res) 
+  reviewDetails(req, res) 
   {
-    const db = connectToDatabase();
-
+  
     const reviewId = req.params.id;
     const sql = 'SELECT c.cname,r.review_id,r.uname,r.prof,r.content,r.grading,r.anotes,r.crating,r.rcreated FROM reviews r LEFT JOIN courses c on c.cid = r.cid WHERE r.review_id = ?'; 
-
+  
     db.all(sql, [reviewId], (err, rows) => {
-        if (err) {
-          console.error(err.message);
-          res.status(500).send('Internal Server Error');
-          return;
-        } else
-          res.json(rows);
+      if (err) 
+      {
+        console.error(err.message);
+        res.status(500).send('Internal Server Error');
+        return;  
+      } 
+      else
+      {
+        res.json(rows);
+      }
     })
-    db.close()
-  },
+  }
 
   // display reviews for a specific course
-  CourseReview: function(req, res) 
+  courseReview(req, res) 
   {
-    const db = connectToDatabase();
-
     const courseName = req.params.cname;
     const sql = 'SELECT c.cname,r.review_id,r.uname,r.prof,r.content,r.grading,r.anotes,r.crating,r.rcreated FROM reviews r LEFT JOIN courses c on c.cid = r.cid WHERE cname LIKE ? ';
 
     db.all(sql, [courseName], (err, rows) => {
         if (err) {
-          console.error(err.message);
-          res.status(500).send('Internal Server Error');
-          return;
+            console.error(err.message);
+            res.status(500).send('Internal Server Error');
+            return;
         } else
-          res.json(rows);
+            res.json(rows);
     })
-    db.close()
-  },
+  }
 
   // deleting a review on the edit review page
-  deleteReview: function(req,res)
+  deleteReview(req,res)
   {
-    const db = connectToDatabase();
-
     const reviewId = req.params.id;
     const sql = 'DELETE FROM reviews WHERE review_id = ?';
 
     db.run(sql, [reviewId], function(err) {
         if (err) {
-          console.error(err.message);
-          res.status(500).send('Internal Server Error');
-          return;
+            console.error(err.message);
+            res.status(500).send('Internal Server Error');
+            return;
         }
         console.log(`Review ${reviewId} deleted successfully`);
         res.sendStatus(200); // Send success response
     });
-    db.close()
-  },
+  }
 
   // takes the user to the correct review page given search
-  reviews: function(req, res) 
-  {
-    const db = connectToDatabase();
-
+  reviews(req, res) 
+  {  
     const { cname } = req.query; 
     
     const sql = 'SELECT * FROM courses WHERE cname LIKE ?';
@@ -288,45 +260,40 @@ module.exports =
         
         if (rows.length === 0) 
         {
-          res.redirect('/index');
+            res.redirect('/index');
         } 
         else 
         {
-          res.sendFile(path.join(__dirname,'../', 'public','view', 'reviewpage.html'));
+            res.sendFile(path.join(__dirname,'../', 'public','view', 'reviewpage.html'));
 
         }
     });
-    db.close()
-  },
+  }
 
   // report a review
-  reportReview: function(req,res)
+  reportReview(req,res)
   {
-    const db = connectToDatabase();
+    const reviewId = req.params.reviewId;
+    
+    const sql = 'UPDATE reviews SET flags = 1 WHERE review_id = ?';
 
-    const rid = req.body.rid;
-    const sql = 'UPDATE SET flags = flags+1 WHERE reviews.flags=?';
-    db.all(sql,[rid],(err,rows)=>{
-      if (err) 
-      {
-        console.error(err.message);
-        res.status(500).send('Internal Server Error');
-        return;
-      }
-      
-      if (rows.length === 0) 
-      {
-          res.status(404).send('Review Not found');
-      } 
+    db.run(sql, [reviewId], (err) => {
+        if (err) {
+            console.error(err.message);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        console.log(`Review ${reviewId} reported successfully`);
+        res.status(200)
     });
-    db.close()
-  },
+
+  }
 
   // get all of the suspended accounts
-  suspended: function(req, res) {
-    const db = connectToDatabase();
-
-    db.all('SELECT * FROM users WHERE suspended = 1', (err, rows) => {
+  suspended(req, res) 
+  {
+    const sql = 'SELECT * FROM users WHERE suspended = 1';
+    db.all(sql, (err, rows) => {
         if (err) {
           console.log(err.message);
           res.status(500).send('Internal Server Error');
@@ -335,16 +302,15 @@ module.exports =
             res.json(rows);
         }
     });
-    db.close()
-  },
+  }
   
   // Unsuspend user option for admin
-  unsuspend: function(req, res) {
-    const db = connectToDatabase();
-
+  unsuspend(req, res) {
     const uname = req.params.uname;
 
-    db.run('UPDATE users SET suspended = 0 WHERE uname = ?', [uname], function(err) {
+    const sql = 'UPDATE users SET suspended = 0 WHERE uname = ?';
+    
+    db.run(sql, [uname], function(err) {
         if (err) {
             console.error(err.message);
             res.status(500).send('Internal Server Error');
@@ -355,12 +321,10 @@ module.exports =
           res.sendStatus(200); // Send success response
         }
     });
-
-    db.close();
-  },
+  }
 
   // edit a review
-  editReview: function(req,res)
+  editReview(req,res)
   {
     const db = connectToDatabase();
 
@@ -382,4 +346,56 @@ module.exports =
     });
     db.close()
   }
+
+  // Display the reports for the admin
+  displayReports(req, res)
+  {
+    const sql = 'SELECT * FROM reviews WHERE flags = 1';
+    db.all(sql, (err, rows) => {
+        if (err) {
+            console.log(err.message);
+            res.status(500).send('Internal Server Error');
+            return;
+        } else {
+            res.json(rows); 
+        }
+    });
+  }
+
+  // Suspend user option for admin
+suspend(req, res) {
+  const uname = req.params.uname;
+
+  const sql = 'UPDATE users SET suspended = 1 WHERE uname = ?';
+  
+  db.run(sql, [uname], function(err) {
+      if (err) {
+          console.error(err.message);
+          res.status(500).send('Internal Server Error');
+          return;
+      }
+      else{
+        console.log(`User ${uname} Suspended successfully`);
+        res.sendStatus(200); // Send success response
+      }
+  });
+}
+
+// dismiss a reported review
+dismissReport (req, res) {
+
+  const reviewId = req.params.reviewId;
+  const sql = 'UPDATE reviews SET flags = 0 WHERE review_id = ?';
+
+  db.run(sql, [reviewId], function(err) {
+      if (err) {
+          console.error(err.message);
+          res.status(500).send('Internal Server Error');
+          return;
+      }
+      console.log(`Review ${reviewId} dismissed successfully`);
+      res.status(200); // Send success response
+  });
+}
+
 }
