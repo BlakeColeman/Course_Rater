@@ -75,7 +75,6 @@ const userLoggedIn = (req, res) => {
 
 // Login 
 const login = (req, res, next) => {
-    console.log("The pain");
     passport.authenticate('local', (err, user, info) => {
         if (err) 
         {
