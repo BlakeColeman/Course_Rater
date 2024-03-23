@@ -39,3 +39,28 @@ function countCharsGrading(obj){
 function countCharsAnotes(obj){
     document.getElementById('charNumAnotes').innerHTML = obj.value.length+ '/500';
 }
+
+// Checking the form before submission
+const form = document.querySelector('form');
+form.addEventListener('submit', checkForm);
+
+// Ensures the user enters a star rating before submitting
+function checkForm(event) {
+    event.preventDefault();
+
+    const form = document.querySelector('form');
+
+    const ratingInputs = document.querySelectorAll('input[name="rate"]');
+    const ratingSelected = Array.from(ratingInputs).some(input => input.checked);
+
+    // display error message if star rating is not selected
+    if (!ratingSelected) {
+        document.getElementById('ratingErrorMessage').style.display = 'block';
+        return;
+    }
+
+    // Hide the error message
+    document.getElementById('ratingErrorMessage').style.display = 'none';
+
+    form.submit(); 
+}

@@ -139,7 +139,7 @@ module.exports  = class database
             return;
           }
           console.log('Review was inserted successfully');
-          res.redirect('/index'); 
+          res.redirect(`/reviews?cname=${cname}`);
         });
       });
     });
