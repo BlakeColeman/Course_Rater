@@ -237,6 +237,7 @@ module.exports  = class database
   }
 
   // deleting a review on the edit review page
+  // and deleting a reported review in the admin account
   deleteReview(req,res) {
     const reviewId = req.params.id;
 

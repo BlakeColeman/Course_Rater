@@ -99,7 +99,7 @@ function dismissReport(reviewId) {
         window.location.href = '/account'; 
     })
     .catch(error => {
-        console.error('Error reporting review:', error);
+        console.error('Error dismissing review:', error);
     });
 }
 
@@ -122,7 +122,7 @@ fetch('/admin/reported-reviews')
             reviewContent.classList.add('review-content');
             reviewContent.innerHTML = `
                 <article>
-                    <button type="button" onclick="dismissReport('${review.review_id}')" class="dismissButton">Dismiss</button>
+                    <button type="button" class="dismissButton" onclick="dismissReport('${review.review_id}')">Dismiss</button>
                     <br>
                     <p><b>User Name:</b> ${review.uname}</p>
                     <p><b>Content:</b> ${review.content}</p>
@@ -130,7 +130,7 @@ fetch('/admin/reported-reviews')
                     <p><b>Assessment:</b> ${review.grading}</p> 
                     <p><b>Additional Notes:</b> ${review.anotes}</p> 
                     
-                    <button type="button" onclick="deleteReview('${review.review_id}')" class="adminButton">Delete</button>
+                    <button type="button" class="adminButton" onclick="deleteReview('${review.review_id}')">Delete</button>
                     <button type="button" class="adminButton" onclick="suspendUser('${review.uname}', this)">Suspend Account</button>
                     <br><br>
                 </article>
