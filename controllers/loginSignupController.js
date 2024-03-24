@@ -72,7 +72,6 @@ const userLoggedIn = (req, res) => {
     }
 }
 
-
 // Login 
 const login = (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
@@ -102,7 +101,6 @@ const logout = (req, res) => {
         res.redirect('/index');
     });
 }
-
 
 module.exports = 
 { 

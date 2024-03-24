@@ -7,7 +7,6 @@ const databaseFacade = require('../database/databaseFacade');
 
 const db = new databaseFacade();
 
-
 // get the courses while searching
 const getCourses = (req, res) => {
     db.getCourses(req,res);
