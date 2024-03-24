@@ -1,3 +1,36 @@
 CREATE TABLE users(uname varchar(255),email varchar(255) UNIQUE,pword varchar(255),role varchar(255),suspended BOOLEAN DEFAULT FALSE,PRIMARY KEY (uname));
 CREATE TABLE courses(cid int,cname varchar(255),PRIMARY KEY(cid));
-CREATE TABLE reviews(review_id integer PRIMARY KEY,cid integer, uname text, content text,grading text,anotes text,crating integer,flags BOOLEAN DEFAULT FALSE,rcreated date,FOREIGN KEY(cid) REFERENCES courses(cid),FOREIGN KEY(uname) REFERENCES users(uname));
+CREATE TABLE reviews(review_id integer PRIMARY KEY,cid integer, uname text, content text,grading text,anotes text,crating integer,prof text, flags BOOLEAN DEFAULT FALSE, rcreated date,FOREIGN KEY(cid) REFERENCES courses(cid),FOREIGN KEY(uname) REFERENCES users(uname));
+
+
+INSERT INTO courses (cid, cname) VALUES ('ACSC 116','ACSC 116-Mathematics of Finance 1'),
+                                        ('ADMN 100','ADMN 100-Introduction to Administration'),
+                                        ('ANTH 100','ANTH 100-Introduction to Anthropology'),
+                                        ('ART 100','ART 100-Introduction to Art'),
+                                        ('ARTH 100','ARTH 100-Introduction to Art History'),
+                                        ('ASTR 101','ASTR 101-Introduction to Astronomy'),
+                                        ('ASTR 119','ASTR 119-Astrobiology'),
+                                        ('BIOL 100','BIOL 100-Biology I - From Cells to Organisms'),
+                                        ('BIOL 101','BIOL 101-Biology II - Organisms in their Environment'),
+                                        ('BUS 100','BUS 100-Introduction to Business'),
+                                        ('CHEM 104','CHEM 104-General Chemistry I'),
+                                        ('CHEM 105','CHEM 105-General Chemistry II'),
+                                        ('CHIN 111','CHIN 111-Introduction Mandarin Chinese I'),
+                                        ('CHIN 112','CHIN 112-Introduction Mandarin Chinese II'),
+                                        ('CLAS 100','CLAS 100-An Introduction to the Civilizations of Greece and Rome'),
+                                        ('CLAS 110','CLAS 110-Greek and Latin ELements in English'),
+                                        ('CS 100','CS 100-Introduction to Computers'),
+                                        ('CS 115','CS 115-Programming and Problem Solving'),
+                                        ('CTCH 110','CTCH 110-Introcution to Creative Technologies'),
+                                        ('CTCH 111','CTCH 111-Creative Technologies Processes'),
+                                        ('ECON 100','ECON 100-Introduction to Economic Issues'),
+                                        ('ECS 101','ECS 101-Education for Justice: Knowledge,Schooling and Society'),
+                                        ('ECS 102','ECS 102-Education for Justice: Self and Other'),
+                                        ('EDRA 101','EDRA 101-Introductions to Drama Education'),
+                                        ('EIND 100','EIND 100-Indigenous Education: Principles and Practices'),
+                                        ('EIND 116','EIND 116-Indigenous Educational Professional Studies'),
+                                        ('ELIT 101','ELIT 101-Introduction to Literature Education,Kindergarten through Grade 6'),
+                                        ('ENGG 100','ENGG 100-Engineering Graphics'),
+                                        ('ENGG 123','ENGG 123-Engineering Design and Communications'),
+                                        ('FILM 100','FILM 100-The Art of Motion Pictures'),
+                                        ('FILM 101','FILM 101-Selected topics Production-AA-ZZ Series')
