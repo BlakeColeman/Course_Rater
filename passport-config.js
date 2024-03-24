@@ -1,4 +1,5 @@
 // passport-config.js
+// For user authentication
 
 const express = require('express');
 const passport = require('passport');

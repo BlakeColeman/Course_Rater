@@ -4,16 +4,16 @@ const express = require('express');
 const reviewController = require('../controllers/reviewController');
 const router = express.Router();
 
-// search for a course
+// Route to search for courses
 router.get('/reviews', reviewController.reviews);
 
-// Retrives courses
+// Route to retrieve courses
 router.get('/getCourse', reviewController.getCourses);
 
-// all reviews for a course that was searched
+// Route to retrieve all reviews for a specific course
 router.get('/reviews/:cname', reviewController.courseReview);
 
-// report a review
+// Route to report a review
 router.post('/report/:reviewId', reviewController.reportReview);
 
 module.exports = router;

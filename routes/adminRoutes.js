@@ -4,22 +4,22 @@ const express = require('express');
 const adminController = require('../controllers/adminController');
 const router = express.Router();
 
-// all of the suspended accounts
+// Route to display all suspended user accounts
 router.get('/admin/suspendedUsers', adminController.suspended);
 
-// Unsuspend account
+// Route to unsuspend a user account
 router.put('/admin/unsuspendUser/:uname', adminController.unsuspend);
 
-// display a reported review
+// Route to display reported reviews
 router.get('/admin/reported-reviews', adminController.displayReports);
 
-// suspend account
+// Route to suspend a user account
 router.put('/admin/suspendUser/:uname',adminController.suspend);
 
-// delete a reported review
+// Route to delete a reported review
 router.delete('/admin/deleteReview/:id', adminController.deleteReview);
 
-// dismiss a reported review
+// Route to dismiss a reported review
 router.put('/admin/dismissReport/:reviewId', adminController.dismissReport);
 
 module.exports = router;
