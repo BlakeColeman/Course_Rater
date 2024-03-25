@@ -6,3 +6,5 @@ Group Project for CS476
 # cd to Course_Rater Directory 
 # on terminal type node src/js/index.js
 # npm must be installed 
+# run npm install  from command prompt
+# run node app.js from command prompt
