@@ -1,0 +1,57 @@
+/* deleteModal .css */
+/* module design for deleting review in editReview.js */
+
+.modal {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* container for message */
+.modal-container {
+  background-color: #fff;
+  margin: auto;
+  margin-top: 200px;
+  padding: 20px;
+  width: 40%;
+  text-align: center;
+  border-radius: 10px;
+}
+
+/* container for buttons */
+.modal-buttons {
+  margin-top: 15px;
+}
+
+/* cancel deleting a review button */
+.cancelButton {
+  background-color: lightgray;
+  font-size: 16px;
+  color: black;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+/* confirm deleting a review button */
+.confirmButton {
+  background-color: #004f2e;
+  font-size: 16px;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+/* hovering over buttons changes opacity */
+.confirmButton:hover, .cancelButton:hover{   
+  opacity: 0.7;   
+} 

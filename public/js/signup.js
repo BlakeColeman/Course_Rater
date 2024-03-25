@@ -1,52 +1,54 @@
+// signup.js
+
+// get input on submit
 document.getElementById("SignUp").addEventListener("submit", function(event){
-	// Prevent the form from submitting by default
-	// testXhr();
-	 // Get form inputs
-	 var uname = document.getElementById("uname").value;
-	 var email = document.getElementById("email").value;
-	 var pword = document.getElementById("spword").value;
-	 var cpword = document.getElementById("cpword").value;
+
+	// Get form inputs
+	var uname = document.getElementById("uname").value;
+	var email = document.getElementById("email").value;
+	var pword = document.getElementById("spword").value;
+	var cpword = document.getElementById("cpword").value;
 	 
-	 //Regex FORM
-	 var RegexEmail = /^[\w]+@uregina.ca$/i;
-	 var RegexPword = /^\W*\w*\W+/;
+	//Regex FORM
+	var RegexEmail = /^[\w]+@uregina.ca$/i;
+	var RegexPword = /^\W*\w*\W+/; // greater than 8 characters and includes a special character
  
-	 // Perform validation
-	 var feedback = document.getElementById("feedback");
-	 feedback.innerText = ""; // Clear previous feedback
-	 feedback.style.color = ""; // Reset color
+	// Perform validation
+	var feedback = document.getElementById("feedback");
+	feedback.innerText = ""; // Clear previous feedback
+	feedback.style.color = ""; // Reset color
 	 
-	 var valid = true;
+	var valid = true;
 
-	 if (validateUsername(uname,feedback) == false)
-	 {
+	if (validateUsername(uname,feedback) == false)
+	{
 		valid = false;
-	 }
-	 else if (validateEmail(email,RegexEmail,feedback) == false)
-	 {
+	}
+	else if (validateEmail(email,RegexEmail,feedback) == false)
+	{
 		valid = false;
-	 }
-	 else if (validatePassword(pword,cpword,RegexPword,feedback) == false)
-	 {
+	}
+	else if (validatePassword(pword,cpword,RegexPword,feedback) == false)
+	{
 		valid = false;
-	 }
+	}
 
-	 if (valid == true)
-	 {
+	if (valid == true)
+	{
 		//If all validations pass, set feedback to green
 		feedback.innerHTML = "Form submitted successfully.";
 		feedback.style.color = "green";
 	
 		// If all validations pass, submit the form
 		document.getElementById("SignUp").submit();
-	 }
-	 else 
-	 {
+	}
+	else 
+	{
 		event.preventDefault();
-	 } 
+	} 
 });
 
-
+// ensure the username is valid
 function validateUsername(uname,feedback)
 {
 	var valid = true;
@@ -62,9 +64,16 @@ function validateUsername(uname,feedback)
        	feedback.style.color = "red";
 		valid = false;
     }
+	else if (uname.length < 3 || uname.length > 12) 
+	{
+		feedback.innerHTML += "\n*Username must be between 3 and 12 characters long";
+		feedback.style.color = "red";
+		valid =  false;
+	}
 	return valid;
 };
 
+// ensure the email is valid
 function validateEmail(email,RegexEmail,feedback)
 {
 	var valid = true;
@@ -95,6 +104,7 @@ function validateEmail(email,RegexEmail,feedback)
 	return valid;
 };
 
+// ensure the password is valid
 function validatePassword(pword,cpword,RegexPword,feedback)
 {
 	var valid = true;
@@ -125,6 +135,7 @@ function validatePassword(pword,cpword,RegexPword,feedback)
 	return valid;
 };
 
+// Sends a synchronous XMLHttpRequest to check the availability of a username
 function checkUsername(uname)
 {
 	var xhr = new XMLHttpRequest();
@@ -152,10 +163,10 @@ function checkUsername(uname)
 	};
 	xhr.send(xUname);
 	
-	//console.log("NEVER",valid);
 	return valid;
 };
 
+// Sends a synchronous XMLHttpRequest to check the availability of a email address
 function checkEmail(email)
 {
 	const xhr = new XMLHttpRequest();

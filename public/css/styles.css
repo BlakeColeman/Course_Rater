@@ -1,3 +1,5 @@
+/* styles for all html files */
+
 /* Reset default browser styles */
 body, h1, h2, h3, p, ul, li {
     margin: 0;
@@ -5,8 +7,15 @@ body, h1, h2, h3, p, ul, li {
 
 }
 
+html{
+    min-height: 100%;
+    position: relative;
+}
+
 /* Global styles */
 body {
+    min-height: 100%;
+    margin-bottom: 75px;
     line-height: 1.6;
     background-color: #f8f8f8;
 }
@@ -16,7 +25,6 @@ header {
     background-color: #333;
     color: #fff;
     padding: 20px 0;
-    text-align: center; /* Align everything to the center */
 }
 
 /* Main content styles */
@@ -25,11 +33,12 @@ main {
 }
 
 /* Footer styles */
-
 .footer {
     left: 0;
     bottom: 0;
     width: 100%;
+    position: absolute;
+    height: 35px;
     background-color: #333;
     color: #fff;
     text-align: center;
@@ -37,11 +46,13 @@ main {
   }
 
 
+/* container for index page search */
 .search {
     text-align: center;
     padding: 50px 0;
 }
 
+/* container for entering a course and searching */
 .search-container {
     max-width: 400px;
     text-align: left;
@@ -60,12 +71,8 @@ main {
     border-radius: 5px;
 }
 
-Body {  
-    font-family: Calibri, Helvetica, sans-serif;  
-    background-color: rgb(#fff);  
-}  
-  
-button {   
+/* Button for signing up, logging in and searching*/
+.button1 {
     background-color: #004f2e;   
     width: 100%;  
     color: #fff;   
@@ -73,7 +80,7 @@ button {
     margin: 10px 0px;   
     border: none;   
     cursor: pointer;   
-}     
+}
    
 input[type=text], input[type=password] {   
     width: 100%;   
@@ -83,11 +90,13 @@ input[type=text], input[type=password] {
     border: 2px solid #004f2e;   
     box-sizing: border-box;   
 }  
-   
-button:hover, .homeButton:hover, .submitButton:hover{   
+
+/* hover over buttons changes opacity */
+.button1:hover, .homeButton:hover, .submitButton:hover, .review-link:hover, .more-button:hover, .dismissButton:hover, .adminButton:hover, .unsusButton:hover{   
     opacity: 0.7;   
 }     
 
+/* container for signup and login form */
 .container{
     max-width: 400px;
     background: white;
@@ -105,12 +114,11 @@ h1 {
 h2 {
     text-align: center;
     font-size: 42px;
-    padding: auto;
 }
 
-h3{
+h3 {
     text-align: center;
-    font-size: 18px;
+    font-size: 16px;
     padding-bottom: 5px;
     font-weight: 400;
 
@@ -123,18 +131,31 @@ h4 {
     padding-left: 20px;
 }
 
-h5{
+h5 {
     text-align: left;
     font-size: 22px;
     margin: auto;
     font-weight: 500;
 }
 
+h6 {
+    text-align: center;
+    font-size: 32px;
+    padding: auto;
+}
+
+/* horizontal break */
 hr {
     margin: 10px 10px;
     border: 1.3px solid #004f2e;
 }
 
+/* Font style for all pages */
+Body {  
+    font-family: Calibri, Helvetica, sans-serif;  
+}  
+
+/* Button in header*/
 .homeButton {
     background-color: white;
     border-radius: 5px;
@@ -146,14 +167,15 @@ hr {
     display: block;
     margin: 15px 20px 15px 10px;
     float: right;
+    cursor: pointer;
 }
 
-.submitButton{
+/* submit button for creating and editing review */
+.submitButton {
     background-color: #004f2e;
     width: 100%;
     color: #fff;
-    padding-top: 15px;
-    padding-bottom: 0;
+    padding: 12px;
     margin: 10px 0px;
     border: none;
     cursor: pointer;
@@ -163,21 +185,28 @@ hr {
     border-radius: 5px;
 }
 
-.subTitle{
+/* Subtitle for pages */
+.subTitle {
     text-align: left; 
     font-size: 32px; 
     padding: 10px 10px 10px 0;
 }
 
-
+/* container for html files used for side padding */
 .over {
     text-align: left;
-    width: auto;
+    min-height:100%;
+    position:relative;
     padding: 0 60px;
-    position: relative;
-    min-height: 69.7vh;
 }
 
+/* box for suspended accounts */
+.suspendedAccounts {
+    border: 2px solid black;
+    padding: 15px;
+}
+
+/* textarea in the create review page */
 textarea {
     border: lightgray 3px solid;
     padding: 10px 10px;
@@ -187,6 +216,7 @@ textarea {
     width:100%;
 }
 
+/* button for creating a review */
 #createButton {
     padding: 10px 15px; 
     font-size: 18px; 
@@ -200,7 +230,8 @@ textarea {
     float: right;
 }
 
-#reportButton {
+/* button for deleting a review in the edit review page */
+#deleteReviewButton {
     padding: 8px 16px; 
     font-size: 14px; 
     font-weight: 400;
@@ -209,15 +240,120 @@ textarea {
     color: #fff; 
     border-radius: 5px; 
     cursor: pointer;
-    width: 150px; 
+    width: 100px; 
     float: right;
 }
 
-fieldset{
+/* button to unsuspend an account */
+.unsusButton {
+    padding: 8px 16px; 
+    font-size: 14px; 
+    font-weight: 400;
+    border: none;
+    background-color: #dc2a1a; 
+    color: #fff; 
+    border-radius: 5px; 
+    cursor: pointer;
+    width: 130px; 
+    float: right;
+}
+
+/*button for suspending an account and deleting a review */
+.adminButton {
+    padding: 8px 16px; 
+    font-size: 14px; 
+    font-weight: 400;
+    border: none;
+    background-color: #dc2a1a; 
+    color: #fff; 
+    border-radius: 5px; 
+    cursor: pointer;
+    max-width: 150px;
+    float: right;
+    margin: 15px;
+}
+
+/*button for dismissing a reported review */
+.dismissButton {
+    padding: 8px 10px; 
+    font-size: 14px; 
+    font-weight: 400;
+    border: none;
+    background-color: lightgray; 
+    color: black; 
+    border-radius: 5px; 
+    cursor: pointer;
+    width: 80px; 
+    float: right;
+}
+
+/* field set for login and signup page */
+fieldset {
     border: 0;
 }
 
-article{
+/* used to display each review */
+article {
     border: 2px solid black;
     padding: 15px;
+    overflow-wrap: break-word; 
+    word-break: break-word; 
+}
+
+/* For displaying username in header */
+#header span {
+    font-size: 28px; 
+    margin-left: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: #004f2e;
+    color: white; 
+    border-radius: 5px; 
+    text-align: left; 
+}
+
+/* dropdown container for review page */
+.dropdown-container {
+    position: relative;
+}
+
+/* '...' button that turns into dropdown */ 
+.more-button {
+    float: right;
+    font-size: 32px;
+    border: none;
+    cursor: pointer;
+    background-color: none;
+}
+
+/* dropdown for the report review feature */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%; 
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    right: 0;
+    list-style: none;
+    background-color: #fff;
+}
+
+/* Report review button */
+.report-button {
+    cursor: pointer;
+    text-decoration: none; 
+    background-color: #fff;
+}
+
+/* U of R course Rating acts as a link to go back to home page */
+.title-link {
+    color: white; 
+    text-decoration: none; 
+}
+
+/* box around the singular review in account page */
+.review-link {
+    color: black; 
+    text-decoration: none; 
 }

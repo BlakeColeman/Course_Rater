@@ -1,0 +1,36 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+        
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>U of R Course Rating</title>
+        <link rel="stylesheet" href="../css/styles.css">
+    </head>
+    
+    <header id="header"></header>
+    
+    <body>
+        <main>
+            <div class="over">
+                <section class="search">
+                    <h2>Search for Classes</h2>
+                    <div class="search-container">
+                        <form id="search_form" action="/reviews" method="get">
+                            <input type="text" id="search_input" name="cname" placeholder="Enter course name">
+                            <button type="submit" class="button1" id="mySubmit">Search</button>
+                        </form>
+                        <div id="search_result"></div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    
+        <div class="footer">
+            <p>&copy; 2024 U of R Course Rating. All rights reserved.</p>
+        </div>
+    
+        <script src="../js/index.js"></script>
+    </body>
+</html>

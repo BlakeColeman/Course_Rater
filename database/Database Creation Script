@@ -1,0 +1,37 @@
+CREATE TABLE users(uname varchar(255),email varchar(255) UNIQUE,pword varchar(255),role varchar(255),suspended BOOLEAN DEFAULT FALSE,PRIMARY KEY (uname));
+CREATE TABLE courses(cid int,cname varchar(255),PRIMARY KEY(cid));
+CREATE TABLE reviews(review_id integer PRIMARY KEY,cid integer, uname text, content text,grading text,anotes text,crating integer,prof text, flags BOOLEAN DEFAULT FALSE, rcreated date,FOREIGN KEY(cid) REFERENCES courses(cid),FOREIGN KEY(uname) REFERENCES users(uname));
+
+
+INSERT INTO courses (cid, cname) VALUES (0,'ACSC 116'),
+                                        (1,'ACSC 217'),
+                                        (2,'ADMN 100'),
+                                        (3,'ANTH 100'),
+                                        (4,'ART 100'),
+                                        (5,'ART 221'),
+                                        (6,'ARTH 100'),
+                                        (7,'ASTR 101'),
+                                        (8,'BIOL 100'),
+                                        (9,'BIOL 226'),
+                                        (10,'BUS 100'),
+                                        (11,'CHEM 104'),
+                                        (12,'CHEM 210'),
+                                        (13,'CHIN 111'),
+                                        (14,'CHIN 112'),
+                                        (15,'CLAS 100'),
+                                        (16,'CLAS 110'),
+                                        (17,'CS 100'),
+                                        (18,'CS 115'),
+                                        (19,'CTCH 110'),
+                                        (20,'CTCH 203'),
+                                        (21,'ECON 100'),
+                                        (22,'ECS 101'),
+                                        (23,'ECS 102'),
+                                        (24,'EDRA 101'),
+                                        (25,'EIND 100'),
+                                        (26,'EIND 116'),
+                                        (27,'ELIT 101'),
+                                        (28,'ENGG 100'),
+                                        (29,'ENGG 123'),
+                                        (30,'FILM 100'),
+                                        (31,'FILM 203')

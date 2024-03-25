@@ -1,0 +1,40 @@
+<!-- editReview.html -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>U of R Course Rating</title>
+        <link rel="stylesheet" href="../css/styles.css">
+        <link rel="stylesheet" href="../css/star.css">
+        <link rel="stylesheet" href="../css/deleteModal.css">
+    </head>
+    <header>
+        <a onclick="history.back()" class="homeButton">Back</a>
+        <h4 class="title">U of R Course Rating</h4>
+    </header>
+
+    <body>
+        <main>
+            <div class="over">
+                <div id="reviewDetails"></div>
+            </div>
+        </main>
+
+        <div id="deleteModal" class="modal">
+        <div class="modal-container">
+            <h6>Are you sure you want to delete this review?</h6>
+            <div class="modal-buttons">
+                <button class="confirmButton" id="confirmDelete">Confirm</button>
+                <button class="cancelButton" id="cancelDelete">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 U of R Course Rating. All rights reserved.</p>
+    </div>
+
+        <script src="../js/editReview.js"></script>
+    </body>
+</html>
