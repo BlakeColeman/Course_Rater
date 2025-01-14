@@ -1,3 +1,5 @@
+#Archiving Repository as this Project is finished
+
 # Course_Rater
 Group Project for CS476
  
